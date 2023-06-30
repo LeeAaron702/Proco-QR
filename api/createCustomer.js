@@ -20,6 +20,7 @@ export default async function handler(req, res) {
               city,
               province: state,
               zip: zipcode,
+              country: "US"
             },
           ],
         },
