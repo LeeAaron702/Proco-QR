@@ -38,14 +38,24 @@ export default async function handler(req, res) {
     try {
       const response = await fetch(url, options);
       const responseData = await response.json();
-  
+    
       if (!response.ok) {
+        if (responseData.errors && responseData.errors.email && responseData.errors.email.length > 0) {
+          const errorMessage = responseData.errors.email[0];
+          return res.status(response.status).json({ message: 'Error creating customer.', error: errorMessage });
+        }
+    
+        if (responseData.errors && responseData.errors.phone && responseData.errors.phone.length > 0) {
+          const errorMessage = responseData.errors.phone[0];
+          return res.status(response.status).json({ message: 'Error creating customer.', error: errorMessage });
+        }
+    
+        // Handle other error cases
         const errorResponse = responseData.error || { message: 'Unknown error from Shopify API.' };
         return res.status(response.status).json({ message: 'Error creating customer.', error: errorResponse });
       }
-  
+    
       return res.status(200).json({ message: 'Customer created successfully.', customer: responseData });
-  
     } catch (error) {
       console.error(error);
       return res.status(500).json({ message: 'Server error.' });
