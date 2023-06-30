@@ -4,7 +4,6 @@ import { Button, Modal, Form } from 'react-bootstrap';
 function ProductPage({ data }) {
   const [show, setShow] = useState(false);
 
-  // create a state for each form field
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [phone, setPhone] = useState('');
@@ -15,7 +14,13 @@ function ProductPage({ data }) {
   const [state, setState] = useState('');
   const [zipcode, setZipcode] = useState('');
 
-  const handleClose = () => setShow(false);
+  const [successMessage, setSuccessMessage] = useState('');
+
+  const handleClose = () => {
+    setShow(false);
+    clearForm();
+  };
+
   const handleShow = () => setShow(true);
 
   const createCustomer = async () => {
@@ -38,15 +43,28 @@ function ProductPage({ data }) {
     });
 
     if (response.ok) {
-      // Handle successful response
+      setSuccessMessage('Customer created successfully.');
     } else {
       // Handle error
+      setSuccessMessage('');
     }
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     createCustomer();
+  };
+
+  const clearForm = () => {
+    setFirstName('');
+    setLastName('');
+    setPhone('');
+    setEmail('');
+    setAddress1('');
+    setAddress2('');
+    setCity('');
+    setState('');
+    setZipcode('');
   };
 
   if (!data) {
@@ -68,7 +86,6 @@ function ProductPage({ data }) {
               <Button variant="primary" onClick={handleShow}>
                 Instant Replacement
               </Button>
-
             </div>
           </div>
         </div>
@@ -81,8 +98,7 @@ function ProductPage({ data }) {
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={handleSubmit}>
-
-            <div className="form-floating mb-3">
+          <div className="form-floating mb-3">
               <input type="text" className="form-control" id="formFirstName" placeholder="Enter first name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
               <label htmlFor="formFirstName">First Name</label>
             </div>
@@ -180,7 +196,6 @@ function ProductPage({ data }) {
               <input type="text" className="form-control" id="formZipcode" placeholder="Enter zipcode" value={zipcode} onChange={(e) => setZipcode(e.target.value)} />
               <label htmlFor="formZipcode">Zipcode</label>
             </div>
-
           </form>
         </Modal.Body>
         <Modal.Footer>
@@ -192,9 +207,14 @@ function ProductPage({ data }) {
           </Button>
         </Modal.Footer>
       </Modal>
+
+      {successMessage && (
+        <div className="alert alert-success" role="alert">
+          {successMessage}
+        </div>
+      )}
     </div>
   );
-
 }
 
 export default ProductPage;
