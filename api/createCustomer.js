@@ -1,5 +1,3 @@
-// /api/createCustomer.js
-
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
       return res.status(405).json({ message: 'Method not allowed.' });
@@ -33,7 +31,7 @@ export default async function handler(req, res) {
         'X-Shopify-Access-Token': process.env.SHOPIFY_ACCESS_TOKEN,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     };
   
     try {
