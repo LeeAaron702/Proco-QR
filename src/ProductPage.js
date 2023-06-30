@@ -15,6 +15,8 @@ function ProductPage({ data }) {
   const [zipcode, setZipcode] = useState('');
 
   const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
 
   const handleClose = () => {
     setShow(false);
@@ -44,8 +46,10 @@ function ProductPage({ data }) {
 
     if (response.ok) {
       setSuccessMessage('Customer created successfully.');
+      setShow(false)
     } else {
-      // Handle error
+      const errorData = await response.json();
+      setErrorMessage(errorData.message || 'Error creating customer.');
       setSuccessMessage('');
     }
   };
@@ -211,6 +215,11 @@ function ProductPage({ data }) {
       {successMessage && (
         <div className="alert alert-success" role="alert">
           {successMessage}
+        </div>
+      )}
+        {errorMessage && (
+        <div className="alert alert-danger" role="alert">
+          {errorMessage}
         </div>
       )}
     </div>
