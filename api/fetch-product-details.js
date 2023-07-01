@@ -12,7 +12,7 @@ export default async function handler(req, res) {
 
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer YOUR_SHOPIFY_API_TOKEN', // Replace with your actual Shopify API token
+        'X-Shopify-Access-Token': 'process.env.SHOPIFY_ACCESS_TOKEN', // Replace with your actual Shopify API token
       },
     });
 
