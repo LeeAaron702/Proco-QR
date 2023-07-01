@@ -56,7 +56,7 @@ function QRCodeGenerator() {
       console.log(data.product.variantId)
       if (data.product) {
         setProductTitle(data.product.title);
-        setVariantId(data.product.variantId);
+        setVariantId(data.product[variantId]);
       }
     } catch (error) {
       console.log(error);
