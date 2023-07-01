@@ -102,14 +102,13 @@ function QRCodeGenerator() {
               </div>
   
               <div className="form-group">
-                <label htmlFor="variantId">Product Title:</label>
+                <label htmlFor="variantId">Variant ID:</label>
                 <input
                   type="text"
                   id="variantId"
                   className="form-control"
                   name="variantId"
                   value={variantId}
-                  readOnly
                 />
               </div>
               <div className="form-group">
@@ -120,7 +119,7 @@ function QRCodeGenerator() {
                   className="form-control"
                   name="productTitle"
                   value={productTitle}
-                  readOnly
+                   
                 />
               </div>
   
@@ -132,7 +131,7 @@ function QRCodeGenerator() {
                   className="form-control"
                   name="modelNumber"
                   value={modelNumber}
-                  readOnly
+                   
                 />
               </div>
   
@@ -144,7 +143,7 @@ function QRCodeGenerator() {
                   className="form-control"
                   name="shopifyLink"
                   value={shopifyLink}
-                  readOnly
+                   
                 />
               </div>
 
