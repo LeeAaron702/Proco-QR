@@ -39,6 +39,7 @@ function QRCodeGenerator() {
       }
 
       const data = await res.json();
+      console.log("🚀 ~ file: QrGenerator.js:42 ~ fetchProductDetails ~ data:", data)
 
       if (data.product) {
         setProductData({
@@ -80,6 +81,17 @@ function QRCodeGenerator() {
                 </div>
               </div>
   
+              <div className="form-group">
+                <label htmlFor="variantId">Product Title:</label>
+                <input
+                  type="text"
+                  id="variantId"
+                  className="form-control"
+                  name="variantId"
+                  value={productData.variantId}
+                  readOnly
+                />
+              </div>
               <div className="form-group">
                 <label htmlFor="productTitle">Product Title:</label>
                 <input
