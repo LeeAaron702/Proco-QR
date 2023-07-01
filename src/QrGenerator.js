@@ -11,6 +11,7 @@ function QRCodeGenerator() {
     ID: ''
   });
   const [qrCodeUrl, setQrCodeUrl] = useState('');
+  const [variantId, setVariantId] = useState(null);
 
   const baseUrl = "https://proco-qr.vercel.app/";
 
@@ -19,7 +20,22 @@ function QRCodeGenerator() {
       ...productData,
       [e.target.name]: e.target.value
     });
+    if(e.target.name === 'ID') {
+        fetchVariantId(e.target.value);
+      }
   };
+
+  const fetchVariantId = async (productId) => {
+    try {
+      const res = await fetch(`/api/fetch-variant-id?productId=${productId}`);
+      const data = await res.json();
+      if (data.variantId) {
+        setVariantId(data.variantId);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,41 +47,45 @@ function QRCodeGenerator() {
 
   return (
     <div className="container">
-      <form onSubmit={handleSubmit} className="mb-3">
-        <div className="form-group">
-          <label htmlFor="productTitle">Product Title:</label>
-          <input type="text" id="productTitle" className="form-control" name="productTitle" value={productData.productTitle} onChange={handleInputChange} />
+      <div className="card">
+        <div className="card-body">
+          <form onSubmit={handleSubmit} className="mb-3">
+
+            <div className="form-group">
+              <label htmlFor="ID">Shopify Product ID:</label>
+              <input type="text" id="ID" className="form-control" name="ID" value={productData.ID} onChange={handleInputChange} />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="productTitle">Product Title:</label>
+              <input type="text" id="productTitle" className="form-control" name="productTitle" value={productData.productTitle} onChange={handleInputChange} />
+            </div>
+      
+            <div className="form-group">
+              <label htmlFor="modelNumber">Model Number:</label>
+              <input type="text" id="modelNumber" className="form-control" name="modelNumber" value={productData.modelNumber} onChange={handleInputChange} />
+            </div>
+      
+            <div className="form-group">
+              <label htmlFor="shopifyLink">Shopify Link:</label>
+              <input type="text" id="shopifyLink" className="form-control" name="shopifyLink" value={productData.shopifyLink} onChange={handleInputChange} />
+            </div>
+      
+            <div className="form-group">
+              <label htmlFor="amazonLink">Amazon Link:</label>
+              <input type="text" id="amazonLink" className="form-control" name="amazonLink" value={productData.amazonLink} onChange={handleInputChange} />
+            </div>
+      
+            <div className="form-group">
+              <label htmlFor="amazonSKU">Amazon SKU:</label>
+              <input type="text" id="amazonSKU" className="form-control" name="amazonSKU" value={productData.amazonSKU} onChange={handleInputChange} />
+            </div>
+            <button type="submit" className="btn btn-primary">Generate QR Code</button>
+          </form>
+      
+          {qrCodeUrl && <QRCode value={qrCodeUrl} size={1000} level={"H"} />}
         </div>
-  
-        <div className="form-group">
-          <label htmlFor="modelNumber">Model Number:</label>
-          <input type="text" id="modelNumber" className="form-control" name="modelNumber" value={productData.modelNumber} onChange={handleInputChange} />
-        </div>
-  
-        <div className="form-group">
-          <label htmlFor="shopifyLink">Shopify Link:</label>
-          <input type="text" id="shopifyLink" className="form-control" name="shopifyLink" value={productData.shopifyLink} onChange={handleInputChange} />
-        </div>
-  
-        <div className="form-group">
-          <label htmlFor="amazonLink">Amazon Link:</label>
-          <input type="text" id="amazonLink" className="form-control" name="amazonLink" value={productData.amazonLink} onChange={handleInputChange} />
-        </div>
-  
-        <div className="form-group">
-          <label htmlFor="amazonSKU">Amazon SKU:</label>
-          <input type="text" id="amazonSKU" className="form-control" name="amazonSKU" value={productData.amazonSKU} onChange={handleInputChange} />
-        </div>
-  
-        <div className="form-group">
-          <label htmlFor="ID">ID:</label>
-          <input type="text" id="ID" className="form-control" name="ID" value={productData.ID} onChange={handleInputChange} />
-        </div>
-  
-        <button type="submit" className="btn btn-primary">Generate QR Code</button>
-      </form>
-  
-      {qrCodeUrl && <QRCode value={qrCodeUrl} size={1000} level={"H"} />}
+      </div>
     </div>
   );
 }
