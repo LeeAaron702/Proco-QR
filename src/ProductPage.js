@@ -23,6 +23,7 @@ function ProductPage({ data }) {
   useEffect(() => {
     if (data) {
       setShopifyID(data.ID);
+      setVariantId(data.variantId);
     }
   }, [data]);
 
@@ -108,6 +109,7 @@ function ProductPage({ data }) {
             <p className="card-text">{data.productTitle}</p>
             <p className="card-text">Model Number: {data.modelNumber}</p>
             <p className="card-text">Shopify Id: {data.ID}</p>
+            <p className="card-text">variant Id: {data.variantId}</p>
             <div className="button-container">
               <div className="mb-3">
                 <a href={data.shopifyLink} target="_blank" rel="noreferrer" className="btn btn-primary">Go to Shopify sales page</a>

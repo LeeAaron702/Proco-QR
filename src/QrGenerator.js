@@ -79,6 +79,7 @@ function QRCodeGenerator() {
     const serializedData = encodeURIComponent(JSON.stringify(productData));
     const fullUrl = `${baseUrl}?data=${serializedData}`;
     setQrCodeUrl(fullUrl);
+    console.log("🚀 ~ file: QrGenerator.js:83 ~ handleSubmit ~ fullUrl:", fullUrl)
   };
   return (
     <div className="container">
@@ -172,7 +173,7 @@ function QRCodeGenerator() {
             </button>
           </form>
   
-          {qrCodeUrl && <QRCode value={qrCodeUrl} size={1000} level={"H"} />}
+          {qrCodeUrl && <QRCode value={qrCodeUrl} size={350} level={"H"} />}
         </div>
       </div>
     </div>
