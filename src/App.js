@@ -10,7 +10,8 @@ function App() {
     modelNumber: '106R01436',
     shopifyLink: 'https://www.professorcolor.com/products/refurbished-toner-cartridge-replacement-for-xerox-phaser-7500-high-capacity-cyan-106r01436?utm_source=copyToPasteBoard&utm_medium=product-links&utm_content=web',
     amazonLink: 'https://a.co/d/2bh5aBj',
-    amazonSKU: 'XRX14361D-C-USA1'
+    amazonSKU: 'XRX14361D-C-USA1',
+    ID: '36303367864488'
   }
 
   useEffect(() => {

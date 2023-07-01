@@ -13,10 +13,17 @@ function ProductPage({ data }) {
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
   const [zipcode, setZipcode] = useState('');
+  const [shopifyID, setShopifyID] = useState('')
 
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-
+  
+ 
+  useEffect(() => {
+    if (data) {
+      setShopifyID(data.ID);
+    }
+  }, [data]);
 
   const handleClose = () => {
     setShow(false);
@@ -24,9 +31,8 @@ function ProductPage({ data }) {
   };
 
   const handleShow = () => setShow(true);
-
-  const createCustomer = async () => {
-    const response = await fetch('/api/createCustomer', {
+  const instantReplacement = async () => {
+    const response = await fetch('/api/InstantReplacement', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -40,7 +46,8 @@ function ProductPage({ data }) {
         address2,
         city,
         state,
-        zipcode
+        zipcode,
+        shopifyID
       }),
     });
 
@@ -56,7 +63,7 @@ function ProductPage({ data }) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    createCustomer();
+    instantReplacement();
   };
 
   const clearForm = () => {
@@ -78,15 +85,14 @@ function ProductPage({ data }) {
         setErrorMessage('');
       }, 30000); // 30000 milliseconds = 30 seconds
       
-      // Cleanup function to clear the timeout if the component is unmounted while the error message is still displayed.
-      return () => clearTimeout(timer);
+     return () => clearTimeout(timer);
     }
   }, [errorMessage]);
   
   if (!data) {
     return <p>Loading...</p>;
   }
-  
+
   return (
     <div className="container">
       <div className="row mt-5">
@@ -96,6 +102,7 @@ function ProductPage({ data }) {
               <h1 className="card-title display-4">QR CODE THINGY</h1>
               <p className="card-text">{data.productTitle}</p>
               <p className="card-text">Model Number: {data.modelNumber}</p>
+              <p className="card-text">Shopify Id: {data.ID}</p>
               <a href={data.shopifyLink} target="_blank" rel="noreferrer" className="btn btn-primary">Go to Shopify sales page</a>
               <a href={data.amazonLink} target="_blank" rel="noreferrer" className="btn btn-secondary">Go to Amazon sales page</a>
               <a href="https://professorcolor.onsitesupport.io/ticket/add" target="_blank" rel="noreferrer" className="btn btn-danger">Submit A Help Ticket</a>
