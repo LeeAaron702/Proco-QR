@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import QRCode from 'qrcode.react';
 
 function QRCodeGenerator() {
@@ -10,8 +10,11 @@ function QRCodeGenerator() {
     amazonSKU: '',
     ID: ''
   });
+    const adminBaseUrl = process.env.SHOPIFY_URL;
+
   const [qrCodeUrl, setQrCodeUrl] = useState('');
   const [variantId, setVariantId] = useState(null);
+  const timeoutRef = useRef(null); // New reference to store timeout id
 
   const baseUrl = "https://proco-qr.vercel.app/";
 
@@ -21,21 +24,32 @@ function QRCodeGenerator() {
       [e.target.name]: e.target.value
     });
     if(e.target.name === 'ID') {
-        fetchVariantId(e.target.value);
+      if (timeoutRef.current) { // Clear previous timeout if exists
+        clearTimeout(timeoutRef.current);
       }
+      timeoutRef.current = setTimeout(() => { // Set new timeout
+        fetchVariantId(e.target.value);
+      }, 5000);
+    }
   };
 
   const fetchVariantId = async (productId) => {
-    try {
-      const res = await fetch(`/api/fetch-variant-id?productId=${productId}`);
-      const data = await res.json();
-      if (data.variantId) {
-        setVariantId(data.variantId);
-      }
-    } catch (error) {
-      console.log(error);
+  try {
+    const res = await fetch(`${adminBaseUrl}/api/fetch-variant-id?productId=${productId}`, {
+      headers: {
+        'X-Shopify-Access-Token': process.env.SHOPIFY_ACCESS_TOKEN,
+        'Content-Type': 'application/json',
+      },
+    });
+    const data = await res.json();
+    if (data.variantId) {
+      setVariantId(data.variantId);
     }
+  } catch (error) {
+    console.log(error);
   }
+};
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
