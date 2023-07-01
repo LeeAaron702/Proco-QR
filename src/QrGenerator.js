@@ -53,11 +53,11 @@ function QRCodeGenerator() {
   
       const data = await res.json();
       console.log("🚀 ~ file: QrGenerator.js:55 ~ fetchProductDetails ~ data:", data);
-      console.log(data.product.variantId);
+      console.log(data.variantId);
   
       if (data.product) {
-        setProductTitle(data.product.title);
-        setVariantId(data.product.variantId);
+        setProductTitle(data.title);
+        setVariantId(data.variantId);
       }
     } catch (error) {
       console.log(error);
