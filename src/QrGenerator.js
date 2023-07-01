@@ -46,17 +46,18 @@ function QRCodeGenerator() {
           "Content-Type": "application/json",
         },
       });
-
+  
       if (!res.ok) {
         throw new Error("Failed to fetch product details.");
       }
-
+  
       const data = await res.json();
-      console.log("🚀 ~ file: QrGenerator.js:55 ~ fetchProductDetails ~ data:", data)
-      console.log(data.product[variantId])
+      console.log("🚀 ~ file: QrGenerator.js:55 ~ fetchProductDetails ~ data:", data);
+      console.log(data.product.variantId);
+  
       if (data.product) {
         setProductTitle(data.product.title);
-        setVariantId(data.product[variantId]);
+        setVariantId(data.product.variantId);
       }
     } catch (error) {
       console.log(error);
