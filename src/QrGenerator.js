@@ -27,9 +27,11 @@ function QRCodeGenerator() {
         const res = await fetch(`/api/fetch-product-details?productId=${productId}`, {
           method: 'GET',
           headers: {
-            'Content-Type': 'application/json',
-          }
+              'Content-Type': 'application/json',
+            }
         });
+        console.log("🚀 ~ file: QrGenerator.js:29 ~ fetchProductDetails ~ res:", res)
+        
         const data = await res.json();
         console.log("🚀 ~ file: QrGenerator.js:34 ~ fetchProductDetails ~ data:", data)
 

@@ -23,7 +23,9 @@ export default async function handler(req, res) {
 
   try {
     const response = await fetch(productUrl, options);
+    console.log("🚀 ~ file: fetch-product-details.js:26 ~ handler ~ response:", response)
     const responseData = await response.json();
+    console.log("🚀 ~ file: fetch-product-details.js:28 ~ handler ~ responseData:", responseData)
 
     if (!response.ok) {
       return res.status(response.status).json({ message: 'Error fetching product.', error: responseData });
