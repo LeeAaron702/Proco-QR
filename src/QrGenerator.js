@@ -2,63 +2,68 @@ import React, { useState } from "react";
 import QRCode from "qrcode.react";
 
 function QRCodeGenerator() {
-    const [productData, setProductData] = useState({
-      productTitle: "",
-      modelNumber: "",
-      shopifyLink: "",
-      amazonLink: "",
-      amazonSKU: "",
-      ID: "",
-      variantId: "",
-    });
-  
-    const [qrCodeUrl, setQrCodeUrl] = useState("");
-    const baseUrl = "https://proco-qr.vercel.app/";
-  
-    const handleInputChange = (e) => {
-      setProductData({
-        ...productData,
-        [e.target.name]: e.target.value,
-      });
-    };
-  
-    const fetchProductDetails = async (productId) => {
-      try {
-        const res = await fetch(`/api/fetch-product-details?productId=${productId}`, {
-          method: 'GET',
-          headers: {
-              'Content-Type': 'application/json',
-            }
-        });
-        console.log("🚀 ~ file: QrGenerator.js:29 ~ fetchProductDetails ~ res:", res)
-        
-        const data = await res.json();
-        console.log("🚀 ~ file: QrGenerator.js:34 ~ fetchProductDetails ~ data:", data)
+  const [productData, setProductData] = useState({
+    productTitle: "",
+    modelNumber: "",
+    shopifyLink: "",
+    amazonLink: "",
+    amazonSKU: "",
+    ID: "",
+    variantId: "",
+  });
 
-        if (data.product) {
-          setProductData({
-            ...productData,
-            productTitle: data.product.title,
-            variantId: data.product.variantId, 
-          });
+  const [qrCodeUrl, setQrCodeUrl] = useState("");
+  const baseUrl = "https://proco-qr.vercel.app/";
+
+  const handleInputChange = (e) => {
+    setProductData({
+      ...productData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const fetchProductDetails = async (productId) => {
+    try {
+      const res = await fetch(
+        `/api/fetch-product-details?productId=${productId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      } catch (error) {
-        console.log(error);
+      );
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch product details.");
       }
-    };
-  
-    const handleSearch = () => {
-      if (productData.ID) {
-        fetchProductDetails(productData.ID);
+
+      const data = await res.json();
+
+      if (data.product) {
+        setProductData({
+          ...productData,
+          productTitle: data.product.title,
+          variantId: data.product.variantId,
+        });
       }
-    };
-  
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      const serializedData = encodeURIComponent(JSON.stringify(productData));
-      const fullUrl = `${baseUrl}?data=${serializedData}`;
-      setQrCodeUrl(fullUrl);
-    };
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSearch = () => {
+    if (productData.ID) {
+      fetchProductDetails(productData.ID);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const serializedData = encodeURIComponent(JSON.stringify(productData));
+    const fullUrl = `${baseUrl}?data=${serializedData}`;
+    setQrCodeUrl(fullUrl);
+  };
   
     return (
       <div className="container">
