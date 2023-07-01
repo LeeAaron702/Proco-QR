@@ -9,10 +9,10 @@ function QRCodeGenerator() {
       amazonLink: "",
       amazonSKU: "",
       ID: "",
+      variantId: "",
     });
   
     const [qrCodeUrl, setQrCodeUrl] = useState("");
-    
     const baseUrl = "https://proco-qr.vercel.app/";
   
     const handleInputChange = (e) => {
@@ -33,14 +33,13 @@ function QRCodeGenerator() {
         const data = await res.json();
         console.log("🚀 ~ file: QrGenerator.js:34 ~ fetchProductDetails ~ data:", data)
 
-        // if (data.product) {
-        //   setProductData({
-        //     ...productData,
-        //     productTitle: data.product.title,
-        //     modelNumber: data.product.variants[0].sku, // assumed SKU as Model Number
-        //     shopifyLink: data.product.shopifyLink,
-        //   });
-        // }
+        if (data.product) {
+          setProductData({
+            ...productData,
+            productTitle: data.product.title,
+            modelNumber: data.product.variantId, // assumed SKU as Model Number
+          });
+        }
       } catch (error) {
         console.log(error);
       }

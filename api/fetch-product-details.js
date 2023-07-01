@@ -31,8 +31,7 @@ export default async function handler(req, res) {
 
     const product = {
       title: responseData.product.title,
-      variantId: responseData.product.variants[0].sku,
-      shopifyLink: `${baseUrl}/products/${responseData.product.handle}`,
+      variantId: responseData.product.variants[1].sku,
   };
 
     return res.status(200).json({ product });
