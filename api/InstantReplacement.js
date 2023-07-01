@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ message: 'Method not allowed.' });
   }
 
-  const { firstName, lastName, phone, email, address1, address2, city, state, zipcode, shopifyID } = req.body;
+  const { firstName, lastName, phone, email, address1, address2, city, state, zipcode, shopifyID, variantId } = req.body;
   
   // Define the base URL for the API requests
 
@@ -103,7 +103,7 @@ export default async function handler(req, res) {
         },
         line_items: [
           {
-            variant_id: shopifyID,
+            variant_id: variantId,
             quantity: 1,
             price: "0.00"
           }

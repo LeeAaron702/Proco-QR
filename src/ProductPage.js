@@ -14,6 +14,7 @@ function ProductPage({ data }) {
   const [state, setState] = useState('');
   const [zipcode, setZipcode] = useState('');
   const [shopifyID, setShopifyID] = useState('')
+  const [variantId, setVariantId] = useState("");
 
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -49,7 +50,8 @@ function ProductPage({ data }) {
         city,
         state,
         zipcode,
-        shopifyID
+        shopifyID,
+        variantId
       }),
     });
 
