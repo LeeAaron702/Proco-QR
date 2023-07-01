@@ -2,51 +2,60 @@ import React, { useState } from "react";
 import QRCode from "qrcode.react";
 
 function QRCodeGenerator() {
-  const [productData, setProductData] = useState({
-    productTitle: "",
-    modelNumber: "",
-    shopifyLink: "",
-    amazonLink: "",
-    amazonSKU: "",
-    ID: "",
-    variantId: "",
-  });
-
+  const [productTitle, setProductTitle] = useState("");
+  const [modelNumber, setModelNumber] = useState("");
+  const [shopifyLink, setShopifyLink] = useState("");
+  const [amazonLink, setAmazonLink] = useState("");
+  const [amazonSKU, setAmazonSKU] = useState("");
+  const [ID, setID] = useState("");
+  const [variantId, setVariantId] = useState("");
   const [qrCodeUrl, setQrCodeUrl] = useState("");
   const baseUrl = "https://proco-qr.vercel.app/";
 
   const handleInputChange = (e) => {
-    setProductData({
-      ...productData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    switch (name) {
+      case "productTitle":
+        setProductTitle(value);
+        break;
+      case "modelNumber":
+        setModelNumber(value);
+        break;
+      case "shopifyLink":
+        setShopifyLink(value);
+        break;
+      case "amazonLink":
+        setAmazonLink(value);
+        break;
+      case "amazonSKU":
+        setAmazonSKU(value);
+        break;
+      case "ID":
+        setID(value);
+        break;
+      default:
+        break;
+    }
   };
 
   const fetchProductDetails = async (productId) => {
     try {
-      const res = await fetch(
-        `/api/fetch-product-details?productId=${productId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const res = await fetch(`/api/fetch-product-details?productId=${productId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       if (!res.ok) {
         throw new Error("Failed to fetch product details.");
       }
 
       const data = await res.json();
-      console.log("🚀 ~ file: QrGenerator.js:42 ~ fetchProductDetails ~ data:", data)
 
       if (data.product) {
-        setProductData({
-          ...productData,
-          productTitle: data.product.title,
-          variantId: data.product.variantId,
-        });
+        setProductTitle(data.product.title);
+        setVariantId(data.product.variantId);
       }
     } catch (error) {
       console.log(error);
@@ -54,13 +63,22 @@ function QRCodeGenerator() {
   };
 
   const handleSearch = () => {
-    if (productData.ID) {
-      fetchProductDetails(productData.ID);
+    if (ID) {
+      fetchProductDetails(ID);
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const productData = {
+      productTitle,
+      modelNumber,
+      shopifyLink,
+      amazonLink,
+      amazonSKU,
+      ID,
+      variantId,
+    };
     const serializedData = encodeURIComponent(JSON.stringify(productData));
     const fullUrl = `${baseUrl}?data=${serializedData}`;
     setQrCodeUrl(fullUrl);
@@ -74,7 +92,7 @@ function QRCodeGenerator() {
               <div className="form-group">
                 <label htmlFor="ID">Shopify Product ID:</label>
                 <div className="input-group">
-                  <input type="text" id="ID" className="form-control" name="ID" value={productData.ID} onChange={handleInputChange} />
+                  <input type="text" id="ID" className="form-control" name="ID" value={ID} onChange={handleInputChange} />
                   <div className="input-group-append">
                     <button type="button" className="btn btn-primary" onClick={handleSearch}>Search</button>
                   </div>
@@ -88,7 +106,7 @@ function QRCodeGenerator() {
                   id="variantId"
                   className="form-control"
                   name="variantId"
-                  value={productData.variantId}
+                  value={variantId}
                   readOnly
                 />
               </div>
@@ -99,7 +117,7 @@ function QRCodeGenerator() {
                   id="productTitle"
                   className="form-control"
                   name="productTitle"
-                  value={productData.productTitle}
+                  value={productTitle}
                   readOnly
                 />
               </div>
@@ -111,7 +129,7 @@ function QRCodeGenerator() {
                   id="modelNumber"
                   className="form-control"
                   name="modelNumber"
-                  value={productData.modelNumber}
+                  value={modelNumber}
                   readOnly
                 />
               </div>
@@ -123,7 +141,7 @@ function QRCodeGenerator() {
                   id="shopifyLink"
                   className="form-control"
                   name="shopifyLink"
-                  value={productData.shopifyLink}
+                  value={shopifyLink}
                   readOnly
                 />
               </div>
@@ -135,7 +153,7 @@ function QRCodeGenerator() {
                 id="amazonLink"
                 className="form-control"
                 name="amazonLink"
-                value={productData.amazonLink}
+                value={amazonLink}
                 onChange={handleInputChange}
               />
             </div>
@@ -147,7 +165,7 @@ function QRCodeGenerator() {
                 id="amazonSKU"
                 className="form-control"
                 name="amazonSKU"
-                value={productData.amazonSKU}
+                value={amazonSKU}
                 onChange={handleInputChange}
               />
             </div>
