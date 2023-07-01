@@ -39,7 +39,7 @@ function QRCodeGenerator() {
           setProductData({
             ...productData,
             productTitle: data.product.title,
-            modelNumber: data.product.variantId, // assumed SKU as Model Number
+            modelNumber: data.product.variantId, 
           });
         }
       } catch (error) {

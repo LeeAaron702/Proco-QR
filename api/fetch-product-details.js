@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     const { productId } = req.query;
 
     // Make a request to Shopify's API
-    const response = await fetch(`${baseUrl}/products/${productId}.json`, {
+    const response = await fetch(`https://professor-color.myshopify.com/admin/api/2022-01/products/563334053922.json`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer YOUR_SHOPIFY_API_TOKEN', // Replace with your actual Shopify API token
