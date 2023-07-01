@@ -94,26 +94,38 @@ function ProductPage({ data }) {
   }
 
   return (
+  
+
     <div className="container">
-      <div className="row mt-5">
-        <div className="col-md-6">
-          <div className="card">
-            <div className="card-body">
-              <h1 className="card-title display-4">QR CODE THINGY</h1>
-              <p className="card-text">{data.productTitle}</p>
-              <p className="card-text">Model Number: {data.modelNumber}</p>
-              <p className="card-text">Shopify Id: {data.ID}</p>
-              <a href={data.shopifyLink} target="_blank" rel="noreferrer" className="btn btn-primary">Go to Shopify sales page</a>
-              <a href={data.amazonLink} target="_blank" rel="noreferrer" className="btn btn-secondary">Go to Amazon sales page</a>
-              <a href="https://professorcolor.onsitesupport.io/ticket/add" target="_blank" rel="noreferrer" className="btn btn-danger">Submit A Help Ticket</a>
-              <Button variant="primary" onClick={handleShow}>
-                Instant Replacement
-              </Button>
+
+        <div className="card">
+          <div className="card-body text-center">
+            <h1 className="card-title display-4">Professor Color</h1>
+            <p className="card-text">{data.productTitle}</p>
+            <p className="card-text">Model Number: {data.modelNumber}</p>
+            {/* <p className="card-text">Shopify Id: {data.ID}</p> */}
+            <div className="button-container">
+              <div className="mb-3">
+                <a href={data.shopifyLink} target="_blank" rel="noreferrer" className="btn btn-primary">Go to Shopify sales page</a>
+              </div>
+              <div className="mb-3">
+                <a href={data.amazonLink} target="_blank" rel="noreferrer" className="btn btn-success">Go to Amazon sales page</a>
+              </div>
+              <div className="mb-3">
+                <a href="https://professorcolor.onsitesupport.io/ticket/add" target="_blank" rel="noreferrer" className="btn btn-danger">Submit A Help Ticket</a>
+              </div>
+              <div>
+                <Button className="btn btn-warning" onClick={handleShow}>
+                  Instant Replacement
+                </Button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="row mt-5"></div>
+    <div className="row mt-5">
+    </div>
+      
+      
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
