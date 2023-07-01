@@ -31,6 +31,8 @@ function ProductPage({ data }) {
   };
 
   const handleShow = () => setShow(true);
+
+  
   const instantReplacement = async () => {
     const response = await fetch('/api/InstantReplacement', {
       method: 'POST',

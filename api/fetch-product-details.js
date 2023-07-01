@@ -1,7 +1,5 @@
 // Serverless function: /api/fetch-variant-id
 
-import fetch from 'node-fetch';
-
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
     return res.status(405).json({ message: 'Method not allowed.' });
@@ -31,10 +29,13 @@ export default async function handler(req, res) {
       return res.status(response.status).json({ message: 'Error fetching product.', error: responseData });
     }
 
-    // Assuming you want to get the variant id of the first variant
-    const variantId = responseData.product.variants[0].id;
+    const product = {
+      title: responseData.product.title,
+      variantId: responseData.product.variants[0].sku,
+      shopifyLink: `${baseUrl}/products/${responseData.product.handle}`,
+  };
 
-    return res.status(200).json({ variantId });
+    return res.status(200).json({ product });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Server error.' });
