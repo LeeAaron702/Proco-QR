@@ -80,68 +80,81 @@ function QRCodeGenerator() {
     const fullUrl = `${baseUrl}?data=${serializedData}`;
     setQrCodeUrl(fullUrl);
   };
-  
-    return (
-      <div className="container">
-        <div className="card">
-          <div className="card-body">
-            <form onSubmit={handleSubmit} className="mb-3">
-              <div className="form-group">
-                <label htmlFor="ID">Shopify Product ID:</label>
-                <div className="input-group">
-                  <input type="text" id="ID" className="form-control" name="ID" value={ID} onChange={handleInputChange} />
-                  <div className="input-group-append">
-                    <button type="button" className="btn btn-primary" onClick={handleSearch}>Search</button>
-                  </div>
+  return (
+    <div className="container">
+      <div className="card">
+        <div className="card-body">
+          <form onSubmit={handleSubmit} className="mb-3">
+            <div className="form-group">
+              <label htmlFor="ID">Shopify Product ID:</label>
+              <div className="input-group">
+                <input
+                  type="text"
+                  id="ID"
+                  className="form-control"
+                  name="ID"
+                  value={ID}
+                  onChange={handleInputChange}
+                />
+                <div className="input-group-append">
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={handleSearch}
+                  >
+                    Search
+                  </button>
                 </div>
               </div>
+            </div>
   
-              <div className="form-group">
-                <label htmlFor="variantId">Variant ID:</label>
-                <input
-                  type="text"
-                  id="variantId"
-                  className="form-control"
-                  name="variantId"
-                  value={variantId}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="productTitle">Product Title:</label>
-                <input
-                  type="text"
-                  id="productTitle"
-                  className="form-control"
-                  name="productTitle"
-                  value={productTitle}
-                   
-                />
-              </div>
+            <div className="form-group">
+              <label htmlFor="variantId">Variant ID:</label>
+              <input
+                type="text"
+                id="variantId"
+                className="form-control"
+                name="variantId"
+                value={variantId}
+                readOnly
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="productTitle">Product Title:</label>
+              <input
+                type="text"
+                id="productTitle"
+                className="form-control"
+                name="productTitle"
+                value={productTitle}
+                readOnly
+              />
+            </div>
   
-              <div className="form-group">
-                <label htmlFor="modelNumber">Model Number:</label>
-                <input
-                  type="text"
-                  id="modelNumber"
-                  className="form-control"
-                  name="modelNumber"
-                  value={modelNumber}
-                   
-                />
-              </div>
+            <div className="form-group">
+              <label htmlFor="modelNumber">Model Number:</label>
+              <input
+                type="text"
+                id="modelNumber"
+                className="form-control"
+                name="modelNumber"
+                value={modelNumber}
+                onChange={handleInputChange}
+              />
+            </div>
   
-              <div className="form-group">
-                <label htmlFor="shopifyLink">Shopify Link:</label>
-                <input
-                  type="text"
-                  id="shopifyLink"
-                  className="form-control"
-                  name="shopifyLink"
-                  value={shopifyLink}
-                   
-                />
-              </div>
-
+            <div className="form-group">
+              <label htmlFor="shopifyLink">Shopify Link:</label>
+              <input
+                type="text"
+                id="shopifyLink"
+                className="form-control"
+                name="shopifyLink"
+                value={shopifyLink}
+                onChange={handleInputChange}
+              />
+            </div>
+  
             <div className="form-group">
               <label htmlFor="amazonLink">Amazon Link:</label>
               <input
@@ -153,17 +166,17 @@ function QRCodeGenerator() {
                 onChange={handleInputChange}
               />
             </div>
-
+  
             <button type="submit" className="btn btn-primary">
               Generate QR Code
             </button>
           </form>
-
+  
           {qrCodeUrl && <QRCode value={qrCodeUrl} size={1000} level={"H"} />}
         </div>
       </div>
     </div>
-  );
+  );  
 }
 
 export default QRCodeGenerator;
