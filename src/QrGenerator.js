@@ -6,7 +6,6 @@ function QRCodeGenerator() {
   const [modelNumber, setModelNumber] = useState("");
   const [shopifyLink, setShopifyLink] = useState("");
   const [amazonLink, setAmazonLink] = useState("");
-  const [amazonSKU, setAmazonSKU] = useState("");
   const [ID, setID] = useState("");
   const [variantId, setVariantId] = useState("");
   const [qrCodeUrl, setQrCodeUrl] = useState("");
@@ -26,9 +25,6 @@ function QRCodeGenerator() {
         break;
       case "amazonLink":
         setAmazonLink(value);
-        break;
-      case "amazonSKU":
-        setAmazonSKU(value);
         break;
       case "ID":
         setID(value);
@@ -56,7 +52,7 @@ function QRCodeGenerator() {
       console.log(data.variantId);
   
       if (data) {
-        setProductTitle(data.title);
+        setProductTitle(data.productTitle);
         setVariantId(data.variantId);
       }
     } catch (error) {
@@ -77,7 +73,6 @@ function QRCodeGenerator() {
       modelNumber,
       shopifyLink,
       amazonLink,
-      amazonSKU,
       ID,
       variantId,
     };
@@ -159,17 +154,6 @@ function QRCodeGenerator() {
               />
             </div>
 
-            <div className="form-group">
-              <label htmlFor="amazonSKU">Amazon SKU:</label>
-              <input
-                type="text"
-                id="amazonSKU"
-                className="form-control"
-                name="amazonSKU"
-                value={amazonSKU}
-                onChange={handleInputChange}
-              />
-            </div>
             <button type="submit" className="btn btn-primary">
               Generate QR Code
             </button>
