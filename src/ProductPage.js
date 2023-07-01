@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Button, Modal, Form } from 'react-bootstrap';
+import React, { useState, useEffect } from "react";
+import { Button, Modal } from 'react-bootstrap';
 
 function ProductPage({ data }) {
   const [show, setShow] = useState(false);
@@ -71,10 +71,22 @@ function ProductPage({ data }) {
     setZipcode('');
   };
 
+  
+  useEffect(() => {
+    if (errorMessage) {
+      const timer = setTimeout(() => {
+        setErrorMessage('');
+      }, 30000); // 30000 milliseconds = 30 seconds
+      
+      // Cleanup function to clear the timeout if the component is unmounted while the error message is still displayed.
+      return () => clearTimeout(timer);
+    }
+  }, [errorMessage]);
+  
   if (!data) {
     return <p>Loading...</p>;
   }
-
+  
   return (
     <div className="container">
       <div className="row mt-5">
