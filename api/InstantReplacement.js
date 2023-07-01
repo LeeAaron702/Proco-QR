@@ -90,6 +90,17 @@ export default async function handler(req, res) {
         customer: {
           id: customer.id
         },
+        shipping_address: {
+          first_name: firstName,
+          last_name: lastName,
+          address1,
+          address2,
+          city,
+          province: state,
+          zip: zipcode,
+          country: "US",
+          phone
+        },
         line_items: [
           {
             variant_id: shopifyID,
@@ -99,6 +110,7 @@ export default async function handler(req, res) {
         ]
       }
     };
+    
     const orderOptions = {
       method: 'POST',
       headers: {
