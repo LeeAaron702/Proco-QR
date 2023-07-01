@@ -1,45 +1,34 @@
 // Serverless function: /api/fetch-variant-id
 
 export default async function handler(req, res) {
-  if (req.method !== 'GET') {
-    return res.status(405).json({ message: 'Method not allowed.' });
-  }
-
-  const productId = req.query.productId;
-
-  // Base URL for Shopify API requests
   const baseUrl = process.env.SHOPIFY_URL;
 
-  // Endpoint to fetch product details (including variants)
-  const productUrl = `${baseUrl}/products/${productId}.json`;
-
-  const options = {
-    method: 'GET',
-    headers: {
-      'X-Shopify-Access-Token': process.env.SHOPIFY_ACCESS_TOKEN,
-      // 'Content-Type': 'application/json',
-    },
-  };
-
   try {
-    const response = await fetch(productUrl, options);
-    console.log("🚀 ~ file: fetch-product-details.js:26 ~ handler ~ response:", response)
-    const responseData = await response.json();
-    console.log("🚀 ~ file: fetch-product-details.js:28 ~ handler ~ responseData:", responseData)
+    const { productId } = req.query;
+
+    // Make a request to Shopify's API
+    const response = await fetch(`${baseUrl}/products/${productId}.json`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer YOUR_SHOPIFY_API_TOKEN', // Replace with your actual Shopify API token
+      },
+    });
 
     if (!response.ok) {
-      return res.status(response.status).json({ message: 'Error fetching product.', error: responseData });
+      throw new Error('Failed to fetch product details.');
     }
 
-    const product = {
-      title: responseData.product.title,
-      variantId: responseData.product.variants[1].sku,
-      shopifyLink: `${baseUrl}/products/${responseData.product.handle}`,
-  };
+    const data = await response.json();
+    const product = data.product;
 
-    return res.status(200).json({ product });
+    // Extract the variant ID and title
+    const variantId = product.variants[0].id;
+    const productTitle = product.title;
+
+    // Send the variant ID and title as the response
+    res.status(200).json({ variantId, productTitle });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: 'Server error.' });
+    console.log(error);
+    res.status(500).json({ error: 'Failed to fetch product details.' });
   }
 }
