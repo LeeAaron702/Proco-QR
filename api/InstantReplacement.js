@@ -4,27 +4,31 @@ export default async function handler(req, res) {
   }
 
   const { firstName, lastName, phone, email, address1, address2, city, state, zipcode, shopifyID } = req.body;
-
-  const url = 'https://professor-color.myshopify.com/admin/api/2022-01/customers.json';
+  
+  // Define the base URL for the API requests
+  const baseUrl = 'https://professor-color.myshopify.com/admin/api/2022-01';
+  
+  const customerUrl = `${baseUrl}/customers.json`;
+  const searchUrl = `${baseUrl}/customers/search.json?query=email:${email}`;
 
   const data = {
-      customer: {
-        first_name: firstName,
-        last_name: lastName,
-        phone,
-        email,
-        addresses: [
-          {
-            address1,
-            address2,
-            city,
-            province: state,
-            zip: zipcode,
-            country: "US"
-          },
-        ],
-      },
-    };
+    customer: {
+      first_name: firstName,
+      last_name: lastName,
+      phone,
+      email,
+      addresses: [
+        {
+          address1,
+          address2,
+          city,
+          province: state,
+          zip: zipcode,
+          country: "US"
+        },
+      ],
+    },
+  };
 
   const options = {
     method: 'POST',
@@ -35,16 +39,36 @@ export default async function handler(req, res) {
     body: JSON.stringify(data)
   };
 
+  let customer;
+
   try {
-    const response = await fetch(url, options);
+    const response = await fetch(customerUrl, options);
     const responseData = await response.json();
 
     if (!response.ok) {
-      handleErrors(response, responseData);
+      if (responseData.errors && responseData.errors.email && responseData.errors.email.includes("has already been taken")) {
+        // If the email is already in use, search for the existing customer
+        const searchResponse = await fetch(searchUrl, {
+          method: 'GET',
+          headers: {
+            'X-Shopify-Access-Token': process.env.SHOPIFY_ACCESS_TOKEN,
+            'Content-Type': 'application/json',
+          },
+        });
+        const searchResult = await searchResponse.json();
+        if (searchResult.customers.length > 0) {
+          customer = searchResult.customers[0];
+        } else {
+          return res.status(500).json({ message: 'Server error. Unable to locate existing customer.' });
+        }
+      } else {
+        handleErrors(response, responseData);
+      }
+    } else {
+      customer = responseData.customer;
     }
 
-    const customer = responseData.customer;
-    const orderUrl = `https://professor-color.myshopify.com/admin/api/2022-01/orders.json`;
+    const orderUrl = `${baseUrl}/orders.json`;
     const orderData = {
       order: {
         customer: {
@@ -72,11 +96,11 @@ export default async function handler(req, res) {
     const orderResponseData = await orderResponse.json();
 
     if (!orderResponse.ok) {
-      handleErrors(orderResponse, orderResponseData);
+      return res.status(orderResponse.status).json({ message: 'Error creating order.', error: orderResponseData });
     }
 
-    return res.status(200).json({ message: 'Customer and order created successfully.', customer: responseData, order: orderResponseData });
-  } catch (error) {
+    return res.status(200).json({ message: 'Customer and order created successfully.', customer, order: orderResponseData });
+  }catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Server error.' });
   }

@@ -56,7 +56,7 @@ function ProductPage({ data }) {
       setSuccessMessage('Customer created successfully.');
     } else {
       const errorData = await response.json();
-      setErrorMessage(errorData.message || 'Error creating customer.');
+      setErrorMessage(errorData.message);
       setSuccessMessage('');
     }
   };
