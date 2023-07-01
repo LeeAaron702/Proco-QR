@@ -48,7 +48,22 @@ export default async function handler(req, res) {
     if (!response.ok) {
       if (responseData.errors && responseData.errors.email && responseData.errors.email.includes("has already been taken")) {
         // If the email is already in use, search for the existing customer
-        const searchResponse = await fetch(searchUrl, {
+        const searchResponse = await fetch(`${baseUrl}/customers/search.json?query=email:${email}`, {
+          method: 'GET',
+          headers: {
+            'X-Shopify-Access-Token': process.env.SHOPIFY_ACCESS_TOKEN,
+            'Content-Type': 'application/json',
+          },
+        });
+        const searchResult = await searchResponse.json();
+        if (searchResult.customers.length > 0) {
+          customer = searchResult.customers[0];
+        } else {
+          return res.status(500).json({ message: 'Server error. Unable to locate existing customer.' });
+        }
+      } else if (responseData.errors && responseData.errors.phone && responseData.errors.phone.includes("Phone has already been taken")) {
+        // If the phone number is already in use, search for the existing customer
+        const searchResponse = await fetch(`${baseUrl}/customers/search.json?query=phone:${phone}`, {
           method: 'GET',
           headers: {
             'X-Shopify-Access-Token': process.env.SHOPIFY_ACCESS_TOKEN,

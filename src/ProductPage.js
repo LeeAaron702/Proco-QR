@@ -53,7 +53,7 @@ function ProductPage({ data }) {
 
     if (response.ok) {
       handleClose()
-      setSuccessMessage('Customer created successfully.');
+      setSuccessMessage('Instant Replacement created successfully.');
     } else {
       const errorData = await response.json();
       setErrorMessage(errorData.message);
