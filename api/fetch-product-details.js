@@ -17,7 +17,7 @@ export default async function handler(req, res) {
     method: 'GET',
     headers: {
       'X-Shopify-Access-Token': process.env.SHOPIFY_ACCESS_TOKEN,
-      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/json',
     },
   };
 
