@@ -55,7 +55,7 @@ function QRCodeGenerator() {
       console.log("🚀 ~ file: QrGenerator.js:55 ~ fetchProductDetails ~ data:", data);
       console.log(data.variantId);
   
-      if (data.product) {
+      if (data) {
         setProductTitle(data.title);
         setVariantId(data.variantId);
       }
