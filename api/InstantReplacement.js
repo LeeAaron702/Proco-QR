@@ -1,4 +1,6 @@
 export default async function handler(req, res) {
+
+  
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method not allowed.' });
   }
@@ -6,11 +8,10 @@ export default async function handler(req, res) {
   const { firstName, lastName, phone, email, address1, address2, city, state, zipcode, shopifyID } = req.body;
   
   // Define the base URL for the API requests
-  const baseUrl = 'https://professor-color.myshopify.com/admin/api/2022-01';
+
+  const baseUrl = process.env.SHOPIFY_URL;
   
   const customerUrl = `${baseUrl}/customers.json`;
-  const searchUrl = `${baseUrl}/customers/search.json?query=email:${email}`;
-
   const data = {
     customer: {
       first_name: firstName,
