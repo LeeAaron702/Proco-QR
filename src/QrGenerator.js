@@ -21,7 +21,7 @@ function QRCodeGenerator() {
         setProductTitle(value);
         break;
       case "modelNumber":
-        setModelNumber(value);
+        setModelNumber(value.trim());
         break;
       case "shopifyLink":
         setShopifyLink(value);
@@ -73,6 +73,7 @@ function QRCodeGenerator() {
       if (data) {
         setProductTitle(data.productTitle);
         setVariantId(data.variantId);
+        setShopifyLink(`https://www.professorcolor.com/products/${data.handle}`)
       }
     } catch (error) {
       console.log(error);
