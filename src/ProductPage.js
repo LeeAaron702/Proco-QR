@@ -142,7 +142,7 @@ function ProductPage({ data }) {
             </div>
           </div>
           <div className="d-flex justify-content-center">
-            <img src={pictureUrl} alt="Logo" className="img-thumbnail" style={{ width: "300px" }} />
+            <img src={pictureUrl} alt="Logo" className="img-fluid" style={{ width: "300px" }} />
           </div>
         </div>
         <div className="text-center">
@@ -166,7 +166,7 @@ function ProductPage({ data }) {
         </div>
       </div>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} className="modal-fixed">
         <Modal.Header closeButton>
           <Modal.Title>Instant Replacement Form</Modal.Title>
         </Modal.Header>
