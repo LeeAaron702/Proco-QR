@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ProductPage from './ProductPage';
-import QRCodeGenerator from "./QrGenerator";
+import PasswordProtectedComponent from "./Password";
 
 function App() {
   const [data, setData] = useState(null);
@@ -20,7 +20,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<ProductPage data={data}/>} />
-        <Route path="/qr-generator" element={<QRCodeGenerator />} />
+        <Route path="/qr-generator" element={<PasswordProtectedComponent />} />
       </Routes>
     </BrowserRouter>
   );

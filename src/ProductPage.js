@@ -105,11 +105,9 @@ function ProductPage({ data }) {
 
         <div className="card">
           <div className="card-body text-center">
-            <h1 className="card-title display-4">Professor Color</h1>
-            <p className="card-text">{data.productTitle}</p>
-            <p className="card-text">Model Number: {data.modelNumber}</p>
-            <p className="card-text">Shopify Id: {data.ID}</p>
-            <p className="card-text">variant Id: {data.variantId}</p>
+            <h1 className="card-title display-1">Professor Color</h1>
+            <h1 className="card-title display-4">{data.modelNumber}</h1>
+            <p className="lead">{data.productTitle}</p>
             <div className="button-container">
               <div className="mb-3">
                 <a href={data.shopifyLink} target="_blank" rel="noreferrer" className="btn btn-primary">Go to Shopify sales page</a>
