@@ -25,9 +25,10 @@ export default async function handler(req, res) {
     // Extract the variant ID and title
     const variantId = product.variants[0].id;
     const productTitle = product.title;
+    const handle = product.handle;
 
     // Send the variant ID and title as the response
-    res.status(200).json({ variantId, productTitle });
+    res.status(200).json({ variantId, productTitle, handle });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Failed to fetch product details.' });
