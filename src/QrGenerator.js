@@ -149,7 +149,6 @@ function QRCodeGenerator() {
                   className="form-control"
                   name="variantId"
                   value={variantId}
-                  readOnly
                 />
               </div>
               <p className="small mb-1">Must use the search button to populate Variant ID.</p>
@@ -163,7 +162,6 @@ function QRCodeGenerator() {
                   className="form-control"
                   name="productTitle"
                   value={productTitle}
-                  readOnly
                 />
               </div>
             </fieldset>
