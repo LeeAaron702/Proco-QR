@@ -75,6 +75,7 @@ function QRCodeGenerator() {
         setProductTitle(data.productTitle);
         setVariantId(data.variantId);
         setShopifyLink(`https://www.professorcolor.com/products/${data.handle}`)
+        setModelNumber(data.modelNumber)
       }
     } catch (error) {
       console.log(error);
