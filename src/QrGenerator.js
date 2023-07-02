@@ -9,6 +9,7 @@ function QRCodeGenerator() {
   const [ID, setID] = useState("");
   const [variantId, setVariantId] = useState("");
   const [qrCodeUrl, setQrCodeUrl] = useState("");
+  const [picUrl, setPicUrl] = useState("")
 
   const qrCodeRef = useRef(null);
 
@@ -76,6 +77,7 @@ function QRCodeGenerator() {
         setVariantId(data.variantId);
         setShopifyLink(`https://www.professorcolor.com/products/${data.handle}`)
         setModelNumber(data.modelNumber)
+        setPicUrl(data.productImage)
       }
     } catch (error) {
       console.log(error);
@@ -97,6 +99,7 @@ function QRCodeGenerator() {
       amazonLink,
       ID,
       variantId,
+      picUrl
     };
     const serializedData = encodeURIComponent(JSON.stringify(productData));
     const fullUrl = `${baseUrl}?data=${serializedData}`;

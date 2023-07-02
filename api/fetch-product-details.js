@@ -42,9 +42,10 @@ export default async function handler(req, res) {
     const productTitle = product.title;
     const handle = product.handle;
     const modelNumber = extractModelNumbers(productTitle)
+    const productImage = product.images.src
 
     // Send the variant ID and title as the response
-    res.status(200).json({ variantId, productTitle, handle, modelNumber });
+    res.status(200).json({ variantId, productTitle, handle, modelNumber, productImage });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Failed to fetch product details.' });
