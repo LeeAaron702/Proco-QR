@@ -69,6 +69,7 @@ function QRCodeGenerator() {
       }
 
       const data = await res.json();
+      console.log("🚀 ~ file: QrGenerator.js:72 ~ fetchProductDetails ~ data:", data)
 
       if (data) {
         setProductTitle(data.productTitle);
