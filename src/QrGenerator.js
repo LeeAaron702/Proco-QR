@@ -9,6 +9,7 @@ function QRCodeGenerator() {
   const [ID, setID] = useState("");
   const [variantId, setVariantId] = useState("");
   const [qrCodeUrl, setQrCodeUrl] = useState("");
+
   const qrCodeRef = useRef(null);
 
   const baseUrl = "https://proco-qr.vercel.app/";
@@ -204,27 +205,26 @@ function QRCodeGenerator() {
               />
             </div>
             <p className="small mb-1">Please search for the product within Amazon, once identified, use the share item button that is in the top
-            right of the product photos and paste it into this field.</p>
+              right of the product photos and paste it into this field.</p>
 
           </form>
-            <div className="d-flex justify-content-between mt-2">
-              <button onClick={handleSubmit} className="btn btn-primary">
-                Generate QR Code
-              </button>
+          <div className="d-flex justify-content-between mt-2">
+            <button onClick={handleSubmit} className="btn btn-primary">
+              Generate QR Code
+            </button>
             <button type="button" onClick={handleDownload} className="btn btn-success">
               Download QR Code
             </button>
-              <button type="button" onClick={handleClear} className="btn btn-secondary">
-                Clear
-              </button>
+            <button type="button" onClick={handleClear} className="btn btn-secondary">
+              Clear
+            </button>
+          </div>
+          <p className="small mb-2"> {qrCodeUrl} </p>
+          {qrCodeUrl && (
+            <div ref={qrCodeRef} className="d-flex justify-content-center">
+              <QRCode value={qrCodeUrl} size={500} level={"H"} />
             </div>
-
-            {qrCodeUrl && (
-              <div ref={qrCodeRef}>
-                <QRCode value={qrCodeUrl} size={350} level={"H"} />
-              </div>
-            )}
-
+          )}
         </div>
       </div>
     </div>
