@@ -1,7 +1,20 @@
 // Serverless function: /api/fetch-variant-id
 
+
 export default async function handler(req, res) {
   const baseUrl = process.env.SHOPIFY_URL;
+
+
+  function extractModelNumbers(title) {
+    // Use the regular expression to match the model numbers
+    let regex = /\b\d{3}R\d{5}\b/g;
+
+    // Find matches in the title
+    let matches = title.match(regex);
+
+    // If there are matches, return them. Otherwise, return an empty array.
+    return matches ? matches.join(" ") : "";
+  }
 
   try {
     const { productId } = req.query;
@@ -12,7 +25,7 @@ export default async function handler(req, res) {
       headers: {
         'Content-Type': 'application/json',
         'X-Shopify-Access-Token': process.env.SHOPIFY_ACCESS_TOKEN,
-        },
+      },
     });
 
     if (!response.ok) {
@@ -22,13 +35,16 @@ export default async function handler(req, res) {
     const data = await response.json();
     const product = data.product;
 
+
+
     // Extract the variant ID and title
     const variantId = product.variants[0].id;
     const productTitle = product.title;
     const handle = product.handle;
+    const modelNumber = extractModelNumbers(productTitle)
 
     // Send the variant ID and title as the response
-    res.status(200).json({ variantId, productTitle, handle });
+    res.status(200).json({ variantId, productTitle, handle, modelNumber });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Failed to fetch product details.' });
