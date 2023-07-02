@@ -18,8 +18,8 @@ function ProductPage({ data }) {
   const [pictureUrl, setPictureUrl] = useState('')
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  
-  
+
+
   useEffect(() => {
     if (data) {
       setShopifyID(data.ID);
@@ -130,22 +130,24 @@ function ProductPage({ data }) {
 
 
     <div className="container">
-
       <div className="card mt-3">
         <div className="card-body">
           <div className="row mb-0">
             <div className="col-md-3">
-              <img src="./pc_1.png" alt="Logo" className="img-fluid mt-3 ms-3" /> {/*Replace this path with your logo path*/}
+              <img src="./pc_1.png" alt="Logo" className="img-fluid mt-4" /> {/*Replace this path with your logo path*/}
             </div>
             <div className="col-md-9">
               <h1 className="card-title display-1 text-center">Professor Color</h1>
-              <h1 className="card-title display-4 text-center">{data.modelNumber}</h1>
-              <img src={pictureUrl} alt="Logo" className="img-fluid" /> 
-
+              <h1 className="card-title display-5 text-center">{data.modelNumber}</h1>
             </div>
           </div>
-        </div>
-        <p className="h4 text-center ms-5">{data.productTitle}</p>
+          <div className="d-flex justify-content-center"> 
+        <img src={pictureUrl} alt="Logo" className="img-thumbnail" style={{width: "300px"}} /> 
+      </div> 
+    </div>
+        <div className="text-center">  
+          <p className="h4">{data.productTitle}</p>
+        </div> 
         <div className="button-container text-center">
           <div className="mb-3">
             <a href={data.shopifyLink} target="_blank" rel="noreferrer" className="btn btn-primary btn-lg">Purchase Directly From Us and Save</a>
@@ -161,16 +163,8 @@ function ProductPage({ data }) {
               Instant Replacement
             </Button>
           </div>
-
-
-
         </div>
       </div>
-
-      <div className="row mt-5">
-      </div>
-
-
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
