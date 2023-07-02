@@ -48,7 +48,7 @@ function QRCodeGenerator() {
         .replace("image/png", "image/octet-stream");
       let downloadLink = document.createElement("a");
       downloadLink.href = pngUrl;
-      downloadLink.download = `${modelNumber}-${ID}-${variantId}.png`;
+      downloadLink.download = `SKU_${modelNumber}-ID_${ID}-VariantId_${variantId}.png`;
       document.body.appendChild(downloadLink);
       downloadLink.click();
       document.body.removeChild(downloadLink);
