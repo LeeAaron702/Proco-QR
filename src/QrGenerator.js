@@ -178,6 +178,21 @@ function QRCodeGenerator() {
                     readOnly
                   />
                 </div>
+                <p className="small mb-1">Must use the search button to populate Product Title.</p>
+              <div className="form-group">
+                <label htmlFor="shopifyLink">Shopify Link:</label>
+                <input
+                  type="text"
+                  id="shopifyLink"
+                  className="form-control"
+                  name="shopifyLink"
+                  value={shopifyLink}
+                  onChange={handleInputChange}
+                  readOnly
+                />
+              </div>
+                <p className="small mb-1">Must use the search button to populate Shopify Link.</p>
+              {/* <p className="small mb-1">Please use 'Copy Link' button within 'More Actions' on the Admin Product Page and paste it into this field.</p> */}
               </fieldset>
 
               <div className="form-group">
@@ -192,20 +207,9 @@ function QRCodeGenerator() {
                 />
               </div>
               <p className="small mb-1">Please use OEM Model Number / SKU</p>
+              <p className="small mb-1">This field is autofilled but please double check.</p>
 
 
-              <div className="form-group">
-                <label htmlFor="shopifyLink">Shopify Link:</label>
-                <input
-                  type="text"
-                  id="shopifyLink"
-                  className="form-control"
-                  name="shopifyLink"
-                  value={shopifyLink}
-                  onChange={handleInputChange}
-                />
-              </div>
-              <p className="small mb-1">Please use 'Copy Link' button within 'More Actions' on the Admin Product Page and paste it into this field.</p>
 
               <div className="form-group">
                 <label htmlFor="amazonLink">Amazon Link:</label>
