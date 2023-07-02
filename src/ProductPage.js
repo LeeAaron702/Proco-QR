@@ -95,7 +95,32 @@ function ProductPage({ data }) {
   }, [errorMessage]);
   
   if (!data) {
-    return <p>Loading...</p>;
+    return (
+      <div className="container mt-3">
+        <div className="row justify-content-center">
+        <div className="col-md-4">
+        <img src="./pc_1.png" alt="Logo" className="img-fluid mt-3"/> {/*Replace this path with your logo path*/}
+      </div>
+          <div className="col-md-8">
+            <div className="alert alert-warning text-center" role="alert">
+              <h4 className="alert-heading">Oops!</h4>
+              <p>
+                It looks like the link you're trying to visit might be broken.
+              </p>
+              <hr />
+              <p className="mb-0">
+                For product support, please click on the button below.
+              </p>
+            </div>
+            <div className="d-grid gap-2">
+              <a href="https://professorcolor.onsitesupport.io/ticket/add" target="_blank" rel="noreferrer" className="btn btn-danger btn-lg">
+                Submit A Help Ticket
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -103,11 +128,11 @@ function ProductPage({ data }) {
 
     <div className="container">
 
-<div className="card">
+<div className="card mt-3">
   <div className="card-body">
-    <div className="row">
+    <div className="row mb-0">
       <div className="col-md-3">
-        <img src="./pc_1.png" alt="Logo" className="img-fluid mt-2 ms-3"/> {/*Replace this path with your logo path*/}
+        <img src="./pc_1.png" alt="Logo" className="img-fluid mt-3 ms-3"/> {/*Replace this path with your logo path*/}
       </div>
       <div className="col-md-9">
         <h1 className="card-title display-1 text-center">Professor Color</h1>
@@ -115,7 +140,7 @@ function ProductPage({ data }) {
         </div>
       </div>
     </div>
-        <p className="h4 text-center p-1 m-1">{data.productTitle}</p>
+        <p className="h4 text-center ms-5">{data.productTitle}</p>
         <div className="button-container text-center">
           <div className="mb-3">
             <a href={data.shopifyLink} target="_blank" rel="noreferrer" className="btn btn-primary btn-lg">Purchase Directly From Us and Save</a>
