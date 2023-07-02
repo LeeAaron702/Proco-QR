@@ -11,7 +11,6 @@ function QRCodeGenerator() {
   const [qrCodeUrl, setQrCodeUrl] = useState("");
   const qrCodeRef = useRef(null);
 
-
   const baseUrl = "https://proco-qr.vercel.app/";
 
   const handleInputChange = (e) => {
@@ -38,6 +37,20 @@ function QRCodeGenerator() {
   };
 
   const handleDownload = () => {
+    // Generate QR Code before download
+    const productData = {
+      productTitle,
+      modelNumber,
+      shopifyLink,
+      amazonLink,
+      ID,
+      variantId,
+    };
+    const serializedData = encodeURIComponent(JSON.stringify(productData));
+    const fullUrl = `${baseUrl}?data=${serializedData}`;
+    setQrCodeUrl(fullUrl);
+    console.log("🚀 ~ file: QrGenerator.js:83 ~ handleDownload ~ fullUrl:", fullUrl);
+
     if (!qrCodeRef.current) {
       return;
     }
@@ -52,8 +65,6 @@ function QRCodeGenerator() {
       document.body.appendChild(downloadLink);
       downloadLink.click();
       document.body.removeChild(downloadLink);
-
-      
     }
   };
 
@@ -72,7 +83,6 @@ function QRCodeGenerator() {
 
       const data = await res.json();
       console.log("🚀 ~ file: QrGenerator.js:55 ~ fetchProductDetails ~ data:", data);
-      console.log(data.variantId);
 
       if (data) {
         setProductTitle(data.productTitle);
@@ -89,26 +99,11 @@ function QRCodeGenerator() {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const productData = {
-      productTitle,
-      modelNumber,
-      shopifyLink,
-      amazonLink,
-      ID,
-      variantId,
-    };
-    const serializedData = encodeURIComponent(JSON.stringify(productData));
-    const fullUrl = `${baseUrl}?data=${serializedData}`;
-    setQrCodeUrl(fullUrl);
-    console.log("🚀 ~ file: QrGenerator.js:83 ~ handleSubmit ~ fullUrl:", fullUrl)
-  };
   return (
     <div className="container">
       <div className="card">
         <div className="card-body">
-          <form onSubmit={handleSubmit} className="mb-3">
+          <form className="mb-3">
             <h1 className="display-1 text-center"> ProCo QR Code Generator</h1>
             <p></p>
             <div className="form-group">
@@ -146,8 +141,6 @@ function QRCodeGenerator() {
                 readOnly
               />
             </div>
-            <p className="small mb-1">Must use the search button to populate Variant ID.</p>
-            <p className="small mb-1">Without Variant ID, shopify cannot link to the product correctly.</p>
 
             <div className="form-group">
               <label htmlFor="productTitle">Product Title:</label>
@@ -172,8 +165,6 @@ function QRCodeGenerator() {
                 onChange={handleInputChange}
               />
             </div>
-            <p className="small mb-1">Please use OEM Model Number / SKU</p>
-
 
             <div className="form-group">
               <label htmlFor="shopifyLink">Shopify Link:</label>
@@ -186,7 +177,6 @@ function QRCodeGenerator() {
                 onChange={handleInputChange}
               />
             </div>
-            <p className="small mb-1">Please use 'Copy Link' button within 'More Actions' on the Admin Product Page and paste it into this field.</p>
 
             <div className="form-group">
               <label htmlFor="amazonLink">Amazon Link:</label>
@@ -199,21 +189,13 @@ function QRCodeGenerator() {
                 onChange={handleInputChange}
               />
             </div>
-            <p className="small mb-1">Please search for the product within Amazon, once identified, use the share item button that is in the top
-            right of the product photos and paste it into this field.</p>
 
             <div className="d-flex justify-content-between mt-2">
-              {/* <button type="submit" className="btn btn-primary">
-                Generate QR Code
-              </button> */}
-
               <button onClick={handleDownload} className="btn btn-primary">
                 Download QR Code
               </button>
             </div>
 
-            <p> {qrCodeUrl} </p>
-            {/* {qrCodeUrl && <QRCode value={qrCodeUrl} size={350} level={"H"} />} */}
             {qrCodeUrl && (
               <div ref={qrCodeRef}>
                 <QRCode value={qrCodeUrl} size={350} level={"H"} />
@@ -225,6 +207,5 @@ function QRCodeGenerator() {
     </div>
   );
 }
-
 
 export default QRCodeGenerator;
