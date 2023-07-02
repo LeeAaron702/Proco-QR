@@ -14,16 +14,17 @@ function ProductPage({ data }) {
   const [state, setState] = useState('');
   const [zipcode, setZipcode] = useState('');
   const [shopifyID, setShopifyID] = useState('')
-  const [variantId, setVariantId] = useState("");
-
+  const [variantId, setVariantId] = useState('');
+  const [pictureUrl, setPictureUrl] = useState('')
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  
- 
+
+
   useEffect(() => {
     if (data) {
       setShopifyID(data.ID);
       setVariantId(data.variantId);
+      setPictureUrl(data.pictureURL)
     }
   }, [data]);
 
@@ -34,7 +35,7 @@ function ProductPage({ data }) {
 
   const handleShow = () => setShow(true);
 
-  
+
   const instantReplacement = async () => {
     const response = await fetch('/api/InstantReplacement', {
       method: 'POST',
@@ -83,24 +84,24 @@ function ProductPage({ data }) {
     setZipcode('');
   };
 
-  
+
   useEffect(() => {
     if (errorMessage) {
       const timer = setTimeout(() => {
         setErrorMessage('');
       }, 30000); // 30000 milliseconds = 30 seconds
-      
-     return () => clearTimeout(timer);
+
+      return () => clearTimeout(timer);
     }
   }, [errorMessage]);
-  
+
   if (!data) {
     return (
       <div className="container mt-3">
         <div className="row justify-content-center">
-        <div className="col-md-4">
-        <img src="./pc_1.png" alt="Logo" className="img-fluid mt-3"/> {/*Replace this path with your logo path*/}
-      </div>
+          <div className="col-md-4">
+            <img src="./pc_1.png" alt="Logo" className="img-fluid mt-3" /> {/*Replace this path with your logo path*/}
+          </div>
           <div className="col-md-8">
             <div className="alert alert-warning text-center" role="alert">
               <h4 className="alert-heading">Oops!</h4>
@@ -124,22 +125,23 @@ function ProductPage({ data }) {
   }
 
   return (
-  
+
 
     <div className="container">
 
-<div className="card mt-3">
-  <div className="card-body">
-    <div className="row mb-0">
-      <div className="col-md-3">
-        <img src="./pc_1.png" alt="Logo" className="img-fluid mt-3 ms-3"/> {/*Replace this path with your logo path*/}
-      </div>
-      <div className="col-md-9">
-        <h1 className="card-title display-1 text-center">Professor Color</h1>
-        <h1 className="card-title display-4 text-center">{data.modelNumber}</h1>
+      <div className="card mt-3">
+        <div className="card-body">
+          <div className="row mb-0">
+            <div className="col-md-3">
+              <img src="./pc_1.png" alt="Logo" className="img-fluid mt-3 ms-3" /> {/*Replace this path with your logo path*/}
+            </div>
+            <div className="col-md-9">
+              <h1 className="card-title display-1 text-center">Professor Color</h1>
+              <h1 className="card-title display-4 text-center">{data.modelNumber}</h1>
+              <h1 className="card-title display-4 text-center">{data.pictureUrl}</h1>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
         <p className="h4 text-center ms-5">{data.productTitle}</p>
         <div className="button-container text-center">
           <div className="mb-3">
@@ -159,13 +161,13 @@ function ProductPage({ data }) {
 
 
 
-  </div>
-</div>
+        </div>
+      </div>
 
-    <div className="row mt-5">
-    </div>
-      
-      
+      <div className="row mt-5">
+      </div>
+
+
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -173,7 +175,7 @@ function ProductPage({ data }) {
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={handleSubmit}>
-          <div className="form-floating mb-3">
+            <div className="form-floating mb-3">
               <input type="text" className="form-control" id="formFirstName" placeholder="Enter first name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
               <label htmlFor="formFirstName">First Name</label>
             </div>
@@ -288,7 +290,7 @@ function ProductPage({ data }) {
           {successMessage}
         </div>
       )}
-        {errorMessage && (
+      {errorMessage && (
         <div className="alert alert-danger" role="alert">
           {errorMessage}
         </div>

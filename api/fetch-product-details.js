@@ -42,7 +42,7 @@ export default async function handler(req, res) {
     const productTitle = product.title;
     const handle = product.handle;
     const modelNumber = extractModelNumbers(productTitle)
-    const productImage = product.images.src
+    const productImage = product.images[0].src
 
     // Send the variant ID and title as the response
     res.status(200).json({ variantId, productTitle, handle, modelNumber, productImage });
