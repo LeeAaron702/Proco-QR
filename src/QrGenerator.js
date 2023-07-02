@@ -139,32 +139,34 @@ function QRCodeGenerator() {
               </div>
               <p className="small mb-1">Must use the search button for QR code to work</p>
             </div>
+            <fieldset disabled>
 
-            <div className="form-group">
-              <label htmlFor="variantId">Variant ID:</label>
-              <input
-                type="text"
-                id="variantId"
-                className="form-control"
-                name="variantId"
-                value={variantId}
-                readOnly
-              />
-            </div>
-            <p className="small mb-1">Must use the search button to populate Variant ID.</p>
-            <p className="small mb-1">Without Variant ID, shopify cannot link to the product correctly.</p>
+              <div className="form-group">
+                <label htmlFor="variantId">Variant ID:</label>
+                <input
+                  type="text"
+                  id="variantId"
+                  className="form-control"
+                  name="variantId"
+                  value={variantId}
+                  readOnly
+                />
+              </div>
+              <p className="small mb-1">Must use the search button to populate Variant ID.</p>
+              <p className="small mb-1">Without Variant ID, shopify cannot link to the product correctly.</p>
 
-            <div className="form-group">
-              <label htmlFor="productTitle">Product Title:</label>
-              <input
-                type="text"
-                id="productTitle"
-                className="form-control"
-                name="productTitle"
-                value={productTitle}
-                readOnly
-              />
-            </div>
+              <div className="form-group">
+                <label htmlFor="productTitle">Product Title:</label>
+                <input
+                  type="text"
+                  id="productTitle"
+                  className="form-control"
+                  name="productTitle"
+                  value={productTitle}
+                  readOnly
+                />
+              </div>
+            </fieldset>
 
             <div className="form-group">
               <label htmlFor="modelNumber">Model Number:</label>

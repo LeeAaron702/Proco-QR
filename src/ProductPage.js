@@ -103,29 +103,40 @@ function ProductPage({ data }) {
 
     <div className="container">
 
-        <div className="card">
-          <div className="card-body text-center">
-            <h1 className="card-title display-1">Professor Color</h1>
-            <h1 className="card-title display-4">{data.modelNumber}</h1>
-            <p className="lead">{data.productTitle}</p>
-            <div className="button-container">
-              <div className="mb-3">
-                <a href={data.shopifyLink} target="_blank" rel="noreferrer" className="btn btn-primary">Go to Shopify sales page</a>
-              </div>
-              <div className="mb-3">
-                <a href={data.amazonLink} target="_blank" rel="noreferrer" className="btn btn-success">Go to Amazon sales page</a>
-              </div>
-              <div className="mb-3">
-                <a href="https://professorcolor.onsitesupport.io/ticket/add" target="_blank" rel="noreferrer" className="btn btn-danger">Submit A Help Ticket</a>
-              </div>
-              <div>
-                <Button className="btn btn-warning" onClick={handleShow}>
-                  Instant Replacement
-                </Button>
-              </div>
-            </div>
-          </div>
+<div className="card">
+  <div className="card-body">
+    <div className="row">
+      <div className="col-md-3">
+        <img src="./pc_1.png" alt="Logo" className="img-fluid mt-2 ms-3"/> {/*Replace this path with your logo path*/}
+      </div>
+      <div className="col-md-9">
+        <h1 className="card-title display-1 text-center">Professor Color</h1>
+        <h1 className="card-title display-4 text-center">{data.modelNumber}</h1>
         </div>
+      </div>
+    </div>
+        <p className="h4 text-center p-1 m-1">{data.productTitle}</p>
+        <div className="button-container text-center">
+          <div className="mb-3">
+            <a href={data.shopifyLink} target="_blank" rel="noreferrer" className="btn btn-primary btn-lg">Purchase Directly From Us and Save</a>
+          </div>
+          <div className="mb-3">
+            <a href={data.amazonLink} target="_blank" rel="noreferrer" className="btn btn-success btn-lg">Go to Amazon Sales Page</a>
+          </div>
+          <div className="mb-3">
+            <a href="https://professorcolor.onsitesupport.io/ticket/add" target="_blank" rel="noreferrer" className="btn btn-danger btn-lg">Submit A Help Ticket</a>
+          </div>
+          <div>
+            <Button className="btn btn-warning mb-3 btn-lg" onClick={handleShow}>
+              Instant Replacement
+            </Button>
+          </div>
+
+
+
+  </div>
+</div>
+
     <div className="row mt-5">
     </div>
       
