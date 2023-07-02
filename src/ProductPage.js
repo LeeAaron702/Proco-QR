@@ -18,8 +18,8 @@ function ProductPage({ data }) {
   const [pictureUrl, setPictureUrl] = useState('')
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-
-
+  
+  
   useEffect(() => {
     if (data) {
       setShopifyID(data.ID);
@@ -27,6 +27,8 @@ function ProductPage({ data }) {
       setPictureUrl(data.pictureURL)
     }
   }, [data]);
+  console.log("🚀 ~ file: ProductPage.js:30 ~ ProductPage ~ data:", data)
+  console.log("🚀 ~ file: ProductPage.js:19 ~ ProductPage ~ pictureUrl:", pictureUrl)
 
   const handleClose = () => {
     setShow(false);
@@ -138,7 +140,8 @@ function ProductPage({ data }) {
             <div className="col-md-9">
               <h1 className="card-title display-1 text-center">Professor Color</h1>
               <h1 className="card-title display-4 text-center">{data.modelNumber}</h1>
-              <h1 className="card-title display-4 text-center">{data.pictureUrl}</h1>
+              <img src={pictureUrl} alt="Logo" className="img-fluid" /> 
+
             </div>
           </div>
         </div>
