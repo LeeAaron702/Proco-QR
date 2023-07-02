@@ -170,6 +170,8 @@ function QRCodeGenerator() {
                 onChange={handleInputChange}
               />
             </div>
+            <p className="small mb-1">Please use OEM Model Number / SKU</p>
+
 
             <div className="form-group">
               <label htmlFor="shopifyLink">Shopify Link:</label>
@@ -196,9 +198,9 @@ function QRCodeGenerator() {
             </div>
 
             <div className="d-flex justify-content-between mt-2">
-              <button type="submit" className="btn btn-primary">
+              {/* <button type="submit" className="btn btn-primary">
                 Generate QR Code
-              </button>
+              </button> */}
 
               <button onClick={handleDownload} className="btn btn-primary">
                 Download QR Code
