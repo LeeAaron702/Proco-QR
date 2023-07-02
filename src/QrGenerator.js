@@ -114,117 +114,126 @@ function QRCodeGenerator() {
     <div className="container">
       <div className="card">
         <div className="card-body">
-          <form onSubmit={handleSubmit} className="mb-3">
-            <h1 className="display-1 text-center">ProCo QR Code Generator</h1>
-            <div className="form-group">
-              <label htmlFor="ID">Shopify Product ID:</label>
-              <div className="input-group">
+          <div className="row">
+              <div className="col-md-3">
+                <img src="./pc_1.png" alt="Logo" className="img-fluid mt-2 ms-3" /> {/*Replace this path with your logo path*/}
+              </div>
+              <div className="col-md-9">
+                <h1 className="display-3 text-center mt-1">ProCo QR Code Generator</h1>
+              </div>
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label htmlFor="ID">Shopify Product ID:</label>
+                <div className="input-group">
+                  <input
+                    type="text"
+                    id="ID"
+                    className="form-control"
+                    name="ID"
+                    value={ID}
+                    onChange={handleInputChange}
+                  />
+                  <div className="input-group-append">
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={handleSearch}
+                    >
+                      Search
+                    </button>
+                  </div>
+                </div>
+                <p className="small mb-1">Must use the search button for QR code to work</p>
+              </div>
+              <fieldset disabled>
+
+                <div className="form-group">
+                  <label htmlFor="variantId">Variant ID:</label>
+                  <input
+                    type="text"
+                    id="variantId"
+                    className="form-control"
+                    name="variantId"
+                    value={variantId}
+                    readOnly
+                  />
+                </div>
+                <p className="small mb-1">Must use the search button to populate Variant ID.</p>
+                <p className="small mb-1">Without Variant ID, shopify cannot link to the product correctly.</p>
+
+                <div className="form-group">
+                  <label htmlFor="productTitle">Product Title:</label>
+                  <input
+                    type="text"
+                    id="productTitle"
+                    className="form-control"
+                    name="productTitle"
+                    value={productTitle}
+                    readOnly
+                  />
+                </div>
+              </fieldset>
+
+              <div className="form-group">
+                <label htmlFor="modelNumber">Model Number:</label>
                 <input
                   type="text"
-                  id="ID"
+                  id="modelNumber"
                   className="form-control"
-                  name="ID"
-                  value={ID}
+                  name="modelNumber"
+                  value={modelNumber}
                   onChange={handleInputChange}
                 />
-                <div className="input-group-append">
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={handleSearch}
-                  >
-                    Search
-                  </button>
-                </div>
               </div>
-              <p className="small mb-1">Must use the search button for QR code to work</p>
-            </div>
-            <fieldset disabled>
+              <p className="small mb-1">Please use OEM Model Number / SKU</p>
+
 
               <div className="form-group">
-                <label htmlFor="variantId">Variant ID:</label>
+                <label htmlFor="shopifyLink">Shopify Link:</label>
                 <input
                   type="text"
-                  id="variantId"
+                  id="shopifyLink"
                   className="form-control"
-                  name="variantId"
-                  value={variantId}
+                  name="shopifyLink"
+                  value={shopifyLink}
+                  onChange={handleInputChange}
                 />
               </div>
-              <p className="small mb-1">Must use the search button to populate Variant ID.</p>
-              <p className="small mb-1">Without Variant ID, shopify cannot link to the product correctly.</p>
+              <p className="small mb-1">Please use 'Copy Link' button within 'More Actions' on the Admin Product Page and paste it into this field.</p>
 
               <div className="form-group">
-                <label htmlFor="productTitle">Product Title:</label>
+                <label htmlFor="amazonLink">Amazon Link:</label>
                 <input
                   type="text"
-                  id="productTitle"
+                  id="amazonLink"
                   className="form-control"
-                  name="productTitle"
-                  value={productTitle}
+                  name="amazonLink"
+                  value={amazonLink}
+                  onChange={handleInputChange}
                 />
               </div>
-            </fieldset>
+              <p className="small mb-1">Please search for the product within Amazon, once identified, use the share item button that is in the top
+                right of the product photos and paste it into this field.</p>
 
-            <div className="form-group">
-              <label htmlFor="modelNumber">Model Number:</label>
-              <input
-                type="text"
-                id="modelNumber"
-                className="form-control"
-                name="modelNumber"
-                value={modelNumber}
-                onChange={handleInputChange}
-              />
+            </form>
+            <div className="d-flex justify-content-between mt-2">
+              <button onClick={handleSubmit} className="btn btn-primary">
+                Generate QR Code
+              </button>
+              <button type="button" onClick={handleDownload} className="btn btn-success">
+                Download QR Code
+              </button>
+              <button type="button" onClick={handleClear} className="btn btn-secondary">
+                Clear
+              </button>
             </div>
-            <p className="small mb-1">Please use OEM Model Number / SKU</p>
-
-
-            <div className="form-group">
-              <label htmlFor="shopifyLink">Shopify Link:</label>
-              <input
-                type="text"
-                id="shopifyLink"
-                className="form-control"
-                name="shopifyLink"
-                value={shopifyLink}
-                onChange={handleInputChange}
-              />
-            </div>
-            <p className="small mb-1">Please use 'Copy Link' button within 'More Actions' on the Admin Product Page and paste it into this field.</p>
-
-            <div className="form-group">
-              <label htmlFor="amazonLink">Amazon Link:</label>
-              <input
-                type="text"
-                id="amazonLink"
-                className="form-control"
-                name="amazonLink"
-                value={amazonLink}
-                onChange={handleInputChange}
-              />
-            </div>
-            <p className="small mb-1">Please search for the product within Amazon, once identified, use the share item button that is in the top
-              right of the product photos and paste it into this field.</p>
-
-          </form>
-          <div className="d-flex justify-content-between mt-2">
-            <button onClick={handleSubmit} className="btn btn-primary">
-              Generate QR Code
-            </button>
-            <button type="button" onClick={handleDownload} className="btn btn-success">
-              Download QR Code
-            </button>
-            <button type="button" onClick={handleClear} className="btn btn-secondary">
-              Clear
-            </button>
+            <p className="small mb-2"> {qrCodeUrl} </p>
+            {qrCodeUrl && (
+              <div ref={qrCodeRef} className="d-flex justify-content-center">
+                <QRCode value={qrCodeUrl} size={500} level={"H"} />
+              </div>
+            )}
           </div>
-          <p className="small mb-2"> {qrCodeUrl} </p>
-          {qrCodeUrl && (
-            <div ref={qrCodeRef} className="d-flex justify-content-center">
-              <QRCode value={qrCodeUrl} size={500} level={"H"} />
-            </div>
-          )}
         </div>
       </div>
     </div>
