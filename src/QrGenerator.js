@@ -184,6 +184,7 @@ function QRCodeGenerator() {
                 onChange={handleInputChange}
               />
             </div>
+            <p className="small mb-1">Please use 'Copy Link' button within 'More Actions' on the Admin Product Page and paste it into this field.</p>
 
             <div className="form-group">
               <label htmlFor="amazonLink">Amazon Link:</label>
@@ -196,6 +197,8 @@ function QRCodeGenerator() {
                 onChange={handleInputChange}
               />
             </div>
+            <p className="small mb-1">Please search for the product within Amazon, once identified, use the share item button that is in the top
+            right of the product photos and paste it into this field.</p>
 
             <div className="d-flex justify-content-between mt-2">
               {/* <button type="submit" className="btn btn-primary">
