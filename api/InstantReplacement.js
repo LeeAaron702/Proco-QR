@@ -107,7 +107,7 @@ export default async function handler(req, res) {
             price: "0.00"
           }
         ],
-        tags: 'Instant Replacement' 
+        "tags": 'Instant Replacement' 
       }
     };
     
