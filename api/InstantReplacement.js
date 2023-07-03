@@ -84,10 +84,10 @@ export default async function handler(req, res) {
 // Now that the customer exists, check for recent replacement orders
 
 // Calculate the date and time 3 days ago in ISO format
-const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
+const oneDayAgo = new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString();
 
 // Construct the URL for the Shopify API call to fetch recent orders
-const recentOrdersUrl = `${baseUrl}/orders.json?created_at_min=${thirtyDaysAgo}&status=any&limit=250&tag=Instant%20Replacement`;
+const recentOrdersUrl = `${baseUrl}/orders.json?created_at_min=${oneDayAgo}&status=any&limit=250&tag=Instant%20Replacement`;
 
 // Make the API call
 const recentOrdersResponse = await fetch(recentOrdersUrl, {

@@ -27,9 +27,7 @@ function ProductPage({ data }) {
       setPictureUrl(data.pictureURL)
     }
   }, [data]);
-  console.log("🚀 ~ file: ProductPage.js:30 ~ ProductPage ~ data:", data)
-  console.log("🚀 ~ file: ProductPage.js:19 ~ ProductPage ~ pictureUrl:", pictureUrl)
-
+  
   const handleClose = () => {
     setShow(false);
     clearForm();
