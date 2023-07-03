@@ -185,15 +185,15 @@ if (recentReplacementOrders.length > 0) {
 function handleErrors(response, responseData) {
   if (responseData.errors && responseData.errors.email && responseData.errors.email.length > 0) {
     const errorMessage = responseData.errors.email[0];
-    return res.status(response.status).json({ message: 'Error creating customer.', error: errorMessage });
+    return { status: response.status, message: 'Error creating customer.', error: errorMessage };
   }
 
   if (responseData.errors && responseData.errors.phone && responseData.errors.phone.length > 0) {
     const errorMessage = responseData.errors.phone[0];
-    return res.status(response.status).json({ message: 'Error creating customer.', error: errorMessage });
+    return { status: response.status, message: 'Error creating customer.', error: errorMessage };
   }
 
   // Handle other error cases
   const errorResponse = responseData.error || { message: 'Unknown error from Shopify API.' };
-  return res.status(response.status).json({ message: 'Error creating customer.', error: errorResponse });
+  return { status: response.status, message: 'Error creating customer.', error: errorResponse };
 }
