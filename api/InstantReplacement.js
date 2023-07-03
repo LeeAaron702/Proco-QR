@@ -5,10 +5,8 @@ export default async function handler(req, res) {
   }
 
   const { firstName, lastName, phone, email, address1, address2, city, state, zipcode, shopifyID, variantId } = req.body;
-  
-
   const baseUrl = process.env.SHOPIFY_URL;
-  
+
   const customerUrl = `${baseUrl}/customers.json`;
   const data = {
     customer: {
@@ -26,7 +24,7 @@ export default async function handler(req, res) {
           country: "US"
         },
       ],
-      "accepts_marketing": true, 
+      "accepts_marketing": true,
     },
   };
 
@@ -83,6 +81,56 @@ export default async function handler(req, res) {
       customer = responseData.customer;
     }
 
+// Now that the customer exists, check for recent replacement orders
+
+// Calculate the date and time 3 days ago in ISO format
+const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
+
+// Construct the URL for the Shopify API call to fetch recent orders
+const recentOrdersUrl = `${baseUrl}/orders.json?created_at_min=${thirtyDaysAgo}&status=any&limit=250&tag=Instant%20Replacement`;
+
+// Make the API call
+const recentOrdersResponse = await fetch(recentOrdersUrl, {
+  method: 'GET',
+  headers: {
+    'X-Shopify-Access-Token': process.env.SHOPIFY_ACCESS_TOKEN,
+    'Content-Type': 'application/json',
+  },
+});
+
+// Parse the response data
+const recentOrdersData = await recentOrdersResponse.json();
+
+// Define the current customer's address
+const customerAddress = {
+  first_name: firstName,
+  last_name: lastName,
+  address1,
+  address2,
+  city,
+  province: state,
+  zip: zipcode,
+  country: "US",
+  phone
+};
+
+
+
+// Filter the orders to find any that match the customer's address
+const recentReplacementOrders = recentOrdersData.orders.filter(order => {
+  const orderAddress = order.shipping_address;
+  return orderAddress.address1 === customerAddress.address1
+    && orderAddress.address2 === customerAddress.address2
+    && orderAddress.city === customerAddress.city
+    && orderAddress.province === customerAddress.province
+    && orderAddress.zip === customerAddress.zip
+});
+
+// If any matching orders are found, respond with an error message
+if (recentReplacementOrders.length > 0) {
+  return res.status(403).json({ message: 'Recent replacement order already exists for this address in the past 30 days.' });
+}
+
     const orderUrl = `${baseUrl}/orders.json`;
     const orderData = {
       order: {
@@ -107,11 +155,10 @@ export default async function handler(req, res) {
             price: "0.00"
           }
         ],
-        "tags": 'Instant Replacement' 
+        "tags": 'Instant Replacement'
       }
     };
-    
-    
+
     const orderOptions = {
       method: 'POST',
       headers: {
@@ -128,8 +175,8 @@ export default async function handler(req, res) {
       return res.status(orderResponse.status).json({ message: 'Error creating order.', error: orderResponseData });
     }
 
-    return res.status(200).json({ message: 'Customer and order created successfully.', customer, order: orderResponseData });
-  }catch (error) {
+    return res.status(200).json({ message: 'Customer and order created successfully.', customer, order: orderResponseData.order });
+  } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Server error.' });
   }
