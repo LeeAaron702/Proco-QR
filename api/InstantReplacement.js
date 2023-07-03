@@ -38,6 +38,7 @@ export default async function handler(req, res) {
   };
 
   let customer;
+  console.log("🚀 ~ file: InstantReplacement.js:41 ~ handler ~ customer:", customer)
 
   try {
     const response = await fetch(customerUrl, options);
@@ -170,6 +171,7 @@ export default async function handler(req, res) {
         "tags": 'Instant Replacement'
       }
     };
+    console.log("🚀 ~ file: InstantReplacement.js:174 ~ handler ~ orderData:", orderData)
 
     const orderOptions = {
       method: 'POST',
