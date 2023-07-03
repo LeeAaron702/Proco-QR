@@ -26,7 +26,7 @@ export default async function handler(req, res) {
           country: "US"
         },
       ],
-      accepts_marketing: true, 
+      "accepts_marketing": true, 
     },
   };
 
