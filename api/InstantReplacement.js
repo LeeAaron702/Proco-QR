@@ -1,13 +1,11 @@
 export default async function handler(req, res) {
 
-  
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Method not allowed.' });
   }
 
   const { firstName, lastName, phone, email, address1, address2, city, state, zipcode, shopifyID, variantId } = req.body;
   
-  // Define the base URL for the API requests
 
   const baseUrl = process.env.SHOPIFY_URL;
   
@@ -28,6 +26,7 @@ export default async function handler(req, res) {
           country: "US"
         },
       ],
+      accepts_marketing: true, 
     },
   };
 
@@ -107,9 +106,11 @@ export default async function handler(req, res) {
             quantity: 1,
             price: "0.00"
           }
-        ]
+        ],
+        tags: 'Instant Replacement' 
       }
     };
+    
     
     const orderOptions = {
       method: 'POST',
