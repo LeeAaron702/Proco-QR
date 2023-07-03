@@ -81,63 +81,67 @@ export default async function handler(req, res) {
       customer = responseData.customer;
     }
 
-// Now that the customer exists, check for recent replacement orders
+    // Now that the customer exists, check for recent replacement orders
 
-// Calculate the date and time 3 days ago in ISO format
-const oneDayAgo = new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString();
+    // Calculate the date and time 3 days ago in ISO format
+    const oneDayAgo = new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString();
 
-// Construct the URL for the Shopify API call to fetch recent orders
-const recentOrdersUrl = `${baseUrl}/orders.json?created_at_min=${oneDayAgo}&status=any&limit=250&tag=Instant%20Replacement`;
+    // Construct the URL for the Shopify API call to fetch recent orders
+    const recentOrdersUrl = `${baseUrl}/orders.json?created_at_min=${oneDayAgo}&status=any&limit=250&tag=Instant%20Replacement`;
 
-// Make the API call
-const recentOrdersResponse = await fetch(recentOrdersUrl, {
-  method: 'GET',
-  headers: {
-    'X-Shopify-Access-Token': process.env.SHOPIFY_ACCESS_TOKEN,
-    'Content-Type': 'application/json',
-  },
-});
+    // Make the API call
+    const recentOrdersResponse = await fetch(recentOrdersUrl, {
+      method: 'GET',
+      headers: {
+        'X-Shopify-Access-Token': process.env.SHOPIFY_ACCESS_TOKEN,
+        'Content-Type': 'application/json',
+      },
+    });
 
-// Parse the response data
-const recentOrdersData = await recentOrdersResponse.json();
-console.log("🚀 ~ file: InstantReplacement.js:103 ~ handler ~ recentOrdersData:", recentOrdersData)
+    // Parse the response data
+    const recentOrdersData = await recentOrdersResponse.json();
+    console.log("🚀 ~ file: InstantReplacement.js:103 ~ handler ~ recentOrdersData:", recentOrdersData.orders.shipping_address)
 
-// Define the current customer's address
-const customerAddress = {
-  first_name: firstName,
-  last_name: lastName,
-  address1,
-  address2,
-  city,
-  province: state,
-  zip: zipcode,
-  country: "US",
-  phone
-};
-console.log("🚀 ~ file: InstantReplacement.js:116 ~ handler ~ customerAddress:", customerAddress)
+    // Define the current customer's address
+    const customerAddress = {
+      first_name: firstName,
+      last_name: lastName,
+      address1,
+      address2,
+      city,
+      province: state,
+      zip: zipcode,
+      country: "US",
+      phone
+    };
+    console.log("🚀 ~ file: InstantReplacement.js:116 ~ handler ~ customerAddress:", customerAddress)
 
 
 
-// Filter the orders to find any that match the customer's address
-const recentReplacementOrders = recentOrdersData.orders.filter(order => {
-  const orderAddress = order.shipping_address;
-  const address1 = orderAddress.address1;
-  const address2 = orderAddress.address2;
-  const city = orderAddress.city;
-  const province = orderAddress.province;
-  const zip = orderAddress.zip;
+    // Filter the orders to find any that match the customer's address
+    const recentReplacementOrders = recentOrdersData.orders.filter(order => {
+      const orderAddress = order.shipping_address;
+      if (!orderAddress) {
+        return false
+      }
 
-  return address1 === customerAddress.address1
-    && address2 === customerAddress.address2
-    && city === customerAddress.city
-    && province === customerAddress.province
-    && zip === customerAddress.zip;
-});
+      const address1 = orderAddress.address1;
+      const address2 = orderAddress.address2;
+      const city = orderAddress.city;
+      const province = orderAddress.province;
+      const zip = orderAddress.zip;
 
-// If any matching orders are found, respond with an error message
-if (recentReplacementOrders.length > 0) {
-  return res.status(403).json({ message: 'Recent replacement order already exists for this address.' });
-}
+      return address1 === customerAddress.address1
+        && address2 === customerAddress.address2
+        && city === customerAddress.city
+        && province === customerAddress.province
+        && zip === customerAddress.zip;
+    });
+
+    // If any matching orders are found, respond with an error message
+    if (recentReplacementOrders.length > 0) {
+      return res.status(403).json({ message: 'Recent replacement order already exists for this address.' });
+    }
 
     const orderUrl = `${baseUrl}/orders.json`;
     const orderData = {
