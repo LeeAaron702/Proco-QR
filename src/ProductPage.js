@@ -150,10 +150,10 @@ function ProductPage({ data }) {
         </div>
         <div className="button-container text-center">
           <div className="mb-3">
-            <a href={data.shopifyLink} target="_blank" rel="noreferrer" className="btn btn-primary btn-lg">Purchase Directly From Us and Save</a>
+            <a href={data.shopifyLink} target="_blank" rel="noreferrer" className="btn btn-success btn-lg">Purchase Directly From Us and Save</a>
           </div>
           <div className="mb-3">
-            <a href={data.amazonLink} target="_blank" rel="noreferrer" className="btn btn-success btn-lg">Go to Amazon Sales Page</a>
+            <a href={data.amazonLink} target="_blank" rel="noreferrer" className="btn btn-primary btn-lg">Go to Amazon Sales Page</a>
           </div>
           <div className="mb-3">
             <a href="https://professorcolor.onsitesupport.io/ticket/add" target="_blank" rel="noreferrer" className="btn btn-danger btn-lg">Submit A Help Ticket</a>
