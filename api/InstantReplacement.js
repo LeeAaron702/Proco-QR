@@ -100,6 +100,7 @@ const recentOrdersResponse = await fetch(recentOrdersUrl, {
 
 // Parse the response data
 const recentOrdersData = await recentOrdersResponse.json();
+console.log("🚀 ~ file: InstantReplacement.js:103 ~ handler ~ recentOrdersData:", recentOrdersData)
 
 // Define the current customer's address
 const customerAddress = {
@@ -113,22 +114,29 @@ const customerAddress = {
   country: "US",
   phone
 };
+console.log("🚀 ~ file: InstantReplacement.js:116 ~ handler ~ customerAddress:", customerAddress)
 
 
 
 // Filter the orders to find any that match the customer's address
 const recentReplacementOrders = recentOrdersData.orders.filter(order => {
   const orderAddress = order.shipping_address;
-  return orderAddress.address1 === customerAddress.address1
-    && orderAddress.address2 === customerAddress.address2
-    && orderAddress.city === customerAddress.city
-    && orderAddress.province === customerAddress.province
-    && orderAddress.zip === customerAddress.zip
+  const address1 = orderAddress.address1;
+  const address2 = orderAddress.address2;
+  const city = orderAddress.city;
+  const province = orderAddress.province;
+  const zip = orderAddress.zip;
+
+  return address1 === customerAddress.address1
+    && address2 === customerAddress.address2
+    && city === customerAddress.city
+    && province === customerAddress.province
+    && zip === customerAddress.zip;
 });
 
 // If any matching orders are found, respond with an error message
 if (recentReplacementOrders.length > 0) {
-  return res.status(403).json({ message: 'Recent replacement order already exists for this address in the past 30 days.' });
+  return res.status(403).json({ message: 'Recent replacement order already exists for this address.' });
 }
 
     const orderUrl = `${baseUrl}/orders.json`;
@@ -170,6 +178,7 @@ if (recentReplacementOrders.length > 0) {
 
     const orderResponse = await fetch(orderUrl, orderOptions);
     const orderResponseData = await orderResponse.json();
+    console.log("🚀 ~ file: InstantReplacement.js:173 ~ handler ~ orderResponseData:", orderResponseData)
 
     if (!orderResponse.ok) {
       return res.status(orderResponse.status).json({ message: 'Error creating order.', error: orderResponseData });
