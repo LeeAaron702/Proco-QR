@@ -37,7 +37,7 @@ function ProductPage({ data }) {
 
 
 const instantReplacement = async () => {
-    const response = await fetch('/api/shopify/rder', {
+    const response = await fetch('/api/shopify/order', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
