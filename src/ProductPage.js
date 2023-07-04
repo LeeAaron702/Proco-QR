@@ -27,7 +27,7 @@ function ProductPage({ data }) {
       setPictureUrl(data.pictureURL)
     }
   }, [data]);
-  
+
   const handleClose = () => {
     setShow(false);
     clearForm();
@@ -36,22 +36,26 @@ function ProductPage({ data }) {
   const handleShow = () => setShow(true);
 
 
-  const instantReplacement = async () => {
-    const response = await fetch('/api/InstantReplacement', {
+const instantReplacement = async () => {
+    const response = await fetch('/api/shopify/order', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        firstName,
-        lastName,
-        phone,
-        email,
-        address1,
-        address2,
-        city,
-        state,
-        zipcode,
+        customer: {
+          firstName,
+          lastName,
+          phone,
+          email,
+          addresses: [{
+            address1,
+            address2,
+            city,
+            province: state,
+            zip: zipcode
+          }]
+        },
         shopifyID,
         variantId
       }),
