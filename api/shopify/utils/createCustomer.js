@@ -1,3 +1,4 @@
+import fetch from 'node-fetch';
 export async function createCustomer(email, firstName, lastName, phone, address) {
   const SHOPIFY_BASE_URL = process.env.SHOPIFY_URL
     const response = await fetch(`${SHOPIFY_BASE_URL}/customers.json`, {
