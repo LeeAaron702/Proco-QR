@@ -161,7 +161,9 @@ export default async function handler(req, res) {
 
   try {
     const customerData = extractCustomerData(req.body);
+    console.log("🚀 ~ file: InstantReplacement.js:164 ~ handler ~ customerData:", customerData)
     const customer = await createOrUpdateCustomer(customerData);
+    console.log("🚀 ~ file: InstantReplacement.js:166 ~ handler ~ customer:", customer)
     const orderData = extractOrderData(req.body, customer);
     const order = await createOrder(orderData);
 
