@@ -16,26 +16,26 @@ export default async function handler(req, res) {
     // Try to get or create a new customer.
     shopifyCustomer = await getOrCreateCustomer(customer);
 
-    // Check for previous orders.
-    const hasPreviousOrders = await checkForPreviousOrders(shopifyCustomer.id);
+    // // Check for previous orders.
+    // const hasPreviousOrders = await checkForPreviousOrders(shopifyCustomer.id);
 
-    // If a previous order is found, throw an error.
-    if (hasPreviousOrders) {
-      return res.status(400).json({ message: 'An immediate replacement order has already been placed in the last 24 hours.' });
-    }
+    // // If a previous order is found, throw an error.
+    // if (hasPreviousOrders) {
+    //   return res.status(400).json({ message: 'An immediate replacement order has already been placed in the last 24 hours.' });
+    // }
 
-    // Prepare line items for the order
-    const product = await getProduct(shopifyID);
-    const preparedItems = [{
-      variant_id: variantId || product.variants[0].id,
-      quantity: 1,
-    }];
+    // // Prepare line items for the order
+    // const product = await getProduct(shopifyID);
+    // const preparedItems = [{
+    //   variant_id: variantId || product.variants[0].id,
+    //   quantity: 1,
+    // }];
 
-    // If no previous orders, create a new order.
-    const newOrder = await createOrder(shopifyCustomer.id, preparedItems);
+    // // If no previous orders, create a new order.
+    // const newOrder = await createOrder(shopifyCustomer.id, preparedItems);
 
-    // If order creation is successful, return a success response.
-    return res.status(200).json({ message: 'Order created successfully.', order: newOrder });
+    // // If order creation is successful, return a success response.
+    // return res.status(200).json({ message: 'Order created successfully.', order: newOrder });
 
   } catch (error) {
     // If an error occurred, return an error response.
