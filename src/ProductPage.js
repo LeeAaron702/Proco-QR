@@ -60,6 +60,7 @@ const instantReplacement = async () => {
         variantId
       }),
     });
+    console.log("🚀 ~ file: ProductPage.js:62 ~ instantReplacement ~ body:", body)
 
     if (response.ok) {
       handleClose()

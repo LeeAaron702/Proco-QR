@@ -9,6 +9,7 @@ export default async function handler(req, res) {
   }
 
   const { customer, shopifyID, variantId } = req.body;
+  console.log("🚀 ~ file: Order.js:12 ~ handler ~ customer:", customer)
 
   try {
     let shopifyCustomer;
