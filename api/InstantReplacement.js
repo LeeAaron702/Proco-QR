@@ -5,8 +5,10 @@ export default async function handler(req, res) {
   }
 
   const { firstName, lastName, phone, email, address1, address2, city, state, zipcode, shopifyID, variantId } = req.body;
-  const baseUrl = process.env.SHOPIFY_URL;
+  
 
+  const baseUrl = process.env.SHOPIFY_URL;
+  
   const customerUrl = `${baseUrl}/customers.json`;
   const data = {
     customer: {
@@ -24,7 +26,7 @@ export default async function handler(req, res) {
           country: "US"
         },
       ],
-      "accepts_marketing": true,
+      "accepts_marketing": true, 
     },
   };
 
@@ -38,7 +40,6 @@ export default async function handler(req, res) {
   };
 
   let customer;
-  console.log("🚀 ~ file: InstantReplacement.js:41 ~ handler ~ customer:", customer)
 
   try {
     const response = await fetch(customerUrl, options);
@@ -82,68 +83,6 @@ export default async function handler(req, res) {
       customer = responseData.customer;
     }
 
-    // Now that the customer exists, check for recent replacement orders
-
-    // Calculate the date and time 3 days ago in ISO format
-    const oneDayAgo = new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString();
-
-    // Construct the URL for the Shopify API call to fetch recent orders
-    const recentOrdersUrl = `${baseUrl}/orders.json?created_at_min=${oneDayAgo}&status=any&limit=250&tag=Instant%20Replacement`;
-
-    // Make the API call
-    const recentOrdersResponse = await fetch(recentOrdersUrl, {
-      method: 'GET',
-      headers: {
-        'X-Shopify-Access-Token': process.env.SHOPIFY_ACCESS_TOKEN,
-        'Content-Type': 'application/json',
-      },
-    });
-
-    // Parse the response data
-    const recentOrdersData = await recentOrdersResponse.json();
-    console.log("🚀 ~ file: InstantReplacement.js:103 ~ handler ~ recentOrdersData:", recentOrdersData.orders.shipping_address)
-
-    // Define the current customer's address
-    const customerAddress = {
-      first_name: firstName,
-      last_name: lastName,
-      address1,
-      address2,
-      city,
-      province: state,
-      zip: zipcode,
-      country: "US",
-      phone
-    };
-    console.log("🚀 ~ file: InstantReplacement.js:116 ~ handler ~ customerAddress:", customerAddress)
-
-
-
-    // Filter the orders to find any that match the customer's address
-    const recentReplacementOrders = recentOrdersData.orders.filter(order => {
-      const orderAddress = order.shipping_address;
-      if (!orderAddress) {
-        return false
-      }
-
-      const address1 = orderAddress.address1;
-      const address2 = orderAddress.address2;
-      const city = orderAddress.city;
-      const province = orderAddress.province;
-      const zip = orderAddress.zip;
-
-      return address1 === customerAddress.address1
-        && address2 === customerAddress.address2
-        && city === customerAddress.city
-        && province === customerAddress.province
-        && zip === customerAddress.zip;
-    });
-
-    // If any matching orders are found, respond with an error message
-    if (recentReplacementOrders.length > 0) {
-      return res.status(403).json({ message: 'Recent replacement order already exists for this address.' });
-    }
-
     const orderUrl = `${baseUrl}/orders.json`;
     const orderData = {
       order: {
@@ -168,11 +107,11 @@ export default async function handler(req, res) {
             price: "0.00"
           }
         ],
-        "tags": 'Instant Replacement'
+        "tags": 'Instant Replacement' 
       }
     };
-    console.log("🚀 ~ file: InstantReplacement.js:174 ~ handler ~ orderData:", orderData)
-
+    
+    
     const orderOptions = {
       method: 'POST',
       headers: {
@@ -184,14 +123,13 @@ export default async function handler(req, res) {
 
     const orderResponse = await fetch(orderUrl, orderOptions);
     const orderResponseData = await orderResponse.json();
-    console.log("🚀 ~ file: InstantReplacement.js:173 ~ handler ~ orderResponseData:", orderResponseData)
 
     if (!orderResponse.ok) {
       return res.status(orderResponse.status).json({ message: 'Error creating order.', error: orderResponseData });
     }
 
-    return res.status(200).json({ message: 'Customer and order created successfully.', customer, order: orderResponseData.order });
-  } catch (error) {
+    return res.status(200).json({ message: 'Customer and order created successfully.', customer, order: orderResponseData });
+  }catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Server error.' });
   }
@@ -200,15 +138,15 @@ export default async function handler(req, res) {
 function handleErrors(response, responseData) {
   if (responseData.errors && responseData.errors.email && responseData.errors.email.length > 0) {
     const errorMessage = responseData.errors.email[0];
-    return { status: response.status, message: 'Error creating customer.', error: errorMessage };
+    return res.status(response.status).json({ message: 'Error creating customer.', error: errorMessage });
   }
 
   if (responseData.errors && responseData.errors.phone && responseData.errors.phone.length > 0) {
     const errorMessage = responseData.errors.phone[0];
-    return { status: response.status, message: 'Error creating customer.', error: errorMessage };
+    return res.status(response.status).json({ message: 'Error creating customer.', error: errorMessage });
   }
 
   // Handle other error cases
   const errorResponse = responseData.error || { message: 'Unknown error from Shopify API.' };
-  return { status: response.status, message: 'Error creating customer.', error: errorResponse };
+  return res.status(response.status).json({ message: 'Error creating customer.', error: errorResponse });
 }

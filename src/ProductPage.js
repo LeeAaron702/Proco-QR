@@ -27,7 +27,7 @@ function ProductPage({ data }) {
       setPictureUrl(data.pictureURL)
     }
   }, [data]);
-
+  
   const handleClose = () => {
     setShow(false);
     clearForm();
@@ -36,31 +36,26 @@ function ProductPage({ data }) {
   const handleShow = () => setShow(true);
 
 
-const instantReplacement = async () => {
-    const response = await fetch('/api/shopify/Order', {
+  const instantReplacement = async () => {
+    const response = await fetch('/api/InstantReplacement', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        customer: {
-          firstName,
-          lastName,
-          phone,
-          email,
-          addresses: [{
-            address1,
-            address2,
-            city,
-            province: state,
-            zip: zipcode
-          }]
-        },
+        firstName,
+        lastName,
+        phone,
+        email,
+        address1,
+        address2,
+        city,
+        state,
+        zipcode,
         shopifyID,
         variantId
       }),
     });
-    console.log("🚀 ~ file: ProductPage.js:62 ~ instantReplacement ~ body:", response)
 
     if (response.ok) {
       handleClose()
