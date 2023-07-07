@@ -143,6 +143,7 @@ async function checkForRecentReplacementOrders(customer, customerData) {
 
     return hasMatchingCustomerId || hasMatchingAddress;
   });
+  console.log("🚀 ~ file: InstantReplacement.js:146 ~ matchingOrders ~ responseData:", responseData)
   console.log("🚀 ~ file: InstantReplacement.js:146 ~ matchingOrders ~ matchingOrders:", matchingOrders)
 
   if (matchingOrders.length > 0) {
