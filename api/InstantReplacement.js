@@ -140,12 +140,18 @@ async function checkForRecentReplacementOrders(customer, customerData) {
   console.log("🚀 ~ file: InstantReplacement.js:140 ~ matchingCustomerOrders ~ matchingCustomerOrders:", matchingCustomerOrders)
 
   const matchingAddressOrders = responseData.orders.filter(order => {
-    const hasMatchingAddress = order.shipping_address &&
+    const hasMatchingAddress = 
       order.shipping_address.address1 === customerAddress.address1 &&
       order.shipping_address.city === customerAddress.city &&
-      order.shipping_address.province === customerAddress.province &&
+      // order.shipping_address.province === customerAddress.province &&
       order.shipping_address.zip === customerAddress.zip;
-
+  
+    console.log(order.shipping_address, 'address 1', order.shipping_address.address1 === customerAddress.address1);
+    console.log('city', order.shipping_address.city === customerAddress.city);
+    console.log('state', order.shipping_address.province === customerAddress.province);
+    console.log('zip',  order.shipping_address.zip === customerAddress.zip);
+    console.log('has matching addy', hasMatchingAddress);
+  
     return hasMatchingAddress;
   });
   console.log("🚀 ~ file: InstantReplacement.js:151 ~ matchingAddressOrders ~ matchingAddressOrders:", matchingAddressOrders)
