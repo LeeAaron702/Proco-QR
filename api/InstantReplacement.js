@@ -5,9 +5,8 @@ export default async function handler(req, res) {
 
   try {
     const customerData = extractCustomerData(req.body);
-    console.log("🚀 ~ file: InstantReplacement.js:164 ~ handler ~ customerData:", customerData)
     const customer = await createOrUpdateCustomer(customerData);
-    console.log("🚀 ~ file: InstantReplacement.js:166 ~ handler ~ customer:", customer)
+    await checkForRecentReplacementOrders(customer);
     const orderData = extractOrderData(req.body, customer);
     const order = await createOrder(orderData);
 
@@ -113,6 +112,29 @@ async function findExistingCustomerByPhone(phone) {
   }
 
   throw new Error('Server error. Unable to locate existing customer.');
+}
+
+async function checkForRecentReplacementOrders(customer) {
+  const baseUrl = process.env.SHOPIFY_URL;
+  const oneDayAgo = new Date(Date.now() - 24*60*60*1000).toISOString();
+  const ordersUrl = `${baseUrl}/orders.json?status=any&created_at_min=${oneDayAgo}&tag=Instant Replacement`;
+
+  const options = {
+    method: 'GET',
+    headers: {
+      'X-Shopify-Access-Token': process.env.SHOPIFY_ACCESS_TOKEN,
+      'Content-Type': 'application/json',
+    },
+  };
+
+  const response = await fetch(ordersUrl, options);
+  const responseData = await response.json();
+
+  const customerOrders = responseData.orders.filter(order => order.customer && order.customer.id === customer.id);
+
+  if (customerOrders.length > 0) {
+    throw new Error('Customer has already placed a replacement order in the last 24 hours.');
+  }
 }
 
 function extractOrderData(body, customer) {
