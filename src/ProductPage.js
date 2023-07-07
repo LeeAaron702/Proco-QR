@@ -100,7 +100,7 @@ function ProductPage({ data }) {
       <div className="container mt-3">
         <div className="row justify-content-center">
           <div className="col-md-4">
-            <img src="./pc_1.png" alt="Logo" className="img-fluid mt-3" /> {/*Replace this path with your logo path*/}
+            <img src="./pc_1.png" alt="Logo" className="img-fluid mt-3" />
           </div>
           <div className="col-md-8">
             <div className="alert alert-warning text-center" role="alert">
@@ -132,7 +132,7 @@ function ProductPage({ data }) {
         <div className="card-body">
           <div className="row mb-0">
             <div className="col-md-3">
-              <img src="./pc_1.png" alt="Logo" className="img-fluid mt-4" /> {/*Replace this path with your logo path*/}
+              <img src="./pc_1.png" alt="Logo" className="img-fluid mt-4" /> 
             </div>
             <div className="col-md-9">
               <h1 className="card-title display-1 text-center">Professor Color</h1>
