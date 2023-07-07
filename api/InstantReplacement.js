@@ -131,6 +131,7 @@ async function checkForRecentReplacementOrders(customer, customerData) {
   const responseData = await response.json();
 
   const customerAddress = customerData.addresses[0];
+  console.log("🚀 ~ file: InstantReplacement.js:134 ~ checkForRecentReplacementOrders ~ customerAddress:", customerAddress)
 
   const matchingOrders = responseData.orders.filter(order => {
     const hasMatchingCustomerId = order.customer && order.customer.id === customer.id;
