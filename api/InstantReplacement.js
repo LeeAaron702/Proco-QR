@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   try {
     const customerData = extractCustomerData(req.body);
     const customer = await createOrUpdateCustomer(customerData);
-    await checkForRecentReplacementOrders(customer);
+    await checkForRecentReplacementOrders(customer, customerData);
     const orderData = extractOrderData(req.body, customer);
     const order = await createOrder(orderData);
 
@@ -114,7 +114,7 @@ async function findExistingCustomerByPhone(phone) {
   throw new Error('Server error. Unable to locate existing customer.');
 }
 
-async function checkForRecentReplacementOrders(customer) {
+async function checkForRecentReplacementOrders(customer, customerData) {
   const baseUrl = process.env.SHOPIFY_URL;
   const oneDayAgo = new Date(Date.now() - 24*60*60*1000).toISOString();
   const ordersUrl = `${baseUrl}/orders.json?status=any&created_at_min=${oneDayAgo}&tag=Instant Replacement`;
@@ -130,10 +130,21 @@ async function checkForRecentReplacementOrders(customer) {
   const response = await fetch(ordersUrl, options);
   const responseData = await response.json();
 
-  const customerOrders = responseData.orders.filter(order => order.customer && order.customer.id === customer.id);
+  const customerAddress = customerData.addresses[0];
 
-  if (customerOrders.length > 0) {
-    throw new Error('Customer has already placed a replacement order in the last 24 hours.');
+  const matchingOrders = responseData.orders.filter(order => {
+    const hasMatchingCustomerId = order.customer && order.customer.id === customer.id;
+    const hasMatchingAddress = order.shipping_address && 
+                               order.shipping_address.address1 === customerAddress.address1 &&
+                               order.shipping_address.city === customerAddress.city &&
+                               order.shipping_address.province === customerAddress.province &&
+                               order.shipping_address.zip === customerAddress.zip;
+
+    return hasMatchingCustomerId || hasMatchingAddress;
+  });
+
+  if (matchingOrders.length > 0) {
+    throw new Error('A replacement order has already been placed with this address or by this customer in the last 24 hours.');
   }
 }
 
