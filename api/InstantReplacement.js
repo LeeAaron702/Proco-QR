@@ -131,22 +131,28 @@ async function checkForRecentReplacementOrders(customer, customerData) {
   const responseData = await response.json();
 
   const customerAddress = customerData.addresses[0];
-  console.log("🚀 ~ file: InstantReplacement.js:134 ~ checkForRecentReplacementOrders ~ customerAddress:", customerAddress)
+  console.log("🚀 ~ checkForRecentReplacementOrders ~ customerAddress:", customerAddress);
 
-  const matchingOrders = responseData.orders.filter(order => {
+  const matchingCustomerOrders = responseData.orders.filter(order => {
     const hasMatchingCustomerId = order.customer && order.customer.id === customer.id;
-    const hasMatchingAddress = order.shipping_address && 
-                               order.shipping_address.address1 === customerAddress.address1 &&
-                               order.shipping_address.city === customerAddress.city &&
-                               order.shipping_address.province === customerAddress.province &&
-                               order.shipping_address.zip === customerAddress.zip;
-
-    return hasMatchingCustomerId || hasMatchingAddress;
+    return hasMatchingCustomerId;
   });
-  console.log("🚀 ~ file: InstantReplacement.js:146 ~ matchingOrders ~ responseData:", responseData)
-  console.log("🚀 ~ file: InstantReplacement.js:146 ~ matchingOrders ~ matchingOrders:", matchingOrders)
+  console.log("🚀 ~ file: InstantReplacement.js:140 ~ matchingCustomerOrders ~ matchingCustomerOrders:", matchingCustomerOrders)
 
-  if (matchingOrders.length > 0) {
+  const matchingAddressOrders = responseData.orders.filter(order => {
+    const hasMatchingAddress = order.shipping_address &&
+      order.shipping_address.address1 === customerAddress.address1 &&
+      order.shipping_address.city === customerAddress.city &&
+      order.shipping_address.province === customerAddress.province &&
+      order.shipping_address.zip === customerAddress.zip;
+
+    return hasMatchingAddress;
+  });
+  console.log("🚀 ~ file: InstantReplacement.js:151 ~ matchingAddressOrders ~ matchingAddressOrders:", matchingAddressOrders)
+
+
+
+  if (matchingCustomerOrders.length > 0 || matchingAddressOrders.length > 0) {
     throw new Error('A replacement order has already been placed with this address or by this customer in the last 24 hours.');
   }
 }
