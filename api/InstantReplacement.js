@@ -6,8 +6,8 @@ export default async function handler(req, res) {
   try {
     const customerData = extractCustomerData(req.body);
     const customer = await createOrUpdateCustomer(customerData);
-    await checkForRecentReplacementOrders(customer);
     const orderData = extractOrderData(req.body, customer);
+    await checkForRecentReplacementOrders(orderData);
     const order = await createOrder(orderData);
 
     return res.status(200).json({ message: 'Customer and order created successfully.', customer, order });
@@ -114,7 +114,7 @@ async function findExistingCustomerByPhone(phone) {
   throw new Error('Server error. Unable to locate existing customer.');
 }
 
-async function checkForRecentReplacementOrders(customer) {
+async function checkForRecentReplacementOrders(orderData) {
   const baseUrl = process.env.SHOPIFY_URL;
   const oneDayAgo = new Date(Date.now() - 24*60*60*1000).toISOString();
   const ordersUrl = `${baseUrl}/orders.json?status=any&created_at_min=${oneDayAgo}&tag=Instant Replacement`;
@@ -130,11 +130,23 @@ async function checkForRecentReplacementOrders(customer) {
   const response = await fetch(ordersUrl, options);
   const responseData = await response.json();
 
-  const customerOrders = responseData.orders.filter(order => order.customer && order.customer.id === customer.id);
+//   const customerOrders = responseData.orders.filter(order => order.customer && order.customer.id === customer.id);
 
-  if (customerOrders.length > 0) {
-    throw new Error('Customer has already placed a replacement order in the last 24 hours.');
-  }
+//   if (customerOrders.length > 0) {
+//     throw new Error('Customer has already placed a replacement order in the last 24 hours.');
+//   }
+// }
+const sameAddressOrders = responseData.orders.filter(order => {
+  return order.customer && order.customer.id === orderData.order.customer.id &&
+         order.shipping_address && order.shipping_address.address1 === orderData.order.shipping_address.address1 &&
+         order.shipping_address.city === orderData.order.shipping_address.city &&
+         order.shipping_address.province === orderData.order.shipping_address.province &&
+         order.shipping_address.zip === orderData.order.shipping_address.zip;
+});
+
+if (sameAddressOrders.length > 0) {
+  throw new Error('A replacement order has already been placed with this address in the last 24 hours.');
+}
 }
 
 function extractOrderData(body, customer) {
