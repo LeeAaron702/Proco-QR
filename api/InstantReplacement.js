@@ -143,6 +143,7 @@ async function checkForRecentReplacementOrders(customer, customerData) {
 
     return hasMatchingCustomerId || hasMatchingAddress;
   });
+  console.log("🚀 ~ file: InstantReplacement.js:146 ~ matchingOrders ~ matchingOrders:", matchingOrders)
 
   if (matchingOrders.length > 0) {
     throw new Error('A replacement order has already been placed with this address or by this customer in the last 24 hours.');
