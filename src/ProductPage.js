@@ -282,7 +282,7 @@ function ProductPage({ data }) {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleSubmit}>
+          <Button variant="primary" type="submit">
             Submit for Instant Replacement
           </Button>
         </Modal.Footer>
