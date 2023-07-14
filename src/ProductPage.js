@@ -171,11 +171,11 @@ function ProductPage({ data }) {
       </div>
 
       <Modal show={show} onHide={handleClose} className="modal-fixed">
-        <Modal.Header closeButton>
-          <Modal.Title>Instant Replacement Form</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
+          <Modal.Header closeButton>
+            <Modal.Title>Instant Replacement Form</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
             <div className="form-floating mb-3">
               <input type="text" className="form-control" id="formFirstName" placeholder="Enter first name" value={firstName} onChange={(e) => setFirstName(e.target.value)} autoComplete="given-name" required />
               <label htmlFor="formFirstName">First Name</label>
@@ -276,16 +276,16 @@ function ProductPage({ data }) {
               <input type="text" className="form-control" id="formZipcode" placeholder="Enter zipcode" value={zipcode} onChange={(e) => setZipcode(e.target.value)} autoComplete="postal-code" required />
               <label htmlFor="formZipcode">Zipcode</label>
             </div>
-          </form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" type="submit">
-            Submit for Instant Replacement
-          </Button>
-        </Modal.Footer>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" type="submit">
+              Submit for Instant Replacement
+            </Button>
+          </Modal.Footer>
+        </form>
       </Modal>
 
       {successMessage && (
