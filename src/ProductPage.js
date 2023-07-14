@@ -138,7 +138,7 @@ function ProductPage({ data }) {
             </div>
           </div>
           <div className="d-flex justify-content-center">
-            {data.pictureUrl &&
+            {pictureUrl &&
               <img src={pictureUrl} alt="Logo" className="img-fluid" style={{ width: "300px" }} />
             }
           </div>
