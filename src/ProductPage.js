@@ -27,7 +27,7 @@ function ProductPage({ data }) {
       setPictureUrl(data.pictureURL)
     }
   }, [data]);
-  
+
   const handleClose = () => {
     setShow(false);
     clearForm();
@@ -132,7 +132,7 @@ function ProductPage({ data }) {
         <div className="card-body">
           <div className="row mb-0">
             <div className="col-md-3">
-              <img src="./pc_1.png" alt="Logo" className="img-fluid mt-4" /> 
+              <img src="./pc_1.png" alt="Logo" className="img-fluid mt-4" />
             </div>
             <div className="col-md-9">
               <h1 className="card-title display-1 text-center">Professor Color</h1>
@@ -151,15 +151,19 @@ function ProductPage({ data }) {
             <a href={data.shopifyLink} target="_blank" rel="noreferrer" className="btn btn-success btn-lg">Purchase Directly From Us and Save</a>
           </div>
           <div className="mb-3">
-            <a href={data.amazonLink} target="_blank" rel="noreferrer" className="btn btn-primary btn-lg">Go to Amazon Sales Page</a>
+            {data.amazonLink &&
+              <a href={data.amazonLink} target="_blank" rel="noreferrer" className="btn btn-primary btn-lg">Go to Amazon Sales Page</a>
+            }
           </div>
           <div className="mb-3">
             <a href="https://professorcolor.onsitesupport.io/ticket/add" target="_blank" rel="noreferrer" className="btn btn-danger btn-lg">Submit A Help Ticket</a>
           </div>
           <div>
-            <Button className="btn btn-warning mb-3 btn-lg" onClick={handleShow}>
-              Instant Replacement
-            </Button>
+            {data.variantId &&
+              <Button className="btn btn-warning mb-3 btn-lg" onClick={handleShow}>
+                Instant Replacement
+              </Button>
+            }
           </div>
         </div>
       </div>
