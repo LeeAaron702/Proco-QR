@@ -58,22 +58,22 @@ async function createOrUpdateCustomer(data) {
   const responseData = await response.json();
   console.log("🚀 ~ file: InstantReplacement.js:59 ~ createOrUpdateCustomer ~ responseData:", responseData)
 
-  if (!response.ok) {
-    let errorMessage = 'Error creating customer.';
-  
-    // Check if there is a detailed error message in the response
-    if (responseData && responseData.errors) {
-      errorMessage += ' Details: ';
-  
-      for (const key in responseData.errors) {
-        if (responseData.errors.hasOwnProperty(key)) {
-          errorMessage += `${key} ${responseData.errors[key]}. `;
-        }
+ if (!response.ok) {
+  let errorMessage = 'Error creating customer.';
+
+  // Check if there is a detailed error message in the response
+  if (responseData && responseData.errors) {
+    errorMessage += ' Details: ';
+
+    for (const key in responseData.errors) {
+      if (responseData.errors.hasOwnProperty(key)) {
+        errorMessage += `${key} ${responseData.errors[key]}. `;
       }
     }
-  
-    throw new Error(errorMessage);
   }
+
+  throw new Error(errorMessage);
+}
   return responseData.customer;
 }
 
@@ -105,6 +105,8 @@ async function checkForRecentReplacementOrders(customer, customerData) {
       order.shipping_address.address1 === customerAddress.address1 &&
       order.shipping_address.city === customerAddress.city &&
       order.shipping_address.zip === customerAddress.zip;
+      console.log("🚀 ~ file: InstantReplacement.js:106 ~ matchingAddressOrders ~ customerAddress.address1:", customerAddress.address1)
+      console.log("🚀 ~ file: InstantReplacement.js:106 ~ matchingAddressOrders ~ order.shipping_address.address1:", order.shipping_address.address1)
 
     return hasMatchingAddress;
   });
