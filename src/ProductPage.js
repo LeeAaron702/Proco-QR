@@ -175,27 +175,27 @@ function ProductPage({ data }) {
         <Modal.Body>
           <form onSubmit={handleSubmit}>
             <div className="form-floating mb-3">
-              <input type="text" className="form-control" id="formFirstName" placeholder="Enter first name" value={firstName} onChange={(e) => setFirstName(e.target.value)} autoComplete="given-name" />
+              <input type="text" className="form-control" id="formFirstName" placeholder="Enter first name" value={firstName} onChange={(e) => setFirstName(e.target.value)} autoComplete="given-name" required />
               <label htmlFor="formFirstName">First Name</label>
             </div>
 
             <div className="form-floating mb-3">
-              <input type="text" className="form-control" id="formLastName" placeholder="Enter last name" value={lastName} onChange={(e) => setLastName(e.target.value)} autoComplete="family-name" />
+              <input type="text" className="form-control" id="formLastName" placeholder="Enter last name" value={lastName} onChange={(e) => setLastName(e.target.value)} autoComplete="family-name" required />
               <label htmlFor="formLastName">Last Name</label>
             </div>
 
             <div className="form-floating mb-3">
-              <input type="text" className="form-control" id="formPhone" placeholder="Enter phone" value={phone} onChange={(e) => setPhone(e.target.value)} autoComplete="tel" />
+              <input type="text" className="form-control" id="formPhone" placeholder="Enter phone" value={phone} onChange={(e) => setPhone(e.target.value)} autoComplete="tel" required />
               <label htmlFor="formPhone">Phone</label>
             </div>
 
             <div className="form-floating mb-3">
-              <input type="email" className="form-control" id="formEmail" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" />
+              <input type="email" className="form-control" id="formEmail" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" required />
               <label htmlFor="formEmail">Email</label>
             </div>
 
             <div className="form-floating mb-3">
-              <input type="text" className="form-control" id="formAddress1" placeholder="Enter address 1" value={address1} onChange={(e) => setAddress1(e.target.value)} autoComplete="address-line1" />
+              <input type="text" className="form-control" id="formAddress1" placeholder="Enter address 1" value={address1} onChange={(e) => setAddress1(e.target.value)} autoComplete="address-line1" required />
               <label htmlFor="formAddress1">Address 1</label>
             </div>
 
@@ -205,7 +205,7 @@ function ProductPage({ data }) {
             </div>
 
             <div className="form-floating mb-3">
-              <input type="text" className="form-control" id="formCity" placeholder="Enter city" value={city} onChange={(e) => setCity(e.target.value)} autoComplete="address-level2" />
+              <input type="text" className="form-control" id="formCity" placeholder="Enter city" value={city} onChange={(e) => setCity(e.target.value)} autoComplete="address-level2" required />
               <label htmlFor="formCity">City</label>
             </div>
             <div className="form mb-3">
@@ -215,6 +215,7 @@ function ProductPage({ data }) {
                 value={state}
                 onChange={(e) => setState(e.target.value)}
                 autoComplete="address-level1"
+                required
               >
                 <option value="">Select state</option>
                 <option value="AL">Alabama</option>
@@ -270,7 +271,7 @@ function ProductPage({ data }) {
               </select>
             </div>
             <div className="form-floating mb-3">
-              <input type="text" className="form-control" id="formZipcode" placeholder="Enter zipcode" value={zipcode} onChange={(e) => setZipcode(e.target.value)} autoComplete="postal-code" />
+              <input type="text" className="form-control" id="formZipcode" placeholder="Enter zipcode" value={zipcode} onChange={(e) => setZipcode(e.target.value)} autoComplete="postal-code" required />
               <label htmlFor="formZipcode">Zipcode</label>
             </div>
           </form>

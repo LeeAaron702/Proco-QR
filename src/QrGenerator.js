@@ -114,6 +114,7 @@ function QRCodeGenerator() {
     setID("");
     setVariantId("");
     setQrCodeUrl("");
+    setPictureURL("");
   };
 
   return (
@@ -122,7 +123,7 @@ function QRCodeGenerator() {
         <div className="card-body">
           <div className="row">
               <div className="col-md-3">
-                <img src="./pc_1.png" alt="Logo" className="img-fluid mt-3 ms-3" /> {/*Replace this path with your logo path*/}
+                <img src="./pc_1.png" alt="Logo" className="img-fluid mt-3 ms-3" /> 
               </div>
               <div className="col-md-9">
                 <h1 className="display-2 text-center">ProCo QR Code Generator</h1>
