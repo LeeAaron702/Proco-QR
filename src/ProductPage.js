@@ -125,8 +125,6 @@ function ProductPage({ data }) {
   }
 
   return (
-
-
     <div className="container">
       <div className="card mt-3">
         <div className="card-body">
@@ -148,7 +146,9 @@ function ProductPage({ data }) {
         </div>
         <div className="button-container text-center">
           <div className="mb-3">
+            {data.amazonLink && 
             <a href={data.shopifyLink} target="_blank" rel="noreferrer" className="btn btn-success btn-lg">Purchase Directly From Us and Save</a>
+            }
           </div>
           <div className="mb-3">
             {data.amazonLink &&
