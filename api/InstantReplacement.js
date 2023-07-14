@@ -92,6 +92,7 @@ async function checkForRecentReplacementOrders(customer, customerData) {
 
   const response = await fetch(ordersUrl, options);
   const responseData = await response.json();
+  console.log("🚀 ~ file: InstantReplacement.js:95 ~ checkForRecentReplacementOrders ~ responseData:", responseData)
 
   const customerAddress = customerData.addresses[0];
 
