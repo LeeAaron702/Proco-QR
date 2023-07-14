@@ -59,9 +59,21 @@ async function createOrUpdateCustomer(data) {
   console.log("🚀 ~ file: InstantReplacement.js:59 ~ createOrUpdateCustomer ~ responseData:", responseData)
 
   if (!response.ok) {
-    throw new Error('Error creating customer.');
+    let errorMessage = 'Error creating customer.';
+  
+    // Check if there is a detailed error message in the response
+    if (responseData && responseData.errors) {
+      errorMessage += ' Details: ';
+  
+      for (const key in responseData.errors) {
+        if (responseData.errors.hasOwnProperty(key)) {
+          errorMessage += `${key} ${responseData.errors[key]}. `;
+        }
+      }
+    }
+  
+    throw new Error(errorMessage);
   }
-
   return responseData.customer;
 }
 
