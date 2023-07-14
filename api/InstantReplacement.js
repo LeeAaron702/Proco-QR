@@ -20,7 +20,7 @@ export default async function handler(req, res) {
 
 function extractCustomerData(body) {
   const { firstName, lastName, phone, email, address1, address2, city, state, zipcode } = body;
-
+  
   return {
     first_name: firstName,
     last_name: lastName,
@@ -36,12 +36,11 @@ function extractCustomerData(body) {
         country: "US"
       },
     ],
-    "accepts_marketing": true,
+    "accepts_marketing": true, 
   };
 }
 
 async function createOrUpdateCustomer(data) {
-  // console.log("🚀 ~ file: InstantReplacement.js:44 ~ createOrUpdateCustomer ~ data:", data)
   const baseUrl = process.env.SHOPIFY_URL;
   const customerUrl = `${baseUrl}/customers.json`;
 
@@ -56,30 +55,70 @@ async function createOrUpdateCustomer(data) {
 
   const response = await fetch(customerUrl, options);
   const responseData = await response.json();
-  // console.log("🚀 ~ file: InstantReplacement.js:59 ~ createOrUpdateCustomer ~ responseData:", responseData)
 
- if (!response.ok) {
-  let errorMessage = 'Error creating customer.';
+  if (!response.ok) {
+    return handleCustomerErrors(responseData, data.email, data.phone);
+  }
 
-  // Check if there is a detailed error message in the response
-  if (responseData && responseData.errors) {
-    errorMessage += ' Details: ';
+  return responseData.customer;
+}
 
-    for (const key in responseData.errors) {
-      if (responseData.errors.hasOwnProperty(key)) {
-        errorMessage += `${key} ${responseData.errors[key]}. `;
-      }
+async function handleCustomerErrors(responseData, email, phone) {
+  if (responseData.errors) {
+    if (responseData.errors.email && responseData.errors.email.includes("has already been taken")) {
+      return findExistingCustomerByEmail(email);
+    }
+
+    if (responseData.errors.phone && responseData.errors.phone.includes("Phone has already been taken")) {
+      return findExistingCustomerByPhone(phone);
     }
   }
 
-  throw new Error(errorMessage);
+  throw new Error('Error creating customer.');
 }
-  return responseData.customer;
+
+async function findExistingCustomerByEmail(email) {
+  const baseUrl = process.env.SHOPIFY_URL;
+  const searchResponse = await fetch(`${baseUrl}/customers/search.json?query=email:${email}`, {
+    method: 'GET',
+    headers: {
+      'X-Shopify-Access-Token': process.env.SHOPIFY_ACCESS_TOKEN,
+      'Content-Type': 'application/json',
+    },
+  });
+
+  const searchResult = await searchResponse.json();
+
+  if (searchResult.customers.length > 0) {
+    return searchResult.customers[0];
+  }
+
+  throw new Error('Server error. Unable to locate existing customer.');
+}
+
+async function findExistingCustomerByPhone(phone) {
+  const baseUrl = process.env.SHOPIFY_URL;
+  const searchResponse = await fetch(`${baseUrl}/customers/search.json?query=phone:${phone}`, {
+    method: 'GET',
+    headers: {
+      'X-Shopify-Access-Token': process.env.SHOPIFY_ACCESS_TOKEN,
+      'Content-Type': 'application/json',
+    },
+  });
+
+  const searchResult = await searchResponse.json();
+
+  if (searchResult.customers.length > 0) {
+    return searchResult.customers[0];
+  }
+	
+  throw new Error('Server error. Unable to locate existing customer by phone.')
+  
 }
 
 async function checkForRecentReplacementOrders(customer, customerData) {
   const baseUrl = process.env.SHOPIFY_URL;
-  const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+  const oneDayAgo = new Date(Date.now() - 24*60*60*1000).toISOString();
   const ordersUrl = `${baseUrl}/orders.json?status=any&created_at_min=${oneDayAgo}&tag=Instant Replacement`;
 
   const options = {
@@ -92,7 +131,6 @@ async function checkForRecentReplacementOrders(customer, customerData) {
 
   const response = await fetch(ordersUrl, options);
   const responseData = await response.json();
-  console.log("🚀 ~ file: InstantReplacement.js:95 ~ checkForRecentReplacementOrders ~ responseData:", responseData)
 
   const customerAddress = customerData.addresses[0];
 
@@ -102,18 +140,18 @@ async function checkForRecentReplacementOrders(customer, customerData) {
   });
 
   const matchingAddressOrders = responseData.orders.filter(order => {
-    if (!order.shipping_address) {
+  if (!order.shipping_address) {
       return false;
     }
-    console.log("🚀 ~ file: InstantReplacement.js:106 ~ matchingAddressOrders ~ customerAddress.address1:", customerAddress.address1)
-    console.log("🚀 ~ file: InstantReplacement.js:106 ~ matchingAddressOrders ~ order.shipping_address.address1:", order.shipping_address.address1)
-    const hasMatchingAddress =
+    const hasMatchingAddress = 
       order.shipping_address.address1 === customerAddress.address1 &&
       order.shipping_address.city === customerAddress.city &&
       order.shipping_address.zip === customerAddress.zip;
-
+   
     return hasMatchingAddress;
   });
+
+
 
   if (matchingCustomerOrders.length > 0 || matchingAddressOrders.length > 0) {
     throw new Error('A replacement order has already been placed with this address or by this customer in the last 24 hours.');
@@ -146,7 +184,7 @@ function extractOrderData(body, customer) {
           price: "0.00"
         }
       ],
-      "tags": 'Instant Replacement'
+      "tags": 'Instant Replacement' 
     }
   };
 }
