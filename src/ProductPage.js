@@ -148,7 +148,7 @@ function ProductPage({ data }) {
         </div>
         <div className="button-container text-center">
           <div className="mb-3">
-            {data.amazonLink &&
+            {data.shopifyLink &&
               <a href={data.shopifyLink} target="_blank" rel="noreferrer" className="btn btn-success btn-lg">Purchase Directly From Us and Save</a>
             }
           </div>
