@@ -41,7 +41,7 @@ function extractCustomerData(body) {
 }
 
 async function createOrUpdateCustomer(data) {
-  console.log("🚀 ~ file: InstantReplacement.js:44 ~ createOrUpdateCustomer ~ data:", data)
+  // console.log("🚀 ~ file: InstantReplacement.js:44 ~ createOrUpdateCustomer ~ data:", data)
   const baseUrl = process.env.SHOPIFY_URL;
   const customerUrl = `${baseUrl}/customers.json`;
 
@@ -56,7 +56,7 @@ async function createOrUpdateCustomer(data) {
 
   const response = await fetch(customerUrl, options);
   const responseData = await response.json();
-  console.log("🚀 ~ file: InstantReplacement.js:59 ~ createOrUpdateCustomer ~ responseData:", responseData)
+  // console.log("🚀 ~ file: InstantReplacement.js:59 ~ createOrUpdateCustomer ~ responseData:", responseData)
 
  if (!response.ok) {
   let errorMessage = 'Error creating customer.';
@@ -101,12 +101,12 @@ async function checkForRecentReplacementOrders(customer, customerData) {
   });
 
   const matchingAddressOrders = responseData.orders.filter(order => {
+    console.log("🚀 ~ file: InstantReplacement.js:106 ~ matchingAddressOrders ~ customerAddress.address1:", customerAddress.address1)
+    console.log("🚀 ~ file: InstantReplacement.js:106 ~ matchingAddressOrders ~ order.shipping_address.address1:", order.shipping_address.address1)
     const hasMatchingAddress =
       order.shipping_address.address1 === customerAddress.address1 &&
       order.shipping_address.city === customerAddress.city &&
       order.shipping_address.zip === customerAddress.zip;
-      console.log("🚀 ~ file: InstantReplacement.js:106 ~ matchingAddressOrders ~ customerAddress.address1:", customerAddress.address1)
-      console.log("🚀 ~ file: InstantReplacement.js:106 ~ matchingAddressOrders ~ order.shipping_address.address1:", order.shipping_address.address1)
 
     return hasMatchingAddress;
   });
