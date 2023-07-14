@@ -41,6 +41,7 @@ function extractCustomerData(body) {
 }
 
 async function createOrUpdateCustomer(data) {
+  console.log("🚀 ~ file: InstantReplacement.js:44 ~ createOrUpdateCustomer ~ data:", data)
   const baseUrl = process.env.SHOPIFY_URL;
   const customerUrl = `${baseUrl}/customers.json`;
 
@@ -55,6 +56,7 @@ async function createOrUpdateCustomer(data) {
 
   const response = await fetch(customerUrl, options);
   const responseData = await response.json();
+  console.log("🚀 ~ file: InstantReplacement.js:59 ~ createOrUpdateCustomer ~ responseData:", responseData)
 
   if (!response.ok) {
     throw new Error('Error creating customer.');
