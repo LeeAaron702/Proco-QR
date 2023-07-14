@@ -102,6 +102,9 @@ async function checkForRecentReplacementOrders(customer, customerData) {
   });
 
   const matchingAddressOrders = responseData.orders.filter(order => {
+    if (!order.shipping_address) {
+      return false;
+    }
     console.log("🚀 ~ file: InstantReplacement.js:106 ~ matchingAddressOrders ~ customerAddress.address1:", customerAddress.address1)
     console.log("🚀 ~ file: InstantReplacement.js:106 ~ matchingAddressOrders ~ order.shipping_address.address1:", order.shipping_address.address1)
     const hasMatchingAddress =
