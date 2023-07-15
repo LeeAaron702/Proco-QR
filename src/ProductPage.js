@@ -296,8 +296,29 @@ function ProductPage({ data }) {
               </select>
             </div>
             <div className="form-floating mb-3">
-              <input type="text" className="form-control" id="formZipcode" placeholder="Enter zipcode" value={zipcode} onChange={(e) => setZipcode(e.target.value)} autoComplete="postal-code" required />
-              <label htmlFor="formZipcode">Zipcode</label>
+              <input
+                type="text"
+                className="form-control"
+                id="formZipcode"
+                placeholder="Enter zipcode"
+                value={zipcode}
+                onChange={(e) => {
+                  if ((/^\d+$/.test(e.target.value) && e.target.value.length <= 5) || e.target.value === '') {
+                    setZipcode(e.target.value);
+                  }
+                }}
+                autoComplete="postal-code"
+                required
+                pattern="\d{5}"
+                onInput={(e) => {
+                  e.target.setCustomValidity('');
+                  if (!e.target.validity.valid) {
+                    if (e.target.value.length < 5) {
+                      e.target.setCustomValidity('Please enter a valid 5-digit zipcode.');
+                    }
+                  }
+                }}
+              />              <label htmlFor="formZipcode">Zipcode</label>
             </div>
           </Modal.Body>
           <Modal.Footer>
