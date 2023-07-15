@@ -218,7 +218,7 @@ async function createOrder(orderData) {
 async function notifyErrorToSlack(message, data) {
   const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL;
   const body = {
-    text: `Error: ${data.firstName} ${message}`,
+    text: `Error: ${message}\nName: ${data.firstName} ${data.lastName}\nPhone: ${data.phone}\n Email:${data.email}\nAddress: ${data.address1} ${data.address2} ${data.city} ${data.state} ${data.zipcode}\nProduct Shopify ID: ${data.shopifyID}`,
   };
 
   await fetch(SLACK_WEBHOOK_URL, {
