@@ -14,7 +14,7 @@ export default async function handler(req, res) {
   } catch (error) {
     console.error(error);
     await notifyErrorToSlack(error.message);
-    return res.status(500).json({ message: 'Server error.' });
+    return res.status(500).json({ message: error.message });
   }
 }
 
