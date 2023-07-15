@@ -188,15 +188,6 @@ function ProductPage({ data }) {
             </div>
 
             <div className="form-floating mb-3">
-              <style>
-                {`
-                  #formPhone::-webkit-inner-spin-button, 
-                  #formPhone::-webkit-outer-spin-button { 
-                    -webkit-appearance: none; 
-                    margin: 0; 
-                  }
-                `}
-              </style>
               <input
                 type="text"
                 className="form-control"
@@ -204,13 +195,21 @@ function ProductPage({ data }) {
                 placeholder="Enter phone"
                 value={phone}
                 onChange={(e) => {
-                  // check if the value is a digit and its length is less than or equal to 10, or the value is an empty string
                   if ((/^\d+$/.test(e.target.value) && e.target.value.length <= 10) || e.target.value === '') {
                     setPhone(e.target.value);
                   }
                 }}
                 autoComplete="tel"
                 required
+                pattern="\d{10}"
+                onInput={(e) => {
+                  e.target.setCustomValidity('');
+                  if (!e.target.validity.valid) {
+                    if (e.target.value.length < 10) {
+                      e.target.setCustomValidity('Please enter a valid 10-digit phone number.');
+                    }
+                  }
+                }}
               />
               <label htmlFor="formPhone">Phone</label>
             </div>
