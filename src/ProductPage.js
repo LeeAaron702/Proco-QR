@@ -46,7 +46,7 @@ function ProductPage({ data }) {
         firstName,
         lastName,
         phone,
-        email,
+        email: email.trim(),
         address1,
         address2,
         city,
@@ -178,12 +178,32 @@ function ProductPage({ data }) {
           </Modal.Header>
           <Modal.Body>
             <div className="form-floating mb-3">
-              <input type="text" className="form-control" id="formFirstName" placeholder="Enter first name" value={firstName} onChange={(e) => setFirstName(e.target.value)} autoComplete="given-name" required />
+              <input
+                type="text"
+                className="form-control"
+                id="formFirstName"
+                placeholder="Enter first name"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                onBlur={(e) => setFirstName(e.target.value.trim())}
+                autoComplete="given-name"
+                required
+              />
               <label htmlFor="formFirstName">First Name</label>
             </div>
 
             <div className="form-floating mb-3">
-              <input type="text" className="form-control" id="formLastName" placeholder="Enter last name" value={lastName} onChange={(e) => setLastName(e.target.value)} autoComplete="family-name" required />
+              <input
+                type="text"
+                className="form-control"
+                id="formLastName"
+                placeholder="Enter last name"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                onBlur={(e) => setLastName(e.target.value.trim())}
+                autoComplete="family-name"
+                required
+              />
               <label htmlFor="formLastName">Last Name</label>
             </div>
 
@@ -220,17 +240,46 @@ function ProductPage({ data }) {
             </div>
 
             <div className="form-floating mb-3">
-              <input type="text" className="form-control" id="formAddress1" placeholder="Enter address 1" value={address1} onChange={(e) => setAddress1(e.target.value)} autoComplete="address-line1" required />
+              <input
+                type="text"
+                className="form-control"
+                id="formAddress1"
+                placeholder="Enter address 1"
+                value={address1}
+                onChange={(e) => setAddress1(e.target.value)}
+                onBlur={(e) => setAddress1(e.target.value.trim())}
+                autoComplete="address-line1"
+                required
+              />
               <label htmlFor="formAddress1">Address 1</label>
             </div>
 
             <div className="form-floating mb-3">
-              <input type="text" className="form-control" id="formAddress2" placeholder="Enter address 2" value={address2} onChange={(e) => setAddress2(e.target.value)} autoComplete="address-line2" />
+              <input
+                type="text"
+                className="form-control"
+                id="formAddress2"
+                placeholder="Enter address 2"
+                value={address2}
+                onChange={(e) => setAddress2(e.target.value)}
+                onBlur={(e) => setAddress2(e.target.value.trim())}
+                autoComplete="address-line2"
+              />
               <label htmlFor="formAddress2">Address 2</label>
             </div>
 
             <div className="form-floating mb-3">
-              <input type="text" className="form-control" id="formCity" placeholder="Enter city" value={city} onChange={(e) => setCity(e.target.value)} autoComplete="address-level2" required />
+              <input
+                type="text"
+                className="form-control"
+                id="formCity"
+                placeholder="Enter city"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                onBlur={(e) => setCity(e.target.value.trim())}
+                autoComplete="address-level2"
+                required
+              />
               <label htmlFor="formCity">City</label>
             </div>
             <div className="form mb-3">
