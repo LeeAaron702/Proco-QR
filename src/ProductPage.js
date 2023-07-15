@@ -59,7 +59,7 @@ function ProductPage({ data }) {
 
     if (response.ok) {
       handleClose()
-      setSuccessMessage('Instant Replacement created successfully.');
+      setSuccessMessage('Instant replacement created successfully.');
     } else {
       const errorData = await response.json();
       setErrorMessage(errorData.message);
