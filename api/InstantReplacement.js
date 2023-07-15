@@ -13,7 +13,7 @@ export default async function handler(req, res) {
     return res.status(200).json({ message: 'Customer and order created successfully.', customer, order });
   } catch (error) {
     console.error(error);
-    await notifyErrorToSlack(error.message);
+    await notifyErrorToSlack(error.message, req.body);
     return res.status(500).json({ message: error.message });
   }
 }
@@ -39,6 +39,7 @@ function extractCustomerData(body) {
     "accepts_marketing": true, 
   };
 }
+
 
 async function createOrUpdateCustomer(data) {
   const baseUrl = process.env.SHOPIFY_URL;
@@ -214,10 +215,10 @@ async function createOrder(orderData) {
   return orderResponseData;
 }
 
-async function notifyErrorToSlack(message) {
+async function notifyErrorToSlack(message, data) {
   const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL;
   const body = {
-    text: `Server error: ${message}`,
+    text: `Error: ${data.firstName} ${message}`,
   };
 
   await fetch(SLACK_WEBHOOK_URL, {
