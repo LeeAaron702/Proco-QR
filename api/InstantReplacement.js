@@ -139,8 +139,12 @@ async function checkForRecentReplacementOrders(customer, customerData) {
     return hasMatchingCustomerId;
   });
 
+  if (matchingCustomerOrders.length > 0) {
+    throw new Error('A replacement order has already been placed by this customer in the last 24 hours.');
+  }
+
   const matchingAddressOrders = responseData.orders.filter(order => {
-  if (!order.shipping_address) {
+    if (!order.shipping_address) {
       return false;
     }
     const hasMatchingAddress = 
@@ -151,10 +155,8 @@ async function checkForRecentReplacementOrders(customer, customerData) {
     return hasMatchingAddress;
   });
 
-
-
-  if (matchingCustomerOrders.length > 0 || matchingAddressOrders.length > 0) {
-    throw new Error('A replacement order has already been placed with this address or by this customer in the last 24 hours.');
+  if (matchingAddressOrders.length > 0) {
+    throw new Error('A replacement order has already been placed with this address in the last 24 hours.');
   }
 }
 
