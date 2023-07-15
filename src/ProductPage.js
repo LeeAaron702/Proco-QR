@@ -318,7 +318,8 @@ function ProductPage({ data }) {
                     }
                   }
                 }}
-              />              <label htmlFor="formZipcode">Zipcode</label>
+              />
+              <label htmlFor="formZipcode">Zipcode</label>
             </div>
           </Modal.Body>
           <Modal.Footer>
