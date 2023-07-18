@@ -1,5 +1,6 @@
 const autocomplete = async (req, res) => {
     const { input } = req.body;
+    console.log("🚀 ~ file: autocomplete.js:3 ~ autocomplete ~ input:", input)
     const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(input)}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&components=country:US`;
   
     try {

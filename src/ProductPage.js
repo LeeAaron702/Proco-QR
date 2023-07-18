@@ -126,7 +126,7 @@ function ProductPage({ data }) {
           body: JSON.stringify({ query }),
         });
         console.log("🚀 ~ file: ProductPage.js:127 ~ debouncedAutoComplete ~ query:", query)
-  
+
         if (response.ok) {
           const data = await response.json();
           setAutocompleteResults(data.predictions);
@@ -144,6 +144,9 @@ function ProductPage({ data }) {
     setAddress1(e.target.value);
     debouncedAutoComplete(e.target.value);
   };
+
+
+
 
 
 
@@ -329,7 +332,20 @@ function ProductPage({ data }) {
               ))}
             </div>
 
-
+            <div className="search">
+              <input
+                type="text"
+                placeholder="Search Location"
+              />
+              <button>GPS Fixed</button>
+            </div>
+            <div className="address">
+              <p>address: </p>
+              <p>City: </p>
+              <p>state: </p>
+              <p>zip: </p>
+              <p>country: </p>
+            </div>
 
             <div className="form-floating mb-3">
               <input
