@@ -332,7 +332,7 @@ function ProductPage({ data }) {
                   {autocompleteResults.map((result, index) => (
                     <Dropdown.Item
                       key={index}
-                      onSelect={() => handleAutocompleteSelect(result)}
+                      onClick={() => handleAutocompleteSelect(result)}
                     >
                       {result.description}
                     </Dropdown.Item>
