@@ -149,6 +149,16 @@ function ProductPage({ data }) {
     debouncedAutoComplete(e.target.value);
   };
 
+  // Function to handle autocomplete result selection
+  const handleAutocompleteSelect = (result) => {
+    const { structured_formatting } = result;
+    setAddress1(structured_formatting.main_text);
+
+    const [city = '', state = ''] = structured_formatting.secondary_text.split(', ');
+    setCity(city.trim());
+    setState(state.trim());
+  };
+
 
 
 
@@ -330,7 +340,10 @@ function ProductPage({ data }) {
               <label htmlFor="formAddress1">Address 1</label>
               {/* Display autocomplete results */}
               {autocompleteResults.map((result, index) => (
-                <div key={index} onClick={() => setAddress1(result.structured_formatting.main_text)}>
+                <div
+                  key={index}
+                  onClick={() => handleAutocompleteSelect(result)}
+                >
                   {result.description}
                 </div>
               ))}
