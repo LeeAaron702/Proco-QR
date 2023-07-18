@@ -8,11 +8,11 @@ const autocomplete = async (req, res) => {
       console.log("🚀 ~ file: autocomplete.js:8 ~ autocomplete ~ data:", data)
       
       // Map the returned data to return only the description, which holds the address.
-      const mappedData = data.predictions.map(prediction => ({
-        description: prediction.description,
-      }));
+    //   const mappedData = data.predictions.map(prediction => ({
+    //     description: prediction.description,
+    //   }));
       
-      res.status(200).json(mappedData);
+      res.status(200).json(data);
     } catch (error) {
       res.status(500).json({ error: 'Error fetching autocomplete options' });
     }
