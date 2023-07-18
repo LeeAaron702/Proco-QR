@@ -22,11 +22,6 @@ function ProductPage({ data }) {
   const [autocompleteResults, setAutocompleteResults] = useState([]);
 
 
-  // const [value, setValue] = useState(null);
-  // console.log("🚀 ~ file: ProductPage.js:27 ~ ProductPage ~ value:", value)
-  // console.log("🚀 ~ value.structured_formatting:", value?.value.structured_formatting.main_text);
-  // console.log("🚀 ~ value.structured_formatting:", value?.value.structured_formatting.secondary_text);
-
   useEffect(() => {
     if (data) {
       setShopifyID(data.ID);
@@ -90,6 +85,7 @@ function ProductPage({ data }) {
     setCity('');
     setState('');
     setZipcode('');
+    setAutocompleteResults([])
   };
 
 
