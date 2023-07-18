@@ -128,7 +128,7 @@ function ProductPage({ data }) {
 
         if (response.ok) {
           const data = await response.json();
-          setAutocompleteResults(data);
+          setAutocompleteResults(data.predictions);
         } else {
           console.error('Response not OK', response);
         }
