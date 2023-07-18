@@ -5,6 +5,7 @@ const autocomplete = async (req, res) => {
   try {
     const response = await fetch(url);
     const data = await response.json();
+    console.log("🚀 ~ file: autocomplete.js:8 ~ autocomplete ~ data:", data)
     res.status(200).json(data);
   } catch (error) {
     res.status(500).json({ error: 'Error fetching autocomplete options' });
