@@ -330,7 +330,7 @@ function ProductPage({ data }) {
               <label htmlFor="formAddress1">Address 1</label>
               {/* Display autocomplete results */}
               {autocompleteResults.map((result, index) => (
-                <div key={index} onClick={() => setAddress1(result.description)}>
+                <div key={index} onClick={() => setAddress1(result.structured_formatting.main_text)}>
                   {result.description}
                 </div>
               ))}
