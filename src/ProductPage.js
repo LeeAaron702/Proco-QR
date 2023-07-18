@@ -117,17 +117,23 @@ function ProductPage({ data }) {
 
   const debouncedAutoComplete = useDebounce(async (query) => {
     if (query) {
-      const response = await fetch('/api/autocomplete', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ query }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setAutocompleteResults(data.predictions);
+      try {
+        const response = await fetch('/api/autocomplete', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ query }),
+        });
+  
+        if (response.ok) {
+          const data = await response.json();
+          setAutocompleteResults(data.predictions);
+        } else {
+          console.error('Response not OK', response);
+        }
+      } catch (error) {
+        console.error('Error fetching autocomplete results', error);
       }
     }
   }, 1000);
