@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Modal } from 'react-bootstrap';
+import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 
 function ProductPage({ data }) {
   const [show, setShow] = useState(false);
@@ -18,6 +19,8 @@ function ProductPage({ data }) {
   const [pictureUrl, setPictureUrl] = useState('')
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+  const [autocomplete, setAutocomplete] = useState([]);
 
 
   useEffect(() => {
@@ -95,6 +98,30 @@ function ProductPage({ data }) {
       return () => clearTimeout(timer);
     }
   }, [errorMessage]);
+
+  const handleAutocomplete = async (input) => {
+    if (!input) {
+      setAutocomplete([]);
+      return;
+    }
+
+    const response = await fetch('/api/autocomplete', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        input,
+      }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log("🚀 ~ file: ProductPage.js:120 ~ handleAutocomplete ~ data:", data)
+      setAutocomplete(data.predictions);
+    }
+  };
+
 
   if (!data) {
     return (
@@ -239,6 +266,9 @@ function ProductPage({ data }) {
               <label htmlFor="formEmail">Email</label>
             </div>
 
+
+
+            {/* 
             <div className="form-floating mb-3">
               <input
                 type="text"
@@ -252,7 +282,43 @@ function ProductPage({ data }) {
                 required
               />
               <label htmlFor="formAddress1">Address 1</label>
+            </div> */}
+
+            <div className="form-floating mb-3">
+              <input
+                type="text"
+                className="form-control"
+                id="formAddress1"
+                placeholder="Enter address 1"
+                value={address1}
+                onChange={(e) => {
+                  setAddress1(e.target.value);
+                  handleAutocomplete(e.target.value);
+                }}
+                onBlur={(e) => setAddress1(e.target.value.trim())}
+                autoComplete="address-line1"
+                required
+              />
+              {autocomplete.length > 0 && (
+                <div className="autocomplete-results">
+                  {autocomplete.map((result) => (
+                    <div
+                      key={result.id}
+                      className="autocomplete-result"
+                      onClick={() => {
+                        setAddress1(result.description);
+                        setAutocomplete([]);
+                      }}
+                    >
+                      {result.description}
+                    </div>
+                  ))}
+                </div>
+              )}
+              <label htmlFor="formAddress1">Address 1</label>
             </div>
+
+
 
             <div className="form-floating mb-3">
               <input
