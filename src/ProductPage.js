@@ -331,14 +331,10 @@ function ProductPage({ data }) {
                   {result.description}
                 </div>
               ))}
-              {autocomplete.map((result, index) => (
-                <div key={index} onClick={() => setAddress1(result.description)}>
-                  {result.description}
-                </div>
-              ))}
+              {autocomplete}
             </div>
 
-          
+
             <div className="form-floating mb-3">
               <input
                 type="text"
