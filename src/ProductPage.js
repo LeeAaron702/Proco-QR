@@ -146,9 +146,12 @@ function ProductPage({ data }) {
   // Function to handle change in address field
   const handleAddressChange = (e) => {
     setAddress1(e.target.value);
-    debouncedAutoComplete(e.target.value);
+    if (e.target.value === '') {
+      setAutocompleteResults([]);
+    } else {
+      debouncedAutoComplete(e.target.value);
+    }
   };
-
   // Function to handle autocomplete result selection
   const handleAutocompleteSelect = (result) => {
     const { structured_formatting } = result;
@@ -158,7 +161,6 @@ function ProductPage({ data }) {
     setCity(city.trim());
     setState(state.trim());
 
-    setAutocompleteResults([]);
 
   };
 
