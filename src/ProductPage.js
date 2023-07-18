@@ -326,7 +326,7 @@ function ProductPage({ data }) {
                 {autocompleteResults.map((result, index) => (
                   <div
                     key={index}
-                    className="dropdown-item"
+                    className="dropdown-item text-break"
                     onClick={() => handleAutocompleteSelect(result)}
                   >
                     {result.description}
