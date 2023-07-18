@@ -306,8 +306,6 @@ function ProductPage({ data }) {
               <label htmlFor="formEmail">Email</label>
             </div>
 
-
-
             <div className="form-floating mb-3 position-relative">
               <input
                 type="text"
@@ -321,12 +319,12 @@ function ProductPage({ data }) {
               />
               <label htmlFor="formAddress1">Address 1</label>
 
-              <div className={`dropdown-menu w-auto ${autocompleteResults.length > 0 ? 'show' : ''}`}>
+              <div className={`dropdown-menu w-auto ${autocompleteResults.length > 0 ? 'show' : ''}`} style={{ maxWidth: '90vw' }}>
                 {/* Display autocomplete results */}
                 {autocompleteResults.map((result, index) => (
                   <div
                     key={index}
-                    className="dropdown-item text-break"
+                    className="dropdown-item text-wrap w-100"
                     onClick={() => handleAutocompleteSelect(result)}
                   >
                     {result.description}
@@ -334,9 +332,6 @@ function ProductPage({ data }) {
                 ))}
               </div>
             </div>
-
-
-
 
             <div className="form-floating mb-3">
               <input
