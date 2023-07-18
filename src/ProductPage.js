@@ -125,6 +125,7 @@ function ProductPage({ data }) {
           },
           body: JSON.stringify({ query }),
         });
+        console.log("🚀 ~ file: ProductPage.js:127 ~ debouncedAutoComplete ~ query:", query)
   
         if (response.ok) {
           const data = await response.json();
