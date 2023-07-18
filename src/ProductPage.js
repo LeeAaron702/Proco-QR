@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Button, Modal, Dropdown } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 
 function ProductPage({ data }) {
   const [show, setShow] = useState(false);
@@ -312,7 +312,7 @@ function ProductPage({ data }) {
 
 
 
-            <div className="form-floating mb-3">
+            <div className="form-floating mb-3 position-relative">
               <input
                 type="text"
                 className="form-control"
@@ -325,19 +325,18 @@ function ProductPage({ data }) {
               />
               <label htmlFor="formAddress1">Address 1</label>
 
-              <Dropdown>
-                <Dropdown.Menu show={autocompleteResults.length > 0}>
-                  {/* Display autocomplete results */}
-                  {autocompleteResults.map((result, index) => (
-                    <Dropdown.Item
-                      key={index}
-                      onClick={() => handleAutocompleteSelect(result)}
-                    >
-                      {result.description}
-                    </Dropdown.Item>
-                  ))}
-                </Dropdown.Menu>
-              </Dropdown>
+              <div className={`dropdown-menu ${autocompleteResults.length > 0 ? 'show' : ''}`} style={{ width: '100%' }}>
+                {/* Display autocomplete results */}
+                {autocompleteResults.map((result, index) => (
+                  <div
+                    key={index}
+                    className="dropdown-item"
+                    onClick={() => handleAutocompleteSelect(result)}
+                  >
+                    {result.description}
+                  </div>
+                ))}
+              </div>
             </div>
 
 
