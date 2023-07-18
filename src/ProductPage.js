@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Button, Modal } from 'react-bootstrap';
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 
@@ -21,6 +21,8 @@ function ProductPage({ data }) {
   const [errorMessage, setErrorMessage] = useState('');
 
   const [autocomplete, setAutocomplete] = useState([]);
+  const [autocompleteResults, setAutocompleteResults] = useState([]);
+
 
 
   useEffect(() => {
@@ -99,28 +101,43 @@ function ProductPage({ data }) {
     }
   }, [errorMessage]);
 
-  const handleAutocomplete = async (input) => {
-    if (!input) {
-      setAutocomplete([]);
-      return;
+
+  function useDebounce(fn, delay) {
+    let timeoutRef = useRef(null);
+
+    function debouncedFn(...args) {
+      window.clearTimeout(timeoutRef.current);
+      timeoutRef.current = window.setTimeout(() => {
+        fn(...args);
+      }, delay);
     }
 
-    const response = await fetch('/api/autocomplete', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        input,
-      }),
-    });
+    return debouncedFn;
+  }
 
-    if (response.ok) {
-      const data = await response.json();
-      console.log("🚀 ~ file: ProductPage.js:120 ~ handleAutocomplete ~ data:", data)
-      setAutocomplete(data.predictions);
+  const debouncedAutoComplete = useDebounce(async (query) => {
+    if (query) {
+      const response = await fetch('/api/autocomplete', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ query }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setAutocompleteResults(data.predictions);
+      }
     }
+  }, 1000);
+
+  // Function to handle change in address field
+  const handleAddressChange = (e) => {
+    setAddress1(e.target.value);
+    debouncedAutoComplete(e.target.value);
   };
+
 
 
   if (!data) {
@@ -291,31 +308,18 @@ function ProductPage({ data }) {
                 id="formAddress1"
                 placeholder="Enter address 1"
                 value={address1}
-                onChange={(e) => {
-                  setAddress1(e.target.value);
-                  handleAutocomplete(e.target.value);
-                }}
+                onChange={handleAddressChange}
                 onBlur={(e) => setAddress1(e.target.value.trim())}
                 autoComplete="address-line1"
                 required
               />
-              {autocomplete.length > 0 && (
-                <div className="autocomplete-results">
-                  {autocomplete.map((result) => (
-                    <div
-                      key={result.id}
-                      className="autocomplete-result"
-                      onClick={() => {
-                        setAddress1(result.description);
-                        setAutocomplete([]);
-                      }}
-                    >
-                      {result.description}
-                    </div>
-                  ))}
-                </div>
-              )}
               <label htmlFor="formAddress1">Address 1</label>
+              {/* Display autocomplete results */}
+              {autocompleteResults.map((result, index) => (
+                <div key={index} onClick={() => setAddress1(result.description)}>
+                  {result.description}
+                </div>
+              ))}
             </div>
 
 
