@@ -321,7 +321,7 @@ function ProductPage({ data }) {
               />
               <label htmlFor="formAddress1">Address 1</label>
 
-              <div className={`dropdown-menu ${autocompleteResults.length > 0 ? 'show' : ''}`} style={{ width: '100%' }}>
+              <div className={`dropdown-menu w-auto ${autocompleteResults.length > 0 ? 'show' : ''}`}>
                 {/* Display autocomplete results */}
                 {autocompleteResults.map((result, index) => (
                   <div
@@ -335,7 +335,7 @@ function ProductPage({ data }) {
               </div>
             </div>
 
-            
+
 
 
             <div className="form-floating mb-3">
