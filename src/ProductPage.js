@@ -157,6 +157,9 @@ function ProductPage({ data }) {
     const [city = '', state = ''] = structured_formatting.secondary_text.split(', ');
     setCity(city.trim());
     setState(state.trim());
+
+    setAutocompleteResults([]);
+
   };
 
 
@@ -342,7 +345,9 @@ function ProductPage({ data }) {
               {autocompleteResults.map((result, index) => (
                 <div
                   key={index}
-                  onClick={() => handleAutocompleteSelect(result)}
+                  onClick={() => handleAutocompleteSelect(result)
+                  
+                    }
                 >
                   {result.description}
                 </div>
