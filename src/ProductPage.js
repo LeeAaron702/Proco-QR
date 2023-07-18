@@ -20,7 +20,6 @@ function ProductPage({ data }) {
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const [autocomplete, setAutocomplete] = useState([]);
   const [autocompleteResults, setAutocompleteResults] = useState([]);
 
 
@@ -129,8 +128,7 @@ function ProductPage({ data }) {
 
         if (response.ok) {
           const data = await response.json();
-          setAutocompleteResults(data.predictions);
-          setAutocomplete(data);
+          setAutocompleteResults(data);
         } else {
           console.error('Response not OK', response);
         }
@@ -331,7 +329,6 @@ function ProductPage({ data }) {
                   {result.description}
                 </div>
               ))}
-              {autocomplete}
             </div>
 
 
