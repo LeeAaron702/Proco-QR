@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Modal, Dropdown } from 'react-bootstrap';
 
 function ProductPage({ data }) {
   const [show, setShow] = useState(false);
@@ -141,7 +141,7 @@ function ProductPage({ data }) {
         console.error('Error fetching autocomplete results', error);
       }
     }
-  }, 1000);
+  }, 500);
 
   // Function to handle change in address field
   const handleAddressChange = (e) => {
@@ -312,22 +312,6 @@ function ProductPage({ data }) {
 
 
 
-            {/* 
-            <div className="form-floating mb-3">
-              <input
-                type="text"
-                className="form-control"
-                id="formAddress1"
-                placeholder="Enter address 1"
-                value={address1}
-                onChange={(e) => setAddress1(e.target.value)}
-                onBlur={(e) => setAddress1(e.target.value.trim())}
-                autoComplete="address-line1"
-                required
-              />
-              <label htmlFor="formAddress1">Address 1</label>
-            </div> */}
-
             <div className="form-floating mb-3">
               <input
                 type="text"
@@ -341,17 +325,20 @@ function ProductPage({ data }) {
                 required
               />
               <label htmlFor="formAddress1">Address 1</label>
-              {/* Display autocomplete results */}
-              {autocompleteResults.map((result, index) => (
-                <div
-                  key={index}
-                  onClick={() => handleAutocompleteSelect(result)
-                  
-                    }
-                >
-                  {result.description}
-                </div>
-              ))}
+
+              <Dropdown>
+                <Dropdown.Menu show={autocompleteResults.length > 0}>
+                  {/* Display autocomplete results */}
+                  {autocompleteResults.map((result, index) => (
+                    <Dropdown.Item
+                      key={index}
+                      onSelect={() => handleAutocompleteSelect(result)}
+                    >
+                      {result.description}
+                    </Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
             </div>
 
 
