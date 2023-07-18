@@ -123,7 +123,7 @@ function ProductPage({ data }) {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ query }),
+          body: JSON.stringify({ input: query }),
         });
         console.log("🚀 ~ file: ProductPage.js:127 ~ debouncedAutoComplete ~ query:", query)
 
@@ -332,21 +332,7 @@ function ProductPage({ data }) {
               ))}
             </div>
 
-            <div className="search">
-              <input
-                type="text"
-                placeholder="Search Location"
-              />
-              <button>GPS Fixed</button>
-            </div>
-            <div className="address">
-              <p>address: </p>
-              <p>City: </p>
-              <p>state: </p>
-              <p>zip: </p>
-              <p>country: </p>
-            </div>
-
+          
             <div className="form-floating mb-3">
               <input
                 type="text"
