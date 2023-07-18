@@ -158,7 +158,7 @@ function ProductPage({ data }) {
     setCity(city.trim());
     setState(state.trim());
 
-    setAutocompleteResults([]);
+    // setAutocompleteResults([]);
 
   };
 
