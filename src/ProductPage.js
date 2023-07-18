@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Button, Modal } from 'react-bootstrap';
-import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 
 function ProductPage({ data }) {
   const [show, setShow] = useState(false);
@@ -23,6 +22,10 @@ function ProductPage({ data }) {
   const [autocompleteResults, setAutocompleteResults] = useState([]);
 
 
+  // const [value, setValue] = useState(null);
+  // console.log("🚀 ~ file: ProductPage.js:27 ~ ProductPage ~ value:", value)
+  // console.log("🚀 ~ value.structured_formatting:", value?.value.structured_formatting.main_text);
+  // console.log("🚀 ~ value.structured_formatting:", value?.value.structured_formatting.secondary_text);
 
   useEffect(() => {
     if (data) {
