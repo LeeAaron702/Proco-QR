@@ -130,7 +130,7 @@ function ProductPage({ data }) {
         if (response.ok) {
           const data = await response.json();
           setAutocompleteResults(data.predictions);
-          console.log("🚀 ~ file: ProductPage.js:133 ~ debouncedAutoComplete ~ data:", data)
+          setAutocomplete(data);
         } else {
           console.error('Response not OK', response);
         }
@@ -327,6 +327,11 @@ function ProductPage({ data }) {
               <label htmlFor="formAddress1">Address 1</label>
               {/* Display autocomplete results */}
               {autocompleteResults.map((result, index) => (
+                <div key={index} onClick={() => setAddress1(result.description)}>
+                  {result.description}
+                </div>
+              ))}
+              {autocomplete.map((result, index) => (
                 <div key={index} onClick={() => setAddress1(result.description)}>
                   {result.description}
                 </div>
