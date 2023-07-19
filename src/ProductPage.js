@@ -197,19 +197,28 @@ function ProductPage({ data }) {
       <div className="card mt-3">
         <div className="card-body">
           <div className="row mb-0">
-            <div className="col-md-3 d-flex justify-content-center align-items-center">
-              <img src="./pc_1.png" alt="Logo" className="img-fluid" style={{ width: "200px" }}/>
+            <div className="col-md-5 d-flex justify-content-center align-items-center">
+              <img src="./pc_1.png" alt="Logo" className="img-fluid d-block mx-auto" style={{ width: "250px", maxWidth: "100%" }} />
             </div>
-            <div className="col-md-9">
-              <h1 className="card-title display-1 text-center">Professor Color</h1>
+            <div className="col-md-7">
+              <h1 className="card-title display-1 text-center mt-md-4">Professor Color</h1>
               <h1 className="card-title display-5 text-center">{data.modelNumber}</h1>
             </div>
           </div>
           <div className="d-flex justify-content-center">
-            {pictureUrl &&
-              <img src={pictureUrl} alt="Logo" className="img-fluid" style={{ width: "200px" }} />
-            }
+            {pictureUrl && (
+              <img
+                src={pictureUrl}
+                alt="Logo"
+                className="img-fluid d-block mx-auto"
+                style={{
+                  width: "250px", // Set the default width for mobile devices
+                  maxWidth: "100%", // Ensure the image scales proportionally
+                }}
+              />
+            )}
           </div>
+
         </div>
         <div className="text-center">
           <p className="h4">{data.productTitle}</p>
