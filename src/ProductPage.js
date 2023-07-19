@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Button, Modal } from 'react-bootstrap';
+import ReviewModal from "./ReviewModal";
 
 function ProductPage({ data }) {
   const [show, setShow] = useState(false);
@@ -20,6 +21,11 @@ function ProductPage({ data }) {
   const [errorMessage, setErrorMessage] = useState('');
 
   const [autocompleteResults, setAutocompleteResults] = useState([]);
+
+  const [showReviewModal, setShowReviewModal] = useState(false)
+  const handleReviewModalOpen = () => setShowReviewModal(true)
+  const handleReviewModalClose = () => setShowReviewModal(false)
+
 
 
   useEffect(() => {
@@ -224,17 +230,23 @@ function ProductPage({ data }) {
         </div>
         <div className="button-container text-center">
           <div className="mb-3">
+            <Button className="btn btn-success btn-lg" onClick={handleReviewModalOpen}>
+              Leave a Review
+            </Button>
+            <ReviewModal showReviewModal={showReviewModal} handleReviewModalClose={handleReviewModalClose} />
+          </div>
+          <div className="mb-3">
             {data.shopifyLink &&
-              <a href={data.shopifyLink} target="_blank" rel="noreferrer" className="btn btn-success btn-lg">Purchase Directly From Us and Save</a>
+              <a href={data.shopifyLink} target="_blank" rel="noreferrer" className="btn btn-secondary btn-lg">Purchase Directly From Us and Save</a>
             }
           </div>
           <div className="mb-3">
             {data.amazonLink &&
-              <a href={data.amazonLink} target="_blank" rel="noreferrer" className="btn btn-primary btn-lg">Go to Amazon Sales Page</a>
+              <a href={data.amazonLink} target="_blank" rel="noreferrer" className="btn btn-secondary btn-lg">Go to Amazon Sales Page</a>
             }
           </div>
           <div className="mb-3">
-            <a href="https://professorcolor.onsitesupport.io/ticket/add" target="_blank" rel="noreferrer" className="btn btn-danger btn-lg">Submit A Help Ticket</a>
+            <a href="https://professorcolor.onsitesupport.io/ticket/add" target="_blank" rel="noreferrer" className="btn btn-secondary btn-lg">Submit A Help Ticket</a>
           </div>
           <div>
             {data.variantId &&
