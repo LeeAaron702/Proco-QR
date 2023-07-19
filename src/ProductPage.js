@@ -137,7 +137,7 @@ function ProductPage({ data }) {
         console.error('Error fetching autocomplete results', error);
       }
     }
-  }, 500);
+  }, 250);
 
   // Function to handle change in address field
   const handleAddressChange = (e) => {
@@ -194,7 +194,7 @@ function ProductPage({ data }) {
 
   return (
     <div className="container">
-      <div className="card mt-3">
+      <div className="card mt-1 mb-1">
         <div className="card-body">
           <div className="row mb-0">
             <div className="col-md-5 d-flex justify-content-center align-items-center">
@@ -234,15 +234,15 @@ function ProductPage({ data }) {
               <a href={data.amazonLink} target="_blank" rel="noreferrer" className="btn btn-primary btn-lg">Go to Amazon Sales Page</a>
             }
           </div>
-          <div className="mb-3">
-            <a href="https://professorcolor.onsitesupport.io/ticket/add" target="_blank" rel="noreferrer" className="btn btn-danger btn-lg">Submit A Help Ticket</a>
-          </div>
           <div>
             {data.variantId &&
-              <Button className="btn btn-warning mb-3 btn-lg" onClick={handleShow}>
+              <Button className="btn btn-danger mb-3 btn-lg" onClick={handleShow}>
                 Instant Replacement
               </Button>
             }
+          </div>
+          <div className="mb-3">
+            <a href="https://professorcolor.onsitesupport.io/ticket/add" target="_blank" rel="noreferrer" className="btn btn-warning btn-lg">Submit A Help Ticket</a>
           </div>
         </div>
       </div>
