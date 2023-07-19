@@ -46,11 +46,13 @@ const InstantReplacementModal = ({
     if (response.ok) {
       handleIRMClose();
       setSuccessMessage("Instant replacement created successfully.");
+      clearForm();
     } else {
       const errorData = await response.json();
       handleIRMShow();
       setErrorMessage(errorData.message);
       setSuccessMessage("");
+      clearForm();
     }
   };
 
