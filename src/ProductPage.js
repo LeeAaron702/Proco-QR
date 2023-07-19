@@ -201,7 +201,7 @@ function ProductPage({ data }) {
               <img src="./pc_1.png" alt="Logo" className="img-fluid d-block mx-auto" style={{ width: "250px", maxWidth: "100%" }} />
             </div>
             <div className="col-md-7">
-              <h1 className="card-title display-1 text-center mt-md-4">Professor Color</h1>
+              {/* <h1 className="card-title display-1 text-center mt-md-4">Professor Color</h1> */}
               <h1 className="card-title display-5 text-center">{data.modelNumber}</h1>
             </div>
           </div>
