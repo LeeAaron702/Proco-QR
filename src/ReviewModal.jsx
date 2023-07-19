@@ -1,7 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Modal } from 'react-bootstrap';
 
+const preventDefault = (event) => {
+    event.preventDefault();
+};
+
 const ReviewModal = ({ showReviewModal, handleReviewModalClose }) => {
+
+    useEffect(() => {
+        if (showReviewModal) {
+            document.addEventListener('touchmove', preventDefault, { passive: false });
+        } else {
+            document.removeEventListener('touchmove', preventDefault);
+        }
+        return () => {
+            document.removeEventListener('touchmove', preventDefault);
+        };
+    }, [showReviewModal]);
+
     return (
         <Modal show={showReviewModal} onHide={handleReviewModalClose} centered>
             <Modal.Header closeButton>
