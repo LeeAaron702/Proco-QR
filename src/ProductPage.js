@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button } from 'react-bootstrap';
-import ReviewModal from "./ReviewModal";
-import InstantReplacementModal from "./InstantReplacementModal";
+import ReviewModal from "./Modals/ReviewModal";
+import InstantReplacementModal from "./Modals/InstantReplacementModal";
 
 function ProductPage({ data }) {
   const [IRshow, setIRShow] = useState(false);
