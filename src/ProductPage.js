@@ -197,17 +197,17 @@ function ProductPage({ data }) {
       <div className="card mt-3">
         <div className="card-body">
           <div className="row mb-0">
-            <div className="col-md-3">
-              <img src="./pc_1.png" alt="Logo" className="img-fluid mt-4" />
+          <div className="col-md-3 d-flex justify-content-center align-items-center"> 
+              <img src="./pc_1.png" alt="Logo" className="img-fluid" style={{width: "250px"}}/>
             </div>
             <div className="col-md-9">
-              <h1 className="card-title display-1 text-center">Professor Color</h1>
+              <h1 className="card-title display-2 text-center">Professor Color</h1>
               <h1 className="card-title display-5 text-center">{data.modelNumber}</h1>
             </div>
           </div>
           <div className="d-flex justify-content-center">
             {pictureUrl &&
-              <img src={pictureUrl} alt="Logo" className="img-fluid" style={{ width: "300px" }} />
+              <img src={pictureUrl} alt="Logo" className="img-fluid" style={{ width: "250px" }} />
             }
           </div>
         </div>
@@ -305,6 +305,7 @@ function ProductPage({ data }) {
               <input type="email" className="form-control" id="formEmail" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)} autoComplete="email" required />
               <label htmlFor="formEmail">Email</label>
             </div>
+
 
             <div className="form-floating mb-3 position-relative">
               <input
