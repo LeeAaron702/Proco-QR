@@ -197,11 +197,10 @@ function ProductPage({ data }) {
       <div className="card mt-1 mb-1">
         <div className="card-body">
           <div className="row mb-0">
-            <div className="col-md-5 d-flex justify-content-center align-items-center">
+            <div className="col-md-6 d-flex justify-content-center align-items-center">
               <img src="./pc_1.png" alt="Logo" className="img-fluid d-block mx-auto" style={{ width: "250px", maxWidth: "100%" }} />
             </div>
-            <div className="col-md-7">
-              {/* <h1 className="card-title display-1 text-center mt-md-4">Professor Color</h1> */}
+            <div className="col-md-6 d-flex align-items-center justify-content-center">
               <h1 className="card-title display-5 text-center">{data.modelNumber}</h1>
             </div>
           </div>
@@ -234,15 +233,15 @@ function ProductPage({ data }) {
               <a href={data.amazonLink} target="_blank" rel="noreferrer" className="btn btn-primary btn-lg">Go to Amazon Sales Page</a>
             }
           </div>
+          <div className="mb-3">
+            <a href="https://professorcolor.onsitesupport.io/ticket/add" target="_blank" rel="noreferrer" className="btn btn-danger btn-lg">Submit A Help Ticket</a>
+          </div>
           <div>
             {data.variantId &&
-              <Button className="btn btn-danger mb-3 btn-lg" onClick={handleShow}>
+              <Button className="btn btn-warning mb-3 btn-lg" onClick={handleShow}>
                 Instant Replacement
               </Button>
             }
-          </div>
-          <div className="mb-3">
-            <a href="https://professorcolor.onsitesupport.io/ticket/add" target="_blank" rel="noreferrer" className="btn btn-warning btn-lg">Submit A Help Ticket</a>
           </div>
         </div>
       </div>
