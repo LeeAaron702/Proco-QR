@@ -146,13 +146,16 @@ const InstantReplacementModal = ({
     // Handling 'Enter' keypress
     if (e.key === 'Enter' && autocompleteContainerRef.current.contains(e.target)) {
       e.preventDefault();
-      const autocompleteOption = autocompleteResults.find(result => result.id === e.target.getAttribute('data-id'));
-      handleAutocompleteSelect(autocompleteOption);
+      const autocompleteOption = autocompleteResults.find(result => result.id.toString() === e.target.getAttribute('data-id'));
+      if (autocompleteOption) {
+        handleAutocompleteSelect(autocompleteOption);
+      }
     }
   };
 
+
   return (
-    <Modal show={show} onHide={handleModalHide} className="modal-fixed">
+    <Modal show={show} onHide={handleModalHide} onKeyDown={handleKeyDown} className="modal-fixed">
         <form onSubmit={handleSubmit}>
           <Modal.Header closeButton>
             <Modal.Title>Instant Replacement Form</Modal.Title>
@@ -249,6 +252,7 @@ const InstantReplacementModal = ({
                 ))}
               </div>
             </div>
+
 
             <div className="form-floating mb-3">
               <input
