@@ -98,62 +98,65 @@ function ProductPage({ data }) {
                 alt="Logo"
                 className="img-fluid d-block mx-auto"
                 style={{
-                  width: "250px", // Set the default width for mobile devices
-                  maxWidth: "100%", // Ensure the image scales proportionally
+                  width: "250px",
+                  maxWidth: "100%",
                 }}
               />
             )}
           </div>
-
         </div>
         <div className="text-center">
           <p className="h4">{data.productTitle}</p>
         </div>
-        <div className="button-container text-center">
-          <div className="mb-3">
-            <Button className="btn btn-success btn-lg" onClick={handleReviewModalOpen}>
-              Leave a Review
-            </Button>
-            <ReviewModal showReviewModal={showReviewModal} handleReviewModalClose={handleReviewModalClose} />
-          </div>
-          <div className="mb-3">
-            {data.shopifyLink &&
-              <a href={data.shopifyLink} target="_blank" rel="noreferrer" className="btn btn-secondary btn-lg">Purchase Directly From Us and Save</a>
-            }
-          </div>
-          <div className="mb-3">
-            {data.amazonASIN && (
+        <div className="text-center mb-3">
+            <div className="mb-3">
               <a
-                href={`https://www.amazon.com/dp/${data.amazonASIN}`}
+                href={`https://www.amazon.com/review/create-review/?ie=UTF8&channel=glance-detail&asin=${data.amazonASIN}`}
                 target="_blank"
                 rel="noreferrer"
-                className="btn btn-secondary btn-lg"
+                className="btn btn-primary btn-lg"
               >
-                Go to Amazon Sales Page
+                Leave a review on Amazon
               </a>
-            )}
-          </div>
-          <div className="mb-3">
-            <a href="https://professorcolor.onsitesupport.io/ticket/add" target="_blank" rel="noreferrer" className="btn btn-danger btn-lg">Submit A Help Ticket</a>
-          </div>
-          <div>
-            {data.variantId &&
-              <Button className="btn btn-warning mb-3 btn-lg" onClick={handleIRMShow}>
-                Instant Replacement
-              </Button>
-            }
-          </div>
+            </div>
+            <div className="mb-3">
+              {data.shopifyLink &&
+                <a href={data.shopifyLink} target="_blank" rel="noreferrer" className="btn btn-success btn-lg">Purchase Directly From Us and Save</a>
+              }
+            </div>
+            <div className="mb-3">
+              {data.amazonASIN && (
+                <a
+                  href={`https://www.amazon.com/dp/${data.amazonASIN}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn btn-secondary btn-lg"
+                >
+                  Go to Amazon Sales Page
+                </a>
+              )}
+            </div>
+            <div className="mb-3">
+              <a href="https://professorcolor.onsitesupport.io/ticket/add" target="_blank" rel="noreferrer" className="btn btn-danger btn-lg">Submit A Help Ticket</a>
+            </div>
+            <div className="mb-3">
+              {data.variantId &&
+                <Button className="btn btn-warning btn-lg" onClick={handleIRMShow}>
+                  Instant Replacement
+                </Button>
+              }
+            </div>
         </div>
       </div>
-            <InstantReplacementModal
-            handleIRMClose={handleIRMClose}
-            handleIRMShow={handleIRMClose}
-            variantId={variantId}
-            shopifyID={shopifyID}
-            setErrorMessage={setErrorMessage}
-            setSuccessMessage={setSuccessMessage}
-            show={IRshow}
-            />
+      <InstantReplacementModal
+        handleIRMClose={handleIRMClose}
+        handleIRMShow={handleIRMShow}
+        variantId={variantId}
+        shopifyID={shopifyID}
+        setErrorMessage={setErrorMessage}
+        setSuccessMessage={setSuccessMessage}
+        show={IRshow}
+      />
       {successMessage && (
         <div className="alert alert-success" role="alert">
           {successMessage}
@@ -169,3 +172,5 @@ function ProductPage({ data }) {
 }
 
 export default ProductPage;
+
+  
