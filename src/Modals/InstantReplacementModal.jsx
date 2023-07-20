@@ -21,6 +21,8 @@ const InstantReplacementModal = ({
   const [zipcode, setZipcode] = useState("");
 
   const [autocompleteResults, setAutocompleteResults] = useState([]);
+  const autocompleteContainerRef = useRef(null);
+
 
   const instantReplacement = async () => {
     const response = await fetch("/api/InstantReplacement", {
@@ -140,6 +142,15 @@ const InstantReplacementModal = ({
     setAutocompleteResults([]);
   };
 
+  const handleKeyDown = (e) => {
+    // Handling 'Enter' keypress
+    if (e.key === 'Enter' && autocompleteContainerRef.current.contains(e.target)) {
+      e.preventDefault();
+      const autocompleteOption = autocompleteResults.find(result => result.id === e.target.getAttribute('data-id'));
+      handleAutocompleteSelect(autocompleteOption);
+    }
+  };
+
   return (
     <Modal show={show} onHide={handleModalHide} className="modal-fixed">
         <form onSubmit={handleSubmit}>
@@ -223,11 +234,13 @@ const InstantReplacementModal = ({
               />
               <label htmlFor="formAddress1">Address 1</label>
 
-              <div className={`dropdown-menu w-auto ${autocompleteResults.length > 0 ? 'show' : ''}`} style={{ maxWidth: '90vw' }}>
+              <div ref={autocompleteContainerRef} className={`dropdown-menu w-auto ${autocompleteResults.length > 0 ? 'show' : ''}`} style={{ maxWidth: '90vw' }}>
                 {/* Display autocomplete results */}
                 {autocompleteResults.map((result, index) => (
                   <div
                     key={index}
+                    data-id={result.id}
+                    tabIndex="0"
                     className="dropdown-item text-wrap w-100"
                     onClick={() => handleAutocompleteSelect(result)}
                   >
