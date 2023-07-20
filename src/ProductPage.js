@@ -122,9 +122,16 @@ function ProductPage({ data }) {
             }
           </div>
           <div className="mb-3">
-            {data.amazonLink &&
-              <a href={data.amazonLink} target="_blank" rel="noreferrer" className="btn btn-secondary btn-lg">Go to Amazon Sales Page</a>
-            }
+            {data.amazonASIN && (
+              <a
+                href={`https://www.amazon.com/dp/${data.amazonASIN}`}
+                target="_blank"
+                rel="noreferrer"
+                className="btn btn-secondary btn-lg"
+              >
+                Go to Amazon Sales Page
+              </a>
+            )}
           </div>
           <div className="mb-3">
             <a href="https://professorcolor.onsitesupport.io/ticket/add" target="_blank" rel="noreferrer" className="btn btn-danger btn-lg">Submit A Help Ticket</a>

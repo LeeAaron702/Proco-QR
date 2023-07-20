@@ -5,7 +5,7 @@ function QRCodeGenerator() {
   const [productTitle, setProductTitle] = useState("");
   const [modelNumber, setModelNumber] = useState("");
   const [shopifyLink, setShopifyLink] = useState("");
-  const [amazonLink, setAmazonLink] = useState("");
+  const [amazonASIN, setAmazonASIN] = useState("");
   const [ID, setID] = useState("");
   const [variantId, setVariantId] = useState("");
   const [qrCodeUrl, setQrCodeUrl] = useState("");
@@ -28,7 +28,7 @@ function QRCodeGenerator() {
         setShopifyLink(value);
         break;
       case "amazonLink":
-        setAmazonLink(value);
+        setAmazonASIN(value);
         break;
       case "ID":
         setID(value);
@@ -96,7 +96,7 @@ function QRCodeGenerator() {
       productTitle,
       modelNumber,
       shopifyLink,
-      amazonLink,
+      amazonASIN,
       ID,
       variantId,
       pictureURL
@@ -110,7 +110,7 @@ function QRCodeGenerator() {
     setProductTitle("");
     setModelNumber("");
     setShopifyLink("");
-    setAmazonLink("");
+    setAmazonASIN("");
     setID("");
     setVariantId("");
     setQrCodeUrl("");
@@ -213,18 +213,17 @@ function QRCodeGenerator() {
 
 
               <div className="form-group">
-                <label htmlFor="amazonLink">Amazon Link:</label>
+                <label htmlFor="amazonLink">Amazon ASIN:</label>
                 <input
                   type="text"
                   id="amazonLink"
                   className="form-control"
                   name="amazonLink"
-                  value={amazonLink}
+                  value={amazonASIN}
                   onChange={handleInputChange}
                 />
               </div>
-              <p className="small mb-1">Please search for the product within Amazon, once identified, use the share item button that is in the top
-                right of the product photos and paste it into this field.</p>
+              <p className="small mb-1">Please input AMAZON ASIN for Amazon sales page link and review link to work.</p>
 
             </form>
             <div className="d-flex justify-content-between mt-2">
