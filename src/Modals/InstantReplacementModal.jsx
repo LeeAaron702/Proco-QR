@@ -59,8 +59,16 @@ const InstantReplacementModal = ({
   };
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    instantReplacement();
+    if (event.key === 'Enter' && autocompleteContainerRef.current.contains(event.target)) {
+      event.preventDefault();
+      const autocompleteOption = autocompleteResults.find(result => result.id.toString() === event.target.getAttribute('data-id'));
+      if (autocompleteOption) {
+        handleAutocompleteSelect(autocompleteOption);
+      }
+    } else {
+      event.preventDefault();
+      instantReplacement();
+    }
   };
 
   const clearForm = () => {
