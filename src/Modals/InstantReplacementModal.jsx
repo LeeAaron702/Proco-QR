@@ -51,10 +51,9 @@ const InstantReplacementModal = ({
       clearForm();
     } else {
       const errorData = await response.json();
-      handleIRMShow();
+      handleModalHide()
       setErrorMessage(errorData.message);
       setSuccessMessage("");
-      clearForm();
     }
   };
 
