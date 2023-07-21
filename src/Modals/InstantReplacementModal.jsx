@@ -154,21 +154,18 @@ const InstantReplacementModal = ({
     // Handling 'Enter' keypress
     if (e.key === 'Enter' && autocompleteContainerRef.current.contains(e.target)) {
       e.preventDefault();
-      const autocompleteOption = autocompleteResults.find(result => result.id.toString() === e.target.getAttribute('data-id'));
-      if (autocompleteOption) {
-        handleAutocompleteSelect(autocompleteOption);
-      }
+      e.stopPropagation();  // Preventing event from propagating to the form submit event
     }
   };
 
 
   return (
-    <Modal show={show} onHide={handleModalHide} onKeyDown={handleKeyDown} className="modal-fixed">
-        <form onSubmit={handleSubmit}>
-          <Modal.Header closeButton>
-            <Modal.Title>Instant Replacement Form</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
+    <Modal show={show} onHide={handleModalHide} className="modal-fixed">
+    <form onSubmit={handleSubmit}>
+      <Modal.Header closeButton>
+        <Modal.Title>Instant Replacement Form</Modal.Title>
+      </Modal.Header>
+      <Modal.Body onKeyDown={handleKeyDown}>
             <div className="form-floating mb-3">
               <input
                 type="text"
@@ -233,33 +230,33 @@ const InstantReplacementModal = ({
 
 
             <div className="form-floating mb-3 position-relative">
-              <input
-                type="text"
-                className="form-control"
-                id="formAddress1"
-                placeholder="Enter address 1"
-                value={address1}
-                onChange={handleAddressChange}
-                autoComplete="address-line1"
-                required
-              />
-              <label htmlFor="formAddress1">Address 1</label>
+          <input
+            type="text"
+            className="form-control"
+            id="formAddress1"
+            placeholder="Enter address 1"
+            value={address1}
+            onChange={handleAddressChange}
+            autoComplete="address-line1"
+            required
+          />
+          <label htmlFor="formAddress1">Address 1</label>
 
-              <div ref={autocompleteContainerRef} className={`dropdown-menu w-auto ${autocompleteResults.length > 0 ? 'show' : ''}`} style={{ maxWidth: '90vw' }}>
-                {/* Display autocomplete results */}
-                {autocompleteResults.map((result, index) => (
-                  <div
-                    key={index}
-                    data-id={result.id}
-                    tabIndex="0"
-                    className="dropdown-item text-wrap w-100"
-                    onClick={() => handleAutocompleteSelect(result)}
-                  >
-                    {result.description}
-                  </div>
-                ))}
+          <div ref={autocompleteContainerRef} className={`dropdown-menu w-auto ${autocompleteResults.length > 0 ? 'show' : ''}`} style={{ maxWidth: '90vw' }}>
+            {/* Display autocomplete results */}
+            {autocompleteResults.map((result, index) => (
+              <div
+                key={index}
+                data-id={result.id}
+                tabIndex="0"
+                className="dropdown-item text-wrap w-100"
+                onClick={() => handleAutocompleteSelect(result)}
+              >
+                {result.description}
               </div>
-            </div>
+            ))}
+          </div>
+        </div>
 
 
             <div className="form-floating mb-3">
