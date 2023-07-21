@@ -151,10 +151,14 @@ const InstantReplacementModal = ({
   };
 
   const handleKeyDown = (e) => {
-    // Handling 'Enter' keypress
-    if (e.key === 'Enter' && autocompleteContainerRef.current.contains(e.target)) {
+    // Handling 'Space' keypress
+    if (e.key === ' ' && autocompleteContainerRef.current.contains(e.target)) {
       e.preventDefault();
       e.stopPropagation();  // Preventing event from propagating to the form submit event
+      const autocompleteOption = autocompleteResults.find(result => result.id.toString() === e.target.getAttribute('data-id'));
+      if (autocompleteOption) {
+        handleAutocompleteSelect(autocompleteOption);
+      }
     }
   };
 
