@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { Button, Modal } from 'react-bootstrap';
+import AddressInput from "../Components/AddressInput";
 
 const InstantReplacementModal = ({
   handleIRMClose,
@@ -59,17 +60,12 @@ const InstantReplacementModal = ({
   };
 
   const handleSubmit = (event) => {
-    if (event.key === 'Enter' && autocompleteContainerRef.current.contains(event.target)) {
-      event.preventDefault();
-      const autocompleteOption = autocompleteResults.find(result => result.id.toString() === event.target.getAttribute('data-id'));
-      if (autocompleteOption) {
-        handleAutocompleteSelect(autocompleteOption);
-      }
-    } else {
+    if (event.key === 'Enter') {
       event.preventDefault();
       instantReplacement();
     }
   };
+
 
   const clearForm = () => {
     setFirstName("");
@@ -232,7 +228,7 @@ const InstantReplacementModal = ({
               <label htmlFor="formEmail">Email</label>
             </div>
 
-
+{/* 
             <div className="form-floating mb-3 position-relative">
           <input
             type="text"
@@ -247,7 +243,7 @@ const InstantReplacementModal = ({
           <label htmlFor="formAddress1">Address 1</label>
 
           <div ref={autocompleteContainerRef} className={`dropdown-menu w-auto ${autocompleteResults.length > 0 ? 'show' : ''}`} style={{ maxWidth: '90vw' }}>
-            {/* Display autocomplete results */}
+
             {autocompleteResults.map((result, index) => (
               <div
                 key={index}
@@ -260,7 +256,14 @@ const InstantReplacementModal = ({
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
+
+<AddressInput
+          value={address1}
+          onChange={handleAddressChange}
+          autocompleteResults={autocompleteResults}
+          onAutocompleteSelect={handleAutocompleteSelect}
+        />
 
 
             <div className="form-floating mb-3">
