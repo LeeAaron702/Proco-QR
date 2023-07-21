@@ -4,15 +4,20 @@ const AddressInput = ({ value, onChange, autocompleteResults, onAutocompleteSele
   const [focusIndex, setFocusIndex] = useState(-1);
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Tab') {
+    if ((e.key === 'ArrowDown' || e.key === 'Tab') && autocompleteResults.length > 0) {
       e.preventDefault();
-      const newIndex = autocompleteResults.length > 0 ? (focusIndex + 1) % autocompleteResults.length : -1;
+      const newIndex = (focusIndex + 1) % autocompleteResults.length;
+      setFocusIndex(newIndex);
+    } else if (e.key === 'ArrowUp' && autocompleteResults.length > 0) {
+      e.preventDefault();
+      const newIndex = (focusIndex - 1 + autocompleteResults.length) % autocompleteResults.length;
       setFocusIndex(newIndex);
     } else if ((e.key === 'Enter' || e.key === ' ') && focusIndex >= 0 && focusIndex < autocompleteResults.length) {
       e.preventDefault();
       onAutocompleteSelect(autocompleteResults[focusIndex]);
     }
   };
+
 
   const handleBlur = () => {
     setFocusIndex(-1);
