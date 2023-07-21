@@ -146,17 +146,17 @@ const InstantReplacementModal = ({
     setAutocompleteResults([]);
   };
 
-  const handleKeyDown = (e) => {
-    // Handling 'Space' keypress
-    if (e.key === ' ' && autocompleteContainerRef.current.contains(e.target)) {
-      e.preventDefault();
-      e.stopPropagation();  // Preventing event from propagating to the form submit event
-      const autocompleteOption = autocompleteResults.find(result => result.id.toString() === e.target.getAttribute('data-id'));
-      if (autocompleteOption) {
-        handleAutocompleteSelect(autocompleteOption);
-      }
-    }
-  };
+  // const handleKeyDown = (e) => {
+  //   // Handling 'Space' keypress
+  //   if (e.key === ' ' && autocompleteContainerRef.current.contains(e.target)) {
+  //     e.preventDefault();
+  //     e.stopPropagation();  // Preventing event from propagating to the form submit event
+  //     const autocompleteOption = autocompleteResults.find(result => result.id.toString() === e.target.getAttribute('data-id'));
+  //     if (autocompleteOption) {
+  //       handleAutocompleteSelect(autocompleteOption);
+  //     }
+  //   }
+  // };
 
 
   return (
@@ -165,7 +165,7 @@ const InstantReplacementModal = ({
       <Modal.Header closeButton>
         <Modal.Title>Instant Replacement Form</Modal.Title>
       </Modal.Header>
-      <Modal.Body onKeyDown={handleKeyDown}>
+      <Modal.Body>
             <div className="form-floating mb-3">
               <input
                 type="text"
@@ -387,7 +387,7 @@ const InstantReplacementModal = ({
             <small className="text-muted">
               We are collecting this information to process your instant replacement request and to improve our services. Your data will not be used for any other purpose.
             </small>
-            <Button variant="secondary" onClick={handleIRMClose}>
+            <Button variant="secondary" onClick={handleModalHide}>
               Close
             </Button>
             <Button variant="primary" type="submit">
