@@ -10,9 +10,9 @@ function App() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const serializedData = params.get('data');
-
+  
     if (serializedData) {
-      const data = JSON.parse(decodeURIComponent(serializedData));
+      const data = JSON.parse(decodeURIComponent(escape(atob(serializedData))));
       setData(data);
     }
   },[]);

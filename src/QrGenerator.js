@@ -101,10 +101,11 @@ function QRCodeGenerator() {
       variantId,
       pictureURL
     };
-    const serializedData = encodeURIComponent(JSON.stringify(productData));
+    const serializedData = btoa(unescape(encodeURIComponent(JSON.stringify(productData))));
     const fullUrl = `${baseUrl}?data=${serializedData}`;
     setQrCodeUrl(fullUrl);
   };
+  
 
   const handleClear = () => {
     setProductTitle("");
