@@ -240,7 +240,7 @@ function QRCodeGenerator() {
             <p className="small mb-2"> {qrCodeUrl} </p>
             {qrCodeUrl && (
               <div ref={qrCodeRef} className="d-flex justify-content-center">
-                <QRCode value={qrCodeUrl} size={500} level={"H"} />
+                <QRCode value={qrCodeUrl} size={500} level={"L"} />
               </div>
             )}
           </div>
