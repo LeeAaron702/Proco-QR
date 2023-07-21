@@ -22,7 +22,6 @@ const InstantReplacementModal = ({
   const [zipcode, setZipcode] = useState("");
 
   const [autocompleteResults, setAutocompleteResults] = useState([]);
-  const autocompleteContainerRef = useRef(null);
 
 
   const instantReplacement = async () => {
@@ -60,10 +59,8 @@ const InstantReplacementModal = ({
   };
 
   const handleSubmit = (event) => {
-    if (event.key === 'Enter') {
       event.preventDefault();
       instantReplacement();
-    }
   };
 
 
