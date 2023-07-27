@@ -13,7 +13,7 @@ function QRCodeGenerator() {
 
   const qrCodeRef = useRef(null);
 
-  const baseUrl = "https://proco-qr.vercel.app/";
+  const baseUrl = "https://proco-qr.com/";
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
