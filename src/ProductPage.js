@@ -51,32 +51,36 @@ function ProductPage({ data }) {
 
 
   if (!data) {
-    return (
-      <div className="container mt-3">
-        <div className="row justify-content-center">
-          <div className="col-md-4">
-            <img src="./pc_1.png" alt="Logo" className="img-fluid mt-3" />
-          </div>
-          <div className="col-md-8">
-            <div className="alert alert-warning text-center" role="alert">
-              <h4 className="alert-heading">Oops!</h4>
-              <p>
-                It looks like the link you're trying to visit might be broken.
-              </p>
-              <hr />
-              <p className="mb-0">
-                For product support, please click on the button below.
-              </p>
+    // Simulate a 1.5-second delay before showing the "no data" page
+    setTimeout(() => {
+      return (
+        <div className="container mt-3">
+          <div className="row justify-content-center">
+            <div className="col-md-4">
+              <img src="./pc_1.png" alt="Logo" className="img-fluid mt-3" />
             </div>
-            <div className="d-grid gap-2">
-              <a href="https://professorcolor.onsitesupport.io/ticket/add" target="_blank" rel="noreferrer" className="btn btn-danger btn-lg">
-                Submit A Help Ticket
-              </a>
+            <div className="col-md-8">
+              <div className="alert alert-warning text-center" role="alert">
+                <h4 className="alert-heading">Oops!</h4>
+                <p>
+                  It looks like the link you're trying to visit might be broken.
+                </p>
+                <hr />
+                <p className="mb-0">
+                  For product support, please click on the button below.
+                </p>
+              </div>
+              <div className="d-grid gap-2">
+                <a href="https://professorcolor.onsitesupport.io/ticket/add" target="_blank" rel="noreferrer" className="btn btn-danger btn-lg">
+                  Submit A Help Ticket
+                </a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    }, 1500); // 1.5-second delay
+    return null; // Return null while waiting for the delay
   }
 
   return (
