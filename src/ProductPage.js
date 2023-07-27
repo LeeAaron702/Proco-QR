@@ -79,7 +79,7 @@ function ProductPage({ data }) {
           </div>
         </div>
       );
-    }, 1500); // 1.5-second delay
+    }, 500); // 1.5-second delay
     return null; // Return null while waiting for the delay
   }
 
