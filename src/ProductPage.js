@@ -13,6 +13,8 @@ function ProductPage({ data }) {
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
+  const [isLoading, setIsLoading] = useState(true); // New state to manage loading
+
 
   const [showReviewModal, setShowReviewModal] = useState(false)
 
@@ -27,7 +29,13 @@ function ProductPage({ data }) {
       setVariantId(data.variantId);
       setPictureUrl(data.pictureURL)
     }
+    const timer = setTimeout(() => {
+      setIsLoading(false); // Set loading to false after the delay
+    }, 500);
+
+    return () => clearTimeout(timer); // Cleanup function to clear the timer if the component unmounts early
   }, [data]);
+
 
   const handleIRMClose = () => {
     setIRShow(false);
@@ -49,12 +57,23 @@ function ProductPage({ data }) {
   }, [errorMessage]);
 
 
-
+  if (!data && isLoading) {
+    return (
+      <div className="container mt-3">
+        <div className="row justify-content-center">
+        <div className="col-md-4">
+              <img src="./pc_1.png" alt="Logo" className="img-fluid mt-3" />
+            </div>
+          <div className="col-md-12 text-center">
+            <p>Loading...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
   if (!data) {
-    // Simulate a 1.5-second delay before showing the "no data" page
-    setTimeout(() => {
-      return (
-        <div className="container mt-3">
+    return (
+      <div className="container mt-3">
           <div className="row justify-content-center">
             <div className="col-md-4">
               <img src="./pc_1.png" alt="Logo" className="img-fluid mt-3" />
@@ -77,10 +96,8 @@ function ProductPage({ data }) {
               </div>
             </div>
           </div>
-        </div>
-      );
-    }, 500); // 1.5-second delay
-    return null; // Return null while waiting for the delay
+          </div>
+    );
   }
 
   return (
